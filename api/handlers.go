@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net"
 
-	"gitea.dancheg97.ru/dancheg97/regen/gen/pb"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

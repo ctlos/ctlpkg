@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"gitea.dancheg97.ru/dancheg97/regen/gen/pb"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

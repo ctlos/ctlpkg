@@ -3,7 +3,7 @@ package cmd
 import (
 	"os"
 
-	"gitea.dancheg97.ru/dancheg97/regen/api"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/api"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
