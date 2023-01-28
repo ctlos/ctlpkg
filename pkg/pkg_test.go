@@ -8,7 +8,11 @@ import (
 )
 
 func TestAdd(t *testing.T) {
-	err := Add(`yay`)
+	pkgr := Packager{
+		YayCache: "/home/makepkg/.cache/yay/",
+		PkgPath:  "/home/makepkg/regen/",
+	}
+	err := pkgr.Add(`yay`)
 	assert.NoError(t, err)
 	files, err := os.ReadDir(".")
 	assert.NoError(t, err)
