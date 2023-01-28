@@ -28,6 +28,7 @@ func Run(params *Params) error {
 	if err != nil {
 		return err
 	}
+
 	logrus.Infof(`Grpc server started on port: %d`, params.Port)
 	return server.Serve(lis)
 }

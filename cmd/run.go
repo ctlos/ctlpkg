@@ -17,13 +17,13 @@ const (
 )
 
 func init() {
-	rootCmd.Flags().String(pgConnString, defaultPg, "db connection string for postrges")
+	rootCmd.Flags().String(pgConnString, defaultPg, "directory that will be used to store packages")
 	viper.BindPFlag(pgConnString, rootCmd.Flags().Lookup(pgConnString))
-	viper.BindEnv(pgConnString, `POSTGRES_CONN_STRING`)
+	viper.BindEnv(pgConnString, `DIRECTORY`)
 
 	rootCmd.Flags().Int(port, defaultPort, "gRPC port app will run on")
 	viper.BindPFlag(port, rootCmd.Flags().Lookup(port))
-	viper.BindEnv(port, `GRPC_PORT`)
+	viper.BindEnv(port, `PORT`)
 
 	rootCmd.AddCommand(runCmd)
 }
