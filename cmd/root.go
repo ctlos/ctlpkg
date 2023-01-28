@@ -41,6 +41,7 @@ var flags = []Flag{
 		Name:        "grpc-port",
 		Env:         "GRPC_PORT",
 		Value:       "9080",
+		Type:        "int",
 		Description: "🌐 gRPC API port for repository packages",
 	},
 	{
@@ -48,6 +49,7 @@ var flags = []Flag{
 		Name:        "file-port",
 		Env:         "FILE_PORT",
 		Value:       "8080",
+		Type:        "int",
 		Description: "🌐 port for static file server to access packages",
 	},
 }

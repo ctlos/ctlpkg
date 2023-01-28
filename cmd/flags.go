@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"os"
+	"strconv"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -42,6 +43,20 @@ func AddFlag(cmd Flag) {
 
 	if cmd.Type == "bool" {
 		cmd.Cmd.PersistentFlags().BoolP(cmd.Name, cmd.ShortName, false, cmd.Description)
+		viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
+	}
+
+	if cmd.Type == "int" {
+		if cmd.Value != "" {
+			i, err := strconv.Atoi(cmd.Value)
+			if err != nil {
+				panic(err)
+			}
+			cmd.Cmd.PersistentFlags().IntP(cmd.Name, cmd.ShortName, i, cmd.Description)
+			viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
+			return
+		}
+		cmd.Cmd.PersistentFlags().IntP(cmd.Name, cmd.ShortName, 0, cmd.Description)
 		viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
 	}
 
