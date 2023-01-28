@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"fmt"
 
 	"gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb"
 	"gitea.dancheg97.ru/dancheg97/go-pacman/pkg"
@@ -17,6 +16,9 @@ type Handlers struct {
 var ErrUnknown = status.Error(codes.NotFound, `unknown error`)
 
 func (s Handlers) Add(ctx context.Context, in *pb.Package) (*pb.Empty, error) {
-	fmt.Println("nan")
+	err := s.Packager.Add(in.Name)
+	if err != nil {
+		return nil, err
+	}
 	return &pb.Empty{}, nil
 }

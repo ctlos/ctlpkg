@@ -20,9 +20,12 @@ var runCmd = &cobra.Command{
 
 func Run(cmd *cobra.Command, args []string) {
 	log := logrus.StandardLogger()
-	log.SetFormatter(&logrus.JSONFormatter{})
+	log.SetFormatter(&logrus.TextFormatter{})
 
-	packager, err := pkg.Get(viper.GetString(`pkg-path`), viper.GetString(`yay-path`))
+	packager, err := pkg.Get(
+		viper.GetString(`pkg-path`),
+		viper.GetString(`yay-path`),
+	)
 	checkErr(err)
 
 	err = api.Run(&api.Params{
