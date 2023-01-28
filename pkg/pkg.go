@@ -12,12 +12,16 @@ type Packager struct {
 	YayCache string
 }
 
-func (p *Packager) Prepare() error {
-	err := os.Mkdir(p.PkgPath+"/x86_64", os.ModePerm)
-	if err != nil {
-		return fmt.Errorf("unable to create directory for packages: %w", err)
+func Get(pkgPath string, yayPath string) (*Packager, error) {
+	packager := &Packager{
+		PkgPath:  pkgPath,
+		YayCache: yayPath,
 	}
-	return nil
+	err := os.Mkdir(pkgPath+"/x86_64", os.ModePerm)
+	if err != nil {
+		return nil, fmt.Errorf("unable to create directory for packages: %w", err)
+	}
+	return packager, nil
 }
 
 func (p *Packager) Add(name string) error {

@@ -11,7 +11,7 @@ import (
 )
 
 type Handlers struct {
-	Packager pkg.Packager
+	Packager *pkg.Packager
 }
 
 var ErrUnknown = status.Error(codes.NotFound, `unknown error`)

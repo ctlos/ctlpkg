@@ -4,24 +4,34 @@ import (
 	"os"
 
 	"gitea.dancheg97.ru/dancheg97/go-pacman/api"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/pkg"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 const (
-	pgConnString    = `pg-str`
+	yayPath    = `yay-path`
+	defaultYay = `/home/makepkg/.cache/yay`
+
+	pkgPath    = `pkg-path`
+	defaultPkg = `/home/makepkg/packages`
+
 	grpcPort        = `grpc-port`
 	defaultGrpcPort = 9080
+
 	filePort        = `file-port`
 	defaultFilePort = 8080
-	defaultPg       = `packages`
 )
 
 func init() {
-	rootCmd.Flags().String(pgConnString, defaultPg, "directory that will be used to store packages")
-	viper.BindPFlag(pgConnString, rootCmd.Flags().Lookup(pgConnString))
-	viper.BindEnv(pgConnString, `DIRECTORY`)
+	rootCmd.Flags().String(pkgPath, defaultYay, "directory with yay cache")
+	viper.BindPFlag(pkgPath, rootCmd.Flags().Lookup(pkgPath))
+	viper.BindEnv(pkgPath, `YAY_PATH`)
+
+	rootCmd.Flags().String(yayPath, defaultPkg, "directory to store packages")
+	viper.BindPFlag(yayPath, rootCmd.Flags().Lookup(yayPath))
+	viper.BindEnv(yayPath, `PKG_PATH`)
 
 	rootCmd.Flags().Int(grpcPort, defaultGrpcPort, "gRPC API port for repository packages")
 	viper.BindPFlag(grpcPort, rootCmd.Flags().Lookup(grpcPort))
@@ -44,8 +54,12 @@ func Run(cmd *cobra.Command, args []string) {
 	log := logrus.StandardLogger()
 	log.SetFormatter(&logrus.JSONFormatter{})
 
-	err := api.Run(&api.Params{
-		Port: viper.GetInt(grpcPort),
+	packager, err := pkg.Get(viper.GetString(pkgPath), viper.GetString(yayPath))
+	check(err, "packager")
+
+	err = api.Run(&api.Params{
+		Port:     viper.GetInt(grpcPort),
+		Packager: packager,
 	})
 	check(err, `services`)
 }

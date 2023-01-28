@@ -5,6 +5,7 @@ import (
 	"net"
 
 	"gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/pkg"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -12,6 +13,7 @@ import (
 
 type Params struct {
 	Port int
+	*pkg.Packager
 }
 
 func Run(params *Params) error {
@@ -20,7 +22,9 @@ func Run(params *Params) error {
 		getStreamMiddleware(),
 	)
 
-	handlers := Handlers{}
+	handlers := Handlers{
+		Packager: params.Packager,
+	}
 	pb.RegisterAurServer(server, handlers)
 	reflection.Register(server)
 
