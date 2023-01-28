@@ -24,3 +24,5 @@ go.work
 .vscode
 dump.sql
 .env
+
+packages/**

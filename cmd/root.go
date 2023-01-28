@@ -14,7 +14,7 @@ var rootCmd = &cobra.Command{
 GO-PACMAN  Copyright (C) 2023  Dancheg97
 This program comes with ABSOLUTELY NO WARRANTY; for details 'use -h flag'.
 This is free software, and you are welcome to redistribute it
-under certain conditions; type 'show c' for details.
+under certain conditions; watch license for details.
 `,
 }
 

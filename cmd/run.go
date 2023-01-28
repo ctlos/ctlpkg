@@ -3,7 +3,7 @@ package cmd
 import (
 	"os"
 
-	"gitea.dancheg97.ru/dancheg97/regen/services"
+	"gitea.dancheg97.ru/dancheg97/regen/api"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -12,7 +12,7 @@ import (
 const (
 	pgConnString = `pg-str`
 	port         = `port`
-	defaultPg    = `postgresql://user:password@localhost:7000/db`
+	defaultPg    = `packages`
 	defaultPort  = 9080
 )
 
@@ -21,16 +21,20 @@ func init() {
 	viper.BindPFlag(pgConnString, rootCmd.Flags().Lookup(pgConnString))
 	viper.BindEnv(pgConnString, `DIRECTORY`)
 
-	rootCmd.Flags().Int(port, defaultPort, "gRPC port app will run on")
+	rootCmd.Flags().Int(port, defaultPort, "gRPC API port for repository packages")
 	viper.BindPFlag(port, rootCmd.Flags().Lookup(port))
-	viper.BindEnv(port, `PORT`)
+	viper.BindEnv(port, `GRPC_PORT`)
+
+	rootCmd.Flags().Int(port, defaultPort, "port for static file server to access packages")
+	viper.BindPFlag(port, rootCmd.Flags().Lookup(port))
+	viper.BindEnv(port, `FILE_PORT`)
 
 	rootCmd.AddCommand(runCmd)
 }
 
 var runCmd = &cobra.Command{
 	Use:   "run",
-	Short: "Run instance of regen",
+	Short: "Run instance of go-pacman",
 	Run:   Run,
 }
 
@@ -38,7 +42,7 @@ func Run(cmd *cobra.Command, args []string) {
 	log := logrus.StandardLogger()
 	log.SetFormatter(&logrus.JSONFormatter{})
 
-	err := services.Run(&services.Params{
+	err := api.Run(&api.Params{
 		Port: viper.GetInt(port),
 	})
 	check(err, `services`)
