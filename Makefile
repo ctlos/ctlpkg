@@ -7,9 +7,7 @@ run:
 
 .PHONY: gen
 gen:
-	docker run --rm -v ${pwd}:/src -w /src unibeautify/sqlformat -r -s -o sqlc.sql sqlc.sql
-	docker run --rm -v ${pwd}:/src -w /src rvolosatovs/protoc --proto_path=/src --go_out=. --go-sqlc_out=require_unimplemented_servers=false:. api.proto
-	docker run --rm -v ${pwd}:/src -w /src kjconroy/sqlc generate -f sqlc.yml
+	docker run --rm -v ${pwd}:/src -w /src rvolosatovs/protoc --proto_path=/src --go_out=. --go-grpc_out=require_unimplemented_servers=false:. api.proto
 
 .PHONY: test
 test:

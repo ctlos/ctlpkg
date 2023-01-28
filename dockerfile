@@ -12,4 +12,5 @@ RUN git clone https://aur.archlinux.org/yay.git \
     && makepkg -sri --needed --noconfirm \
     && cd \
     && rm -rf .cache yay
-RUN go run .
+RUN go install .
+CMD regen

@@ -3,7 +3,6 @@ package cmd
 import (
 	"os"
 
-	"gitea.dancheg97.ru/dancheg97/regen/postgres"
 	"gitea.dancheg97.ru/dancheg97/regen/services"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -31,7 +30,7 @@ func init() {
 
 var runCmd = &cobra.Command{
 	Use:   "run",
-	Short: "Run instance of go-nats template",
+	Short: "Run instance of regen",
 	Run:   Run,
 }
 
@@ -39,12 +38,8 @@ func Run(cmd *cobra.Command, args []string) {
 	log := logrus.StandardLogger()
 	log.SetFormatter(&logrus.JSONFormatter{})
 
-	pg, err := postgres.Get(viper.GetString(pgConnString))
-	check(err, `postgres`)
-
-	err = services.Run(&services.Params{
-		Postgres: pg,
-		Port:     viper.GetInt(port),
+	err := services.Run(&services.Params{
+		Port: viper.GetInt(port),
 	})
 	check(err, `services`)
 }

@@ -2,38 +2,14 @@ syntax = "proto3";
 package template.v1;
 option go_package = "gen/pb";
 
-// Service containing operations for managing users
-service UserStorage {
-  // Creates new user
-  rpc Create(User) returns (User);
-  // Operation to recieve new user
-  rpc List(Empty) returns (stream User);
-  // Operation to delete user
-  rpc Remove(Id) returns (Empty);
-  // Operation update information about user
-  rpc Update(User) returns (User);
+// Service containing method for adding aur packages
+service Aur {
+  // Add new package from AUR
+  rpc Add(Package) returns (Empty);
+}
+
+message Package {
+  string name = 1;
 }
 
 message Empty {}
-
-message Id {
-  int32 id = 1;
-}
-
-// Multiple users
-message Users {
-  // list with repeated users
-  repeated User users = 1;
-}
-
-// Unified entity for user
-message User {
-  // User id that will be set on create operation
-  int32 id = 1;
-  // User name
-  string name = 2;
-  // User age
-  int32 age = 3;
-  // Information about user
-  string description = 4;
-}

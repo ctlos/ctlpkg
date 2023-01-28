@@ -8,12 +8,14 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "go-sqlc",
-	Short: "Go cli template for building project with NATS service",
+	Use:   "regen",
+	Short: "Tool for managing personal pacman repository.",
 	Long: `
-Very long, interestring and descriptive description.
-
-Possibly multiline.`,
+REGEN  Copyright (C) 2023  Dancheg97
+This program comes with ABSOLUTELY NO WARRANTY; for details 'use -h flag'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; type 'show c' for details.
+`,
 }
 
 func Execute() {

@@ -5,16 +5,13 @@ import (
 	"net"
 
 	"gitea.dancheg97.ru/dancheg97/regen/gen/pb"
-	"gitea.dancheg97.ru/dancheg97/regen/postgres"
-	"gitea.dancheg97.ru/dancheg97/regen/services/users"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
 
 type Params struct {
-	Postgres *postgres.Postgres
-	Port     int
+	Port int
 }
 
 func Run(params *Params) error {
@@ -23,8 +20,8 @@ func Run(params *Params) error {
 		getStreamMiddleware(),
 	)
 
-	handlers := users.Handlers{Postgres: params.Postgres}
-	pb.RegisterUserStorageServer(server, handlers)
+	handlers := Handlers{}
+	pb.RegisterAurServer(server, handlers)
 	reflection.Register(server)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(`:%d`, params.Port))
