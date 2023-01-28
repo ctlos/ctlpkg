@@ -5,9 +5,6 @@ services:
     build:
       context: .
     command: run
-    environment:
-      POSTGRES_CONN_STRING: postgresql://user:password@postgres:5432/db
-      GRPC_PORT: 9080
     ports:
       - 9080:9080
-
+      - 8080:8080

@@ -10,10 +10,12 @@ import (
 )
 
 const (
-	pgConnString = `pg-str`
-	port         = `port`
-	defaultPg    = `packages`
-	defaultPort  = 9080
+	pgConnString    = `pg-str`
+	grpcPort        = `grpc-port`
+	defaultGrpcPort = 9080
+	filePort        = `file-port`
+	defaultFilePort = 8080
+	defaultPg       = `packages`
 )
 
 func init() {
@@ -21,13 +23,13 @@ func init() {
 	viper.BindPFlag(pgConnString, rootCmd.Flags().Lookup(pgConnString))
 	viper.BindEnv(pgConnString, `DIRECTORY`)
 
-	rootCmd.Flags().Int(port, defaultPort, "gRPC API port for repository packages")
-	viper.BindPFlag(port, rootCmd.Flags().Lookup(port))
-	viper.BindEnv(port, `GRPC_PORT`)
+	rootCmd.Flags().Int(grpcPort, defaultGrpcPort, "gRPC API port for repository packages")
+	viper.BindPFlag(grpcPort, rootCmd.Flags().Lookup(grpcPort))
+	viper.BindEnv(grpcPort, `GRPC_PORT`)
 
-	rootCmd.Flags().Int(port, defaultPort, "port for static file server to access packages")
-	viper.BindPFlag(port, rootCmd.Flags().Lookup(port))
-	viper.BindEnv(port, `FILE_PORT`)
+	rootCmd.Flags().Int(filePort, defaultFilePort, "port for static file server to access packages")
+	viper.BindPFlag(filePort, rootCmd.Flags().Lookup(filePort))
+	viper.BindEnv(filePort, `FILE_PORT`)
 
 	rootCmd.AddCommand(runCmd)
 }
@@ -43,7 +45,7 @@ func Run(cmd *cobra.Command, args []string) {
 	log.SetFormatter(&logrus.JSONFormatter{})
 
 	err := api.Run(&api.Params{
-		Port: viper.GetInt(port),
+		Port: viper.GetInt(grpcPort),
 	})
 	check(err, `services`)
 }

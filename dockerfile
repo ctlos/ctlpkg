@@ -12,5 +12,6 @@ RUN git clone https://aur.archlinux.org/yay.git \
     && makepkg -sri --needed --noconfirm \
     && cd \
     && rm -rf .cache yay
-RUN go install .
-CMD regen
+RUN go build -buildvcs=false .
+ENTRYPOINT ["./go-pacman"]
+CMD ["--help"]
