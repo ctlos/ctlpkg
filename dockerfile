@@ -1,11 +1,15 @@
-FROM golang:1.19.1 AS build
-WORKDIR /
-COPY go.mod ./
-COPY go.sum ./
-RUN go mod download
+FROM archlinux/archlinux:base-devel
+LABEL maintainer="test.cab <git@test.cab>"
+RUN pacman -Syu --needed --noconfirm git go
+ARG user=makepkg
+RUN useradd --system --create-home $user \
+    && echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user
+USER $user
+WORKDIR /home/$user
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -o go-sqlc ./main.go
-FROM alpine:3.16.2
-COPY --from=build /go-sqlc .
-ENTRYPOINT ["/go-sqlc"]
-CMD ["--help"]
+RUN git clone https://aur.archlinux.org/yay.git \
+    && cd yay \
+    && makepkg -sri --needed --noconfirm \
+    && cd \
+    && rm -rf .cache yay
+RUN go run .

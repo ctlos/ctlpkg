@@ -3,8 +3,8 @@ package cmd
 import (
 	"os"
 
-	"gitea.dancheg97.ru/dancheg97/go-sqlc/postgres"
-	"gitea.dancheg97.ru/dancheg97/go-sqlc/services"
+	"gitea.dancheg97.ru/dancheg97/regen/postgres"
+	"gitea.dancheg97.ru/dancheg97/regen/services"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"

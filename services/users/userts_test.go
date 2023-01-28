@@ -7,9 +7,9 @@ import (
 	"os"
 	"testing"
 
-	"gitea.dancheg97.ru/dancheg97/go-sqlc/gen/pb"
-	"gitea.dancheg97.ru/dancheg97/go-sqlc/gen/sqlc"
-	"gitea.dancheg97.ru/dancheg97/go-sqlc/postgres"
+	"gitea.dancheg97.ru/dancheg97/regen/gen/pb"
+	"gitea.dancheg97.ru/dancheg97/regen/gen/sqlc"
+	"gitea.dancheg97.ru/dancheg97/regen/postgres"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
 )
