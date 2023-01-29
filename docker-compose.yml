@@ -5,6 +5,8 @@ services:
     build:
       context: .
     command: run
+    environment:
+      INIT_PKGS: onlyoffice-bin yay
     ports:
       - 9080:9080
       - 8080:8080

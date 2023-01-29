@@ -20,7 +20,7 @@ Environment variables:
 - `USER` - 😀 user name in system
 - `GRPC_PORT` - 🌐 gRPC API port for repository packages
 - `FILE_PORT` - 🌐 port for static file server to access packages
-- `INIT_PKGS` - 📦 initial packages for download
+- `INIT_PKGS` - 📦 initial packages to download on start
 
 You can run repository via `docker-compose`:
 
