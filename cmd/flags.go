@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Short description of contents for command
+// Short description of contents for command.
 type Flag struct {
 	// Cobra command that we will bound our cmd to
 	Cmd *cobra.Command
@@ -29,21 +29,24 @@ type Flag struct {
 	Description string
 }
 
-// Function to add new command to CLI tool
+// Function to add new command to CLI tool.
 func AddFlag(cmd Flag) {
 	if cmd.Type == "" {
 		cmd.Cmd.PersistentFlags().StringP(cmd.Name, cmd.ShortName, cmd.Value, cmd.Description)
-		viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
+		err := viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
+		checkErr(err)
 	}
 
 	if cmd.Type == "strarr" {
 		cmd.Cmd.PersistentFlags().StringArrayP(cmd.Name, cmd.ShortName, nil, cmd.Description)
-		viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
+		err := viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
+		checkErr(err)
 	}
 
 	if cmd.Type == "bool" {
 		cmd.Cmd.PersistentFlags().BoolP(cmd.Name, cmd.ShortName, false, cmd.Description)
-		viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
+		err := viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
+		checkErr(err)
 	}
 
 	if cmd.Type == "int" {
@@ -53,15 +56,18 @@ func AddFlag(cmd Flag) {
 				panic(err)
 			}
 			cmd.Cmd.PersistentFlags().IntP(cmd.Name, cmd.ShortName, i, cmd.Description)
-			viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
+			err = viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
+			checkErr(err)
 			return
 		}
 		cmd.Cmd.PersistentFlags().IntP(cmd.Name, cmd.ShortName, 0, cmd.Description)
-		viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
+		err := viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))
+		checkErr(err)
 	}
 
 	if cmd.IsRequired {
-		cmd.Cmd.MarkFlagRequired(cmd.Name)
+		err := cmd.Cmd.MarkFlagRequired(cmd.Name)
+		checkErr(err)
 	}
 }
 
