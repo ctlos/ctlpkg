@@ -20,9 +20,25 @@ You can run repository via `docker-compose`:
 services:
   gitea.dancheg97.ru/dancheg97/go-pacman:latest:
     command: run
+    environment:
+      REPO: localhost
     volumes:
       - ./pacman:/var/cache/pacman/pkg
     ports:
       - 9080:9080
       - 8080:8080
+```
+
+Or, alternatively, if you have virtual machine without password for sudo user,
+you can install package using go:
+
+```sh
+go install gitea.dancheg97.ru/dancheg97/go-pacman@latest
+```
+
+And run it as a CLI programm:
+
+```sh
+go-pacman -h
+go-pacman run -h
 ```
