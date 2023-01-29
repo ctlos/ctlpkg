@@ -65,6 +65,11 @@ func AddFlag(cmd Flag) {
 		checkErr(err)
 	}
 
+	if cmd.Env != `` {
+		err := viper.BindEnv(cmd.Name, cmd.Env)
+		checkErr(err)
+	}
+
 	if cmd.IsRequired {
 		err := cmd.Cmd.MarkFlagRequired(cmd.Name)
 		checkErr(err)
