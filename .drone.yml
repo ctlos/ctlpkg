@@ -24,6 +24,9 @@ steps:
     volumes:
       - name: docker
         path: /var/run/docker.sock
+    environment:
+      PASS:
+        from_secret: PASS
     commands:
       - docker build -t gitea.dancheg97.ru/dancheg97/$DRONE_REPO:latest -t gitea.dancheg97.ru/drone/$DRONE_REPO:$(date +"%m-%d-%y") .
       - docker login -u dancheg97 -p $PASS gitea.dancheg97.ru
