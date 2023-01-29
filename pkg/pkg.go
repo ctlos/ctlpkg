@@ -58,7 +58,6 @@ func (p *Packager) processPackageDir(pkg string) error {
 			}
 		}
 	}
-	// REMOVE FROM YAY CACHE
 	err = os.RemoveAll(p.YayCacheDir + pkg)
 	if err != nil {
 		return fmt.Errorf("unable to remove cached dir")
