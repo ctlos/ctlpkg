@@ -1,6 +1,7 @@
 FROM archlinux/archlinux:base-devel
 LABEL maintainer="test.cab <git@test.cab>"
 RUN pacman -Syu --needed --noconfirm git go
+RUN chmod a+rwx -R /var/cache/pacman/pkg
 ARG user=makepkg
 RUN useradd --system --create-home $user \
     && echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user
