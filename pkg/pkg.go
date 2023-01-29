@@ -22,7 +22,7 @@ func Get(user string, pkgDir string, repoName string) (*Packager, error) {
 }
 
 func (p *Packager) Add(name string) error {
-	_, err := exec.Command("bash", "-c", "yay --noconfirm -Sy "+name).Output()
+	_, err := exec.Command("bash", "-c", "yay --noconfirm --noremovemake -Sy "+name).Output()
 	if err != nil {
 		return fmt.Errorf("unable to execute yay for '"+name+"': %w ", err)
 	}
@@ -40,7 +40,7 @@ func (p *Packager) Add(name string) error {
 	}
 	repo := p.PacmanCacheDir + "/" + p.RepoName + ".db.tar.gz"
 	pkgs := p.PacmanCacheDir + "/*.pkg.tar.zst"
-	_, err = exec.Command("bash", "-c", "sudo repo-add -n -q "+repo+" "+pkgs).Output()
+	_, err = exec.Command("bash", "-c", "repo-add -n -q "+repo+" "+pkgs).Output()
 	return err
 }
 
@@ -57,7 +57,7 @@ func (p *Packager) processPackageDir(pkg string) error {
 				return fmt.Errorf("unable to read file, %w", err)
 			}
 
-			err = os.WriteFile(p.PacmanCacheDir+pkgFiles.Name(), input, 0600)
+			err = os.WriteFile(p.PacmanCacheDir+pkgFiles.Name(), input, 0o644)
 			if err != nil {
 				return fmt.Errorf("unable to read file, %w", err)
 			}
