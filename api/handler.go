@@ -15,8 +15,8 @@ type Handlers struct {
 
 var ErrUnknown = status.Error(codes.NotFound, `unknown error`)
 
-func (s Handlers) Add(ctx context.Context, in *pb.Package) (*pb.Empty, error) {
-	err := s.Packager.Add(in.Name)
+func (s Handlers) Add(ctx context.Context, in *pb.Packages) (*pb.Empty, error) {
+	err := s.Packager.Add(in.Packages)
 	if err != nil {
 		return nil, err
 	}

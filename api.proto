@@ -5,12 +5,13 @@ option go_package = "gen/pb";
 // Service containing method for adding aur packages
 service Aur {
   // Add new package from AUR
-  rpc Add(Package) returns (Empty);
+  rpc Add(Packages) returns (Empty);
   // Check wether some package exists in repository
 }
 
-message Package {
-  string name = 1;
+// You can pass multiple packages at once in single line separated with space
+message Packages {
+  string packages = 1;
 }
 
 message Empty {}

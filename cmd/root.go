@@ -52,6 +52,13 @@ var flags = []Flag{
 		Type:        "int",
 		Description: "🌐 port for static file server to access packages",
 	},
+	{
+		Cmd:         rootCmd,
+		Name:        "init-pkgs",
+		Env:         "INIT_PKGS",
+		Type:        "string",
+		Description: "📦 initial packages for download",
+	},
 }
 
 func Execute() {

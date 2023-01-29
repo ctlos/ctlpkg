@@ -12,7 +12,15 @@ Dockerized pacman repository with gRPC API for packages.
 
 Project aims to quickly set up and running personal pacman repostitory without pain and hussle.
 
-Currently supports single gRPC method `Add()`, which will add package from AUR repository to registry.
+Currently supports single gRPC method `Add()`, which will add packages from AUR repository to registry.
+
+Environment variables:
+
+- `REPO` - 📄 repository name on the web page
+- `USER` - 😀 user name in system
+- `GRPC_PORT` - 🌐 gRPC API port for repository packages
+- `FILE_PORT` - 🌐 port for static file server to access packages
+- `INIT_PKGS` - 📦 initial packages for download
 
 You can run repository via `docker-compose`:
 

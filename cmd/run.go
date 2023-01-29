@@ -30,6 +30,11 @@ func Run(cmd *cobra.Command, args []string) {
 	packager, err := pkg.Get(viper.GetString(`user`), pkgPath, viper.GetString(`repo`))
 	checkErr(err)
 
+	start := viper.GetString(`init-pkgs`)
+	if start != `` {
+		packager.Add(start)
+	}
+
 	err = api.Run(&api.Params{
 		Port:     viper.GetInt(`grpc-port`),
 		Packager: packager,

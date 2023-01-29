@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AurClient interface {
 	// Add new package from AUR
-	Add(ctx context.Context, in *Package, opts ...grpc.CallOption) (*Empty, error)
+	Add(ctx context.Context, in *Packages, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type aurClient struct {
@@ -34,7 +34,7 @@ func NewAurClient(cc grpc.ClientConnInterface) AurClient {
 	return &aurClient{cc}
 }
 
-func (c *aurClient) Add(ctx context.Context, in *Package, opts ...grpc.CallOption) (*Empty, error) {
+func (c *aurClient) Add(ctx context.Context, in *Packages, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/template.v1.Aur/Add", in, out, opts...)
 	if err != nil {
@@ -48,14 +48,14 @@ func (c *aurClient) Add(ctx context.Context, in *Package, opts ...grpc.CallOptio
 // for forward compatibility
 type AurServer interface {
 	// Add new package from AUR
-	Add(context.Context, *Package) (*Empty, error)
+	Add(context.Context, *Packages) (*Empty, error)
 }
 
 // UnimplementedAurServer should be embedded to have forward compatible implementations.
 type UnimplementedAurServer struct {
 }
 
-func (UnimplementedAurServer) Add(context.Context, *Package) (*Empty, error) {
+func (UnimplementedAurServer) Add(context.Context, *Packages) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Add not implemented")
 }
 
@@ -71,7 +71,7 @@ func RegisterAurServer(s grpc.ServiceRegistrar, srv AurServer) {
 }
 
 func _Aur_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Package)
+	in := new(Packages)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -83,7 +83,7 @@ func _Aur_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}
 		FullMethod: "/template.v1.Aur/Add",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AurServer).Add(ctx, req.(*Package))
+		return srv.(AurServer).Add(ctx, req.(*Packages))
 	}
 	return interceptor(ctx, in, info, handler)
 }
