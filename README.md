@@ -26,12 +26,11 @@ You can run repository via `docker-compose`:
 
 ```yml
 services:
-  gitea.dancheg97.ru/dancheg97/go-pacman:latest:
+  pacman:
+    image: gitea.dancheg97.ru/dancheg97/go-pacman:latest
     command: run
     environment:
-      REPO: localhost
-    volumes:
-      - ./pacman:/var/cache/pacman/pkg
+      INIT_PKGS: onlyoffice-bin yay
     ports:
       - 9080:9080
       - 8080:8080
