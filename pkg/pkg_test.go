@@ -10,7 +10,6 @@ import (
 func TestAdd(t *testing.T) {
 	pkgr := Packager{
 		YayCache: "/home/makepkg/.cache/yay/",
-		PkgPath:  "/home/makepkg/go-pacman/",
 	}
 	err := pkgr.Add(`yay`)
 	assert.NoError(t, err)

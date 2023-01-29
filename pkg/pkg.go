@@ -7,49 +7,61 @@ import (
 	"strings"
 )
 
+const pkgPath = `/var/cache/pacman/pkg/`
+
 type Packager struct {
-	PkgPath  string
 	YayCache string
 }
 
-func Get(pkgPath string, yayPath string) (*Packager, error) {
-	packager := &Packager{
-		PkgPath:  pkgPath,
-		YayCache: yayPath,
-	}
-	err := os.MkdirAll(pkgPath+"/x86_64", os.ModePerm)
-	if !os.IsExist(err) && err != nil {
-		return nil, fmt.Errorf("unable to create directory for packages: %w", err)
-	}
-	return packager, nil
+func Get(user string) (*Packager, error) {
+	return &Packager{
+		YayCache: `/home/` + user + `/.cache/yay/`,
+	}, nil
 }
 
 func (p *Packager) Add(name string) error {
-	_, err := exec.Command("bash", "-c", "yay -Sy "+name).Output()
+	_, err := exec.Command("bash", "-c", "yay --noconfirm -Sy "+name).Output()
 	if err != nil {
 		return fmt.Errorf("unable to execute yay for '"+name+"': %w ", err)
 	}
-	dir, err := os.ReadDir(p.YayCache + "/" + name)
+	des, err := os.ReadDir(p.YayCache)
 	if err != nil {
-		return fmt.Errorf("unable to find cache dir, %w", err)
+		return fmt.Errorf("unable to find yay cache dir, %w", err)
 	}
-	var transfered bool
-	for _, file := range dir {
-		if strings.HasSuffix(file.Name(), ".pkg.tar.zst") {
-			input, err := os.ReadFile(p.YayCache + "/" + name + "/" + file.Name())
+	for _, de := range des {
+		if de.IsDir() {
+			err := p.processPackageDir(de.Name())
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func (p *Packager) processPackageDir(pkg string) error {
+	// LATER ADD GITEA HOOK TO MIRROR SOURCE CODE
+	ddes, err := os.ReadDir(p.YayCache + pkg)
+	if err != nil {
+		return fmt.Errorf("unable to find pkg cache dir: %s, %w", pkg, err)
+	}
+	for _, pkgFiles := range ddes {
+		if strings.HasSuffix(pkgFiles.Name(), ".pkg.tar.zst") {
+			input, err := os.ReadFile(p.YayCache + pkg + "/" + pkgFiles.Name())
 			if err != nil {
 				return fmt.Errorf("unable to read file, %w", err)
 			}
 
-			err = os.WriteFile(p.PkgPath+"/x86_64/"+file.Name(), input, 0644)
+			err = os.WriteFile(pkgPath+pkgFiles.Name(), input, 0644)
 			if err != nil {
 				return fmt.Errorf("unable to read file, %w", err)
 			}
-			transfered = true
 		}
 	}
-	if !transfered {
-		return fmt.Errorf("file was not found in build dir")
+	// REMOVE FROM YAY CACHE
+	err = os.RemoveAll(p.YayCache + pkg)
+	if err != nil {
+		return fmt.Errorf("unable to remove cached dir")
 	}
 	return nil
 }

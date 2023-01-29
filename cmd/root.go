@@ -24,17 +24,10 @@ var rootCmd = &cobra.Command{
 var flags = []Flag{
 	{
 		Cmd:         rootCmd,
-		Name:        "yay-path",
-		Env:         "YAY_PATH",
-		Value:       "/home/makepkg/.cache/yay",
-		Description: "📂 directory with yay cache",
-	},
-	{
-		Cmd:         rootCmd,
-		Name:        "pkg-path",
-		Env:         "PKG_PATH",
-		Value:       "/home/makepkg/packages",
-		Description: "📂 directory to store packages",
+		Name:        "user",
+		Env:         "USER",
+		Value:       "makepkg",
+		Description: "😀 user name in system",
 	},
 	{
 		Cmd:         rootCmd,
