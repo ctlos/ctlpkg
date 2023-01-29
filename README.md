@@ -4,9 +4,9 @@
 
 <h2 align="center">Go pacman</h2>
 
-[![Generic badge](https://img.shields.io/badge/LICENSE-GPLv3-red.svg)](https://gitea.dancheg97.ru/templates/go-pacman/src/branch/main/LICENSE)
-[![Generic badge](https://img.shields.io/badge/GITEA-REPO-blue.svg)](https://gitea.dancheg97.ru/templates/go-pacman)
-[![Build Status](https://drone.dancheg97.ru/api/badges/templates/go-pacman/status.svg)](https://drone.dancheg97.ru/templates/go-pacman)
+[![Generic badge](https://img.shields.io/badge/LICENSE-GPLv3-red.svg)](https://gitea.dancheg97.ru/dancheg97/go-pacman/src/branch/main/LICENSE)
+[![Generic badge](https://img.shields.io/badge/GITEA-REPO-blue.svg)](https://gitea.dancheg97.ru/dancheg97/go-pacman)
+[![Build Status](https://drone.dancheg97.ru/api/badges/dancheg97/go-pacman/status.svg)](https://drone.dancheg97.ru/dancheg97/go-pacman)
 
 Dockerized pacman repository with gRPC API for packages.
 
