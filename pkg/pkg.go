@@ -17,7 +17,7 @@ func Get(pkgPath string, yayPath string) (*Packager, error) {
 		PkgPath:  pkgPath,
 		YayCache: yayPath,
 	}
-	err := os.Mkdir(pkgPath+"/x86_64", os.ModePerm)
+	err := os.MkdirAll(pkgPath+"/x86_64", os.ModePerm)
 	if !os.IsExist(err) && err != nil {
 		return nil, fmt.Errorf("unable to create directory for packages: %w", err)
 	}
@@ -25,7 +25,7 @@ func Get(pkgPath string, yayPath string) (*Packager, error) {
 }
 
 func (p *Packager) Add(name string) error {
-	_, err := exec.Command("yay", "-Sy", name).Output()
+	_, err := exec.Command("bash", "-c", "yay -Sy "+name).Output()
 	if err != nil {
 		return fmt.Errorf("unable to execute yay for '"+name+"': %w ", err)
 	}
