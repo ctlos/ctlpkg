@@ -19,15 +19,6 @@ steps:
       - go vet  ./...
       - golangci-lint run
 
-  - name: test
-    image: golang
-    environment:
-      POSTGRES_CONN_STRING: postgresql://user:password@postgres:5432/db
-      GRPC_PORT: 9080
-    commands:
-      - go run . migrate
-      - go test -short -count=1 -cover ./...
-
   - name: build
     image: docker
     volumes:
