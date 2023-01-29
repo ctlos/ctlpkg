@@ -40,7 +40,7 @@ func (p *Packager) Add(name string) error {
 	}
 	repo := p.PacmanCacheDir + "/" + p.RepoName + ".db.tar.gz"
 	pkgs := p.PacmanCacheDir + "/*.pkg.tar.zst"
-	_, err = exec.Command("bash", "-c", "repo-add -n -q "+repo+" "+pkgs).Output()
+	_, err = exec.Command("bash", "-c", "sudo repo-add -n -q "+repo+" "+pkgs).Output()
 	return err
 }
 
