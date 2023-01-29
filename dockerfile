@@ -1,5 +1,7 @@
 FROM archlinux/archlinux:base-devel
-LABEL maintainer="test.cab <git@test.cab>"
+
+LABEL maintainer="Dancheg97 <dangdancheg@gmail.com>"
+
 RUN pacman -Syu --needed --noconfirm git go
 RUN chmod a+rwx -R /var/cache/pacman/pkg
 ARG user=makepkg
