@@ -12,7 +12,7 @@ func RunFileServer(path string, port int) {
 
 	server := &http.Server{
 		Addr:              fmt.Sprintf(`:%d`, port),
-		ReadHeaderTimeout: 3 * time.Second,
+		ReadHeaderTimeout: time.Second,
 	}
 
 	err := server.ListenAndServe()
