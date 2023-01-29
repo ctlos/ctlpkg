@@ -6,6 +6,8 @@ option go_package = "gen/pb";
 service Aur {
   // Add new package from AUR
   rpc Add(Package) returns (Empty);
+  // Check wether some package exists in repository
+  
 }
 
 message Package {

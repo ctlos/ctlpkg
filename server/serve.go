@@ -8,7 +8,7 @@ import (
 
 func RunFileServer(path string, port int) {
 	fs := http.FileServer(http.Dir(path))
-	http.Handle(`/x86_64/`, fs)
+	http.Handle(`/`, fs)
 
 	server := &http.Server{
 		Addr:              fmt.Sprintf(`:%d`, port),
