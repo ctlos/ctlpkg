@@ -27,7 +27,7 @@ func Run(cmd *cobra.Command, args []string) {
 
 	go server.RunFileServer(pkgPath, viper.GetInt(`file-port`))
 
-	packager, err := pkg.Get(viper.GetString(`user`), pkgPath)
+	packager, err := pkg.Get(viper.GetString(`user`), pkgPath, viper.GetString(`repo`))
 	checkErr(err)
 
 	err = api.Run(&api.Params{

@@ -8,12 +8,14 @@ import (
 )
 
 type Packager struct {
+	RepoName       string
 	YayCacheDir    string
 	PacmanCacheDir string
 }
 
-func Get(user string, pkgDir string) (*Packager, error) {
+func Get(user string, pkgDir string, repoName string) (*Packager, error) {
 	return &Packager{
+		RepoName:       repoName,
 		YayCacheDir:    `/home/` + user + `/.cache/yay/`,
 		PacmanCacheDir: pkgDir,
 	}, nil
@@ -36,7 +38,10 @@ func (p *Packager) Add(name string) error {
 			}
 		}
 	}
-	return nil
+	repo := p.PacmanCacheDir + "/" + p.RepoName + ".db.tar.gz"
+	pkgs := p.PacmanCacheDir + "/*.pkg.tar.zst"
+	_, err = exec.Command("bash", "-c", "repo-add -n -q "+repo+" "+pkgs).Output()
+	return err
 }
 
 func (p *Packager) processPackageDir(pkg string) error {

@@ -24,6 +24,13 @@ var rootCmd = &cobra.Command{
 var flags = []Flag{
 	{
 		Cmd:         rootCmd,
+		Name:        "repo",
+		Env:         "REPO",
+		Value:       "localhost",
+		Description: "📄 repository name on the web page",
+	},
+	{
+		Cmd:         rootCmd,
 		Name:        "user",
 		Env:         "USER",
 		Value:       "makepkg",
