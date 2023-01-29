@@ -5,6 +5,8 @@ services:
     build:
       context: .
     command: run
+    volumes:
+      - ./pacman:/var/cache/pacman/pkg
     ports:
       - 9080:9080
       - 8080:8080

@@ -13,3 +13,16 @@ Dockerized pacman repository with gRPC API for packages.
 Project aims to quickly set up and running personal pacman repostitory without pain and hussle.
 
 Currently supports single gRPC method `Add()`, which will add package from AUR repository to registry.
+
+You can run repository via `docker-compose`:
+
+```yml
+services:
+  gitea.dancheg97.ru/dancheg97/go-pacman:latest:
+    command: run
+    volumes:
+      - ./pacman:/var/cache/pacman/pkg
+    ports:
+      - 9080:9080
+      - 8080:8080
+```
