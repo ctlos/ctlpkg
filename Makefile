@@ -17,4 +17,5 @@ test:
 .PHONY: lint
 lint:
 	gofumpt -l -w .
-	golangci-lint run
+	docker run --rm -v ${pwd}:/src -w /src golangci/golangci-lint golangci-lint run
+

@@ -11,14 +11,6 @@ volumes:
     host:
       path: /var/run/docker.sock
 
-services:
-  - name: postgres
-    image: postgres:14
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: db
-
 steps:
   - name: lint
     image: golangci/golangci-lint
