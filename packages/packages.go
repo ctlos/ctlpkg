@@ -28,24 +28,26 @@ func Get(user string, pkgDir string, repoName string) (*Packager, error) {
 
 func (p *Packager) Add(packages string) (*string, error) {
 	var output string
-
 	logrus.Info("executing yay for packages: ", packages)
-	out, err := exec.Command("bash", "-c", "yay --noconfirm --noremovemake -Sy "+packages).Output()
+
+	cmd := exec.Command("bash", "-c", "yay --noconfirm --noremovemake -Sy "+packages)
+	cmd.Stdout = logrus.StandardLogger().Writer()
+	err := cmd.Run()
 	if err != nil {
-		logrus.Error("yay script failed: ", string(out))
 		return nil, fmt.Errorf("unable to execute yay for '"+packages+"': %w ", err)
 	}
-	logrus.Info("yay script succeed: ", string(out))
 
-	out, err = exec.Command("bash", "-c", "sudo chmod a+rwx -R /home/makepkg/.cache/yay").Output()
+	cmd = exec.Command("bash", "-c", "sudo chmod a+rwx -R /home/makepkg/.cache/yay")
+	cmd.Stdout = logrus.StandardLogger().Writer()
+	err = cmd.Run()
 	if err != nil {
-		logrus.Error("yay script failed: ", string(out))
 		return nil, fmt.Errorf("unable to set proper permissions for yay build dir")
 	}
 
-	out, err = exec.Command("bash", "-c", "sudo chmod a+rwx -R /var/cache/pacman/pkg").Output()
+	cmd = exec.Command("bash", "-c", "sudo chmod a+rwx -R /var/cache/pacman/pkg")
+	cmd.Stdout = logrus.StandardLogger().Writer()
+	err = cmd.Run()
 	if err != nil {
-		logrus.Error("yay script failed: ", string(out))
 		return nil, fmt.Errorf("unable to set proper permissions for yay build dir")
 	}
 
@@ -64,12 +66,13 @@ func (p *Packager) Add(packages string) (*string, error) {
 
 	repo := p.PacmanCacheDir + "/" + p.RepoName + ".db.tar.gz"
 	pkgs := p.PacmanCacheDir + "/*.pkg.tar.zst"
-	out, err = exec.Command("bash", "-c", "repo-add -n -q "+repo+" "+pkgs).Output()
+
+	cmd = exec.Command("bash", "-c", "repo-add -n -q "+repo+" "+pkgs)
+	cmd.Stdout = logrus.StandardLogger().Writer()
+	err = cmd.Run()
 	if err != nil {
-		logrus.Error("repo-add script failed: ", string(out))
 		return nil, fmt.Errorf("unable to add packages to repository")
 	}
-	logrus.Info("repo-add script succeed: ", string(out))
 
 	return &output, nil
 }
