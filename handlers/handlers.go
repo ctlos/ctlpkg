@@ -2,15 +2,16 @@ package handlers
 
 import (
 	"context"
+	"strings"
 
 	pb "gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb/proto/v1"
-	"gitea.dancheg97.ru/dancheg97/go-pacman/pkg"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/packages"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
 type Handlers struct {
-	Packager *pkg.Packager
+	Packager *packages.Packager
 }
 
 var ErrUnknown = status.Error(codes.NotFound, `unknown error`)
@@ -21,7 +22,7 @@ func (s Handlers) Add(ctx context.Context, in *pb.AddRequest) (*pb.AddResponse, 
 		return nil, err
 	}
 	return &pb.AddResponse{
-		Message: *out,
+		Message: strings.Split(*out, "\n"),
 	}, nil
 }
 

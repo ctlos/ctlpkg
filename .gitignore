@@ -25,5 +25,6 @@ go.work
 dump.sql
 .env
 
-packages/**
 go-pacman
+
+cache/**

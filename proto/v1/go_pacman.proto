@@ -16,7 +16,7 @@ message AddRequest {
 }
 
 message AddResponse {
-  string message = 2;
+  repeated string message = 2;
 }
 
 message SearchRequest {

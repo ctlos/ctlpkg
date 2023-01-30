@@ -3,7 +3,7 @@ package cmd
 import (
 	"gitea.dancheg97.ru/dancheg97/go-pacman/fileserver"
 	"gitea.dancheg97.ru/dancheg97/go-pacman/handlers"
-	"gitea.dancheg97.ru/dancheg97/go-pacman/pkg"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/packages"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -27,7 +27,7 @@ func Run(cmd *cobra.Command, args []string) {
 
 	go fileserver.RunFileServer(pkgPath, viper.GetInt(`file-port`))
 
-	packager, err := pkg.Get(viper.GetString(`user`), pkgPath, viper.GetString(`repo`))
+	packager, err := packages.Get(viper.GetString(`user`), pkgPath, viper.GetString(`repo`))
 	checkErr(err)
 
 	start := viper.GetString(`init-pkgs`)

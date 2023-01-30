@@ -5,7 +5,7 @@
 <h2 align="center">Go pacman</h2>
 
 [![Generic badge](https://img.shields.io/badge/LICENSE-GPLv3-red.svg)](https://gitea.dancheg97.ru/dancheg97/go-pacman/src/branch/main/LICENSE)
-[![Generic badge](https://img.shields.io/badge/GITEA-REPO-orgnge.svg)](https://gitea.dancheg97.ru/dancheg97/go-pacman)
+[![Generic badge](https://img.shields.io/badge/GITEA-REPO-cyan.svg)](https://gitea.dancheg97.ru/dancheg97/go-pacman)
 [![Generic badge](https://img.shields.io/badge/DOCKER-CONTAINER-blue.svg)](https://gitea.dancheg97.ru/dancheg97/-/packages/container/go-pacman/latest)
 [![Build Status](https://drone.dancheg97.ru/api/badges/dancheg97/go-pacman/status.svg)](https://drone.dancheg97.ru/dancheg97/go-pacman)
 
@@ -40,8 +40,6 @@ services:
       - 9080:9080
       - 8080:8080
 ```
-
----
 
 Or, alternatively, if you have virtual machine without password for sudo user,
 you can install package using go:

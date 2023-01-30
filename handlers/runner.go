@@ -5,7 +5,7 @@ import (
 	"net"
 
 	pb "gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb/proto/v1"
-	"gitea.dancheg97.ru/dancheg97/go-pacman/pkg"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/packages"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -13,7 +13,7 @@ import (
 
 type Params struct {
 	Port int
-	*pkg.Packager
+	*packages.Packager
 }
 
 func Run(params *Params) error {
