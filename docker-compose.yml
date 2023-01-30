@@ -6,7 +6,8 @@ services:
       context: .
     command: run
     environment:
-      INIT_PKGS: onlyoffice-bin yay
+      INIT_PKGS: yay
+      LOGS_FMT: pretty
     ports:
       - 9080:9080
       - 8080:8080

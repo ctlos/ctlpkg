@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var rootCmd = &cobra.Command{
@@ -56,14 +58,35 @@ var flags = []Flag{
 		Cmd:         rootCmd,
 		Name:        "init-pkgs",
 		Env:         "INIT_PKGS",
-		Type:        "string",
 		Description: "📦 initial packages for download",
+	},
+	{
+		Cmd:         rootCmd,
+		Name:        "logs-fmt",
+		Env:         "LOGS_FMT",
+		Value:       "json",
+		Description: "📒 output format for logs",
 	},
 }
 
 func Execute() {
 	for _, flag := range flags {
 		AddFlag(flag)
+	}
+
+	switch viper.GetString(`logs-fmt`) {
+	case `json`:
+		logrus.SetFormatter(&logrus.JSONFormatter{})
+	case `text`:
+		logrus.SetFormatter(&logrus.TextFormatter{})
+	case `pretty`:
+		logrus.SetFormatter(&logrus.TextFormatter{
+			ForceColors:   true,
+			DisableQuote:  true,
+			FullTimestamp: true,
+		})
+	default:
+		logrus.SetFormatter(&logrus.JSONFormatter{})
 	}
 
 	if err := rootCmd.Execute(); err != nil {

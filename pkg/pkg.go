@@ -10,6 +10,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+const pkgExt = `.pkg.tar.zst`
+
 type Packager struct {
 	RepoName       string
 	YayCacheDir    string
@@ -101,8 +103,8 @@ func (p *Packager) Search(pattern string) ([]string, error) {
 		if err != nil {
 			return fmt.Errorf("unable to scan file: %w", err)
 		}
-		if strings.HasSuffix(info.Name(), `.pkg.tar.zst`) {
-			packages = append(packages, info.Name())
+		if strings.HasSuffix(info.Name(), pkgExt) && strings.Contains(info.Name(), pattern) {
+			packages = append(packages, strings.Replace(info.Name(), pkgExt, ``, 1))
 		}
 		return nil
 	})
