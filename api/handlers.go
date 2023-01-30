@@ -26,6 +26,11 @@ func (s Handlers) Add(ctx context.Context, in *pb.AddRequest) (*pb.AddResponse, 
 }
 
 func (s Handlers) Search(ctx context.Context, in *pb.SearchRequest) (*pb.SearchResponse, error) {
-	
-	return nil, nil
+	rez, err := s.Packager.Search(in.Pattern)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.SearchResponse{
+		Packages: rez,
+	}, nil
 }

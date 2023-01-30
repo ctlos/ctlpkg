@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"github.com/sirupsen/logrus"
@@ -92,4 +93,21 @@ func (p *Packager) processPackageDir(pkg string) error {
 	}
 	logrus.Info("yay cache cleaned for directory: ", pkg)
 	return nil
+}
+
+func (p *Packager) Search(pattern string) ([]string, error) {
+	var packages []string
+	err := filepath.Walk(p.PacmanCacheDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return fmt.Errorf("unable to scan file: %w", err)
+		}
+		if strings.HasSuffix(info.Name(), `.pkg.tar.zst`) {
+			packages = append(packages, info.Name())
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, fmt.Errorf(`unable to search: %w`, err)
+	}
+	return packages, nil
 }
