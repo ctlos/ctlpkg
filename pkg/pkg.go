@@ -80,7 +80,7 @@ func (p *Packager) processPackageDir(pkg string) error {
 				return fmt.Errorf("unable to read file, %w", err)
 			}
 
-			err = os.WriteFile(p.PacmanCacheDir+pkgFiles.Name(), input, 0600)
+			err = os.WriteFile(p.PacmanCacheDir+pkgFiles.Name(), input, 0o600)
 			if err != nil {
 				return fmt.Errorf("unable to read file, %w", err)
 			}
