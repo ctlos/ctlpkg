@@ -3,7 +3,6 @@ package api
 import (
 	"context"
 
-	"gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb"
 	"gitea.dancheg97.ru/dancheg97/go-pacman/pkg"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

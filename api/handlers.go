@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net"
 
-	"gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb"
 	"gitea.dancheg97.ru/dancheg97/go-pacman/pkg"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
@@ -25,7 +24,7 @@ func Run(params *Params) error {
 	handlers := Handlers{
 		Packager: params.Packager,
 	}
-	pb.RegisterAurServer(server, handlers)
+	pb.Register(server, handlers)
 	reflection.Register(server)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(`:%d`, params.Port))

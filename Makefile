@@ -7,7 +7,7 @@ run:
 
 .PHONY: gen
 gen:
-	docker run --rm -v ${pwd}:/src -w /src rvolosatovs/protoc --proto_path=/src --go_out=. --go-grpc_out=require_unimplemented_servers=false:. api.proto
+	docker run --rm -v ${pwd}:/src -w /src bufbuild/buf generate .
 
 .PHONY: test
 test:
