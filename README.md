@@ -11,7 +11,7 @@
 
 Dockerized pacman repository with gRPC API for package management. Project goal is to quickly set up personal pacman repostitory without pain and hustle.
 
-gRPC API is available at port `9080` by default, and should not be exposed publically, because it executes `yay` shell command under the hood. Also, this API supports reflection, so you can explore it using `grpcurl`, `grpclicker-vscode` or `insomnia`.
+gRPC API is available at port `9080` by default, and should not be exposed publicly, because it executes `yay` shell command under the hood. Also, this API supports reflection, so you can explore it using `grpcurl`, `grpclicker-vscode` or `insomnia`.
 
 ---
 
