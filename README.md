@@ -25,6 +25,7 @@ Environment variables/flags:
 - 🌐 - `GRPC_PORT` - `grpc-port` - gRPC API port for repository packages
 - 🌐 - `FILE_PORT` - `file-port` - port for static file server to access packages
 - 📦 - `INIT_PKGS` - `init-pkgs` - initial packages to download on start
+- 📒 - `LOGS_FMT` - `logs-fmt` - format for logs (can be text/json/pretty)
 
 You can run repository via `docker-compose`:
 
