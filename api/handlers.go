@@ -1,37 +1,28 @@
 package api
 
 import (
-	"fmt"
-	"net"
+	"context"
 
+	pb "gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb/proto/v1"
 	"gitea.dancheg97.ru/dancheg97/go-pacman/pkg"
-	"github.com/sirupsen/logrus"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
-type Params struct {
-	Port int
-	*pkg.Packager
+type Handlers struct {
+	Packager *pkg.Packager
 }
 
-func Run(params *Params) error {
-	server := grpc.NewServer(
-		getUnaryMiddleware(),
-		getStreamMiddleware(),
-	)
+var ErrUnknown = status.Error(codes.NotFound, `unknown error`)
 
-	handlers := Handlers{
-		Packager: params.Packager,
-	}
-	pb.Register(server, handlers)
-	reflection.Register(server)
-
-	lis, err := net.Listen("tcp", fmt.Sprintf(`:%d`, params.Port))
+func (s Handlers) Add(ctx context.Context, in *pb.AddRequest) (*pb.AddResponse, error) {
+	err := s.Packager.Add(in.Packages)
 	if err != nil {
-		return err
+		return nil, err
 	}
+	return &pb.AddResponse{}, nil
+}
 
-	logrus.Infof(`Grpc server started on port: %d`, params.Port)
-	return server.Serve(lis)
+func (s Handlers) Search(ctx context.Context, in *pb.SearchRequest) (*pb.SearchResponse, error) {
+	return nil, nil
 }

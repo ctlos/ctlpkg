@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             (unknown)
-// source: api.proto
+// source: proto/v1/go_pacman.proto
 
 package pb
 
@@ -38,7 +38,7 @@ func NewAurServiceClient(cc grpc.ClientConnInterface) AurServiceClient {
 
 func (c *aurServiceClient) Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error) {
 	out := new(AddResponse)
-	err := c.cc.Invoke(ctx, "/go.pacman.AurService/Add", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.v1.AurService/Add", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (c *aurServiceClient) Add(ctx context.Context, in *AddRequest, opts ...grpc
 
 func (c *aurServiceClient) Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error) {
 	out := new(SearchResponse)
-	err := c.cc.Invoke(ctx, "/go.pacman.AurService/Search", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.v1.AurService/Search", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func _AurService_Add_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/go.pacman.AurService/Add",
+		FullMethod: "/proto.v1.AurService/Add",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AurServiceServer).Add(ctx, req.(*AddRequest))
@@ -114,7 +114,7 @@ func _AurService_Search_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/go.pacman.AurService/Search",
+		FullMethod: "/proto.v1.AurService/Search",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AurServiceServer).Search(ctx, req.(*SearchRequest))
@@ -126,7 +126,7 @@ func _AurService_Search_Handler(srv interface{}, ctx context.Context, dec func(i
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AurService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "go.pacman.AurService",
+	ServiceName: "proto.v1.AurService",
 	HandlerType: (*AurServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -139,5 +139,5 @@ var AurService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api.proto",
+	Metadata: "proto/v1/go_pacman.proto",
 }

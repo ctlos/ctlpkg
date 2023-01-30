@@ -1,7 +1,6 @@
 syntax = "proto3";
-package go.pacman;
-
-option go_package = "gen/pb";
+package proto.v1;
+option go_package = "gen/go/pb";
 
 // Service containing method for adding aur packages
 service AurService {
