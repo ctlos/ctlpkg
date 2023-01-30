@@ -27,10 +27,10 @@ func (p *Packager) Add(packages string) error {
 	logrus.Info("executing yay for packages: ", packages)
 	out, err := exec.Command("bash", "-c", "yay --noconfirm --noremovemake -Sy "+packages).Output()
 	if err != nil {
-		logrus.Error("yay script failed: ", out)
+		logrus.Error("yay script failed: ", string(out))
 		return fmt.Errorf("unable to execute yay for '"+packages+"': %w ", err)
 	}
-	logrus.Info("yay script succeed: ", out)
+	logrus.Info("yay script succeed: ", string(out))
 
 	des, err := os.ReadDir(p.YayCacheDir)
 	if err != nil {
@@ -49,10 +49,10 @@ func (p *Packager) Add(packages string) error {
 	pkgs := p.PacmanCacheDir + "/*.pkg.tar.zst"
 	out, err = exec.Command("bash", "-c", "repo-add -n -q "+repo+" "+pkgs).Output()
 	if err != nil {
-		logrus.Error("repo-add script failed: ", out)
+		logrus.Error("repo-add script failed: ", string(out))
 		return fmt.Errorf("unable to add packages to repository")
 	}
-	logrus.Info("repo-add script succeed: ", out)
+	logrus.Info("repo-add script succeed: ", string(out))
 	return nil
 }
 
