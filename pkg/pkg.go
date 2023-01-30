@@ -23,24 +23,27 @@ func Get(user string, pkgDir string, repoName string) (*Packager, error) {
 	}, nil
 }
 
-func (p *Packager) Add(packages string) error {
+func (p *Packager) Add(packages string) (*string, error) {
+	var output string
+
 	logrus.Info("executing yay for packages: ", packages)
 	out, err := exec.Command("bash", "-c", "yay --noconfirm --noremovemake -Sy "+packages).Output()
 	if err != nil {
 		logrus.Error("yay script failed: ", string(out))
-		return fmt.Errorf("unable to execute yay for '"+packages+"': %w ", err)
+		return nil, fmt.Errorf("unable to execute yay for '"+packages+"': %w ", err)
 	}
 	logrus.Info("yay script succeed: ", string(out))
+	output += string(out)
 
 	des, err := os.ReadDir(p.YayCacheDir)
 	if err != nil {
-		return fmt.Errorf("unable to find yay cache dir, %w", err)
+		return nil, fmt.Errorf("unable to find yay cache dir, %w", err)
 	}
 	for _, de := range des {
 		if de.IsDir() {
 			err := p.processPackageDir(de.Name())
 			if err != nil {
-				return err
+				return nil, err
 			}
 		}
 	}
@@ -50,10 +53,12 @@ func (p *Packager) Add(packages string) error {
 	out, err = exec.Command("bash", "-c", "repo-add -n -q "+repo+" "+pkgs).Output()
 	if err != nil {
 		logrus.Error("repo-add script failed: ", string(out))
-		return fmt.Errorf("unable to add packages to repository")
+		return nil, fmt.Errorf("unable to add packages to repository")
 	}
 	logrus.Info("repo-add script succeed: ", string(out))
-	return nil
+
+	output += string(out)
+	return &output, nil
 }
 
 func (p *Packager) processPackageDir(pkg string) error {

@@ -16,13 +16,16 @@ type Handlers struct {
 var ErrUnknown = status.Error(codes.NotFound, `unknown error`)
 
 func (s Handlers) Add(ctx context.Context, in *pb.AddRequest) (*pb.AddResponse, error) {
-	err := s.Packager.Add(in.Packages)
+	out, err := s.Packager.Add(in.Packages)
 	if err != nil {
 		return nil, err
 	}
-	return &pb.AddResponse{}, nil
+	return &pb.AddResponse{
+		Message: *out,
+	}, nil
 }
 
 func (s Handlers) Search(ctx context.Context, in *pb.SearchRequest) (*pb.SearchResponse, error) {
+	
 	return nil, nil
 }

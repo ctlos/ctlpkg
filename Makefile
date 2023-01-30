@@ -7,7 +7,7 @@ run:
 
 .PHONY: gen
 gen:
-	docker run --rm -v ${pwd}:/src -w /src bufbuild/buf generate .
+	docker run --rm -v ${pwd}:/src -w /src gitea.dancheg97.ru/templates/golden-go:latest buf generate .
 
 .PHONY: test
 test:
@@ -16,6 +16,5 @@ test:
 
 .PHONY: lint
 lint:
-	gofumpt -l -w .
-	golangci-lint run
-
+	docker run --rm -v ${pwd}:/src -w /src gitea.dancheg97.ru/templates/golden-go:latest gofumpt -l -w .
+	docker run --rm -v ${pwd}:/src -w /src gitea.dancheg97.ru/templates/golden-go:latest golangci-lint run
