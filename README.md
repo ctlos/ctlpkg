@@ -14,13 +14,17 @@ Project aims to quickly set up and running personal pacman repostitory without p
 
 Currently supports single gRPC method `Add()`, which will add packages from AUR repository to registry.
 
-Environment variables:
+---
 
-- `REPO` - 📄 repository name on the web page
-- `USER` - 😀 user name in system
-- `GRPC_PORT` - 🌐 gRPC API port for repository packages
-- `FILE_PORT` - 🌐 port for static file server to access packages
-- `INIT_PKGS` - 📦 initial packages to download on start
+### Configurations
+
+Environment variables/flags:
+
+- 📄 - `REPO` - `repo` - repository name on the web page
+- 😀 - `USER` - `user` - user name in system, will be used to eject `yay` packages
+- 🌐 - `GRPC_PORT` - `grpc-port` - gRPC API port for repository packages
+- 🌐 - `FILE_PORT` - `file-port` - port for static file server to access packages
+- 📦 - `INIT_PKGS` - `init-pkgs` - initial packages to download on start
 
 You can run repository via `docker-compose`:
 
@@ -35,6 +39,8 @@ services:
       - 9080:9080
       - 8080:8080
 ```
+
+---
 
 Or, alternatively, if you have virtual machine without password for sudo user,
 you can install package using go:

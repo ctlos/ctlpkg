@@ -1,0 +1,27 @@
+syntax = "proto3";
+package proto.v1;
+option go_package = "gen/go/pb";
+
+// Service containing method for adding aur packages
+service AurService {
+  // Add new packages from AUR package registry
+  rpc Add(AddRequest) returns (AddResponse);
+  // Check wether some package exists in repository
+  rpc Search(SearchRequest) returns (SearchResponse);
+}
+
+message AddRequest {
+  string packages = 1;
+}
+
+message AddResponse {
+  string message = 2;
+}
+
+message SearchRequest {
+  string pattern = 1;
+}
+
+message SearchResponse {
+  repeated string packages = 1;
+}
