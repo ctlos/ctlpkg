@@ -26,6 +26,8 @@ type AurServiceClient interface {
 	Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error)
 	// Check wether some package exists in repository
 	Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error)
+	// Update all packages from AUR at once
+	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 }
 
 type aurServiceClient struct {
@@ -54,6 +56,15 @@ func (c *aurServiceClient) Search(ctx context.Context, in *SearchRequest, opts .
 	return out, nil
 }
 
+func (c *aurServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+	out := new(UpdateResponse)
+	err := c.cc.Invoke(ctx, "/proto.v1.AurService/Update", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AurServiceServer is the server API for AurService service.
 // All implementations should embed UnimplementedAurServiceServer
 // for forward compatibility
@@ -62,6 +73,8 @@ type AurServiceServer interface {
 	Add(context.Context, *AddRequest) (*AddResponse, error)
 	// Check wether some package exists in repository
 	Search(context.Context, *SearchRequest) (*SearchResponse, error)
+	// Update all packages from AUR at once
+	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
 }
 
 // UnimplementedAurServiceServer should be embedded to have forward compatible implementations.
@@ -73,6 +86,9 @@ func (UnimplementedAurServiceServer) Add(context.Context, *AddRequest) (*AddResp
 }
 func (UnimplementedAurServiceServer) Search(context.Context, *SearchRequest) (*SearchResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Search not implemented")
+}
+func (UnimplementedAurServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
 
 // UnsafeAurServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -122,6 +138,24 @@ func _AurService_Search_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AurService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AurServiceServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.v1.AurService/Update",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AurServiceServer).Update(ctx, req.(*UpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AurService_ServiceDesc is the grpc.ServiceDesc for AurService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -136,6 +170,10 @@ var AurService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Search",
 			Handler:    _AurService_Search_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _AurService_Update_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

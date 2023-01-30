@@ -32,3 +32,11 @@ func (s Handlers) Search(ctx context.Context, in *pb.SearchRequest) (*pb.SearchR
 		Packages: rez,
 	}, nil
 }
+
+func (s Handlers) Update(ctx context.Context, in *pb.UpdateRequest) (*pb.UpdateResponse, error) {
+	err := s.Packager.Update()
+	if err != nil {
+		return nil, err
+	}
+	return &pb.UpdateResponse{}, nil
+}

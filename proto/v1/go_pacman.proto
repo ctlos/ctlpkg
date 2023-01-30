@@ -9,6 +9,8 @@ service AurService {
   rpc Add(AddRequest) returns (AddResponse);
   // Check wether some package exists in repository
   rpc Search(SearchRequest) returns (SearchResponse);
+  // Update all packages from AUR at once
+  rpc Update(UpdateRequest) returns (UpdateResponse);
 }
 
 message AddRequest {
@@ -24,3 +26,7 @@ message SearchRequest {
 message SearchResponse {
   repeated string packages = 1;
 }
+
+message UpdateRequest {}
+
+message UpdateResponse {}

@@ -123,3 +123,13 @@ func (p *Packager) Search(pattern string) ([]string, error) {
 	}
 	return packages, nil
 }
+
+func (p *Packager) Update() error {
+	out, err := exec.Command("bash", "-c", "yay --noconfirm -Syu").Output()
+	if err != nil {
+		logrus.Error("yay script failed: ", string(out))
+		return fmt.Errorf("unable to execute yay: %w", err)
+	}
+	logrus.Info("yay update script succeed: ", string(out))
+	return nil
+}
