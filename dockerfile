@@ -3,13 +3,14 @@ FROM archlinux/archlinux:base-devel
 LABEL maintainer="Dancheg97 <dangdancheg@gmail.com>"
 
 RUN pacman -Syu --needed --noconfirm git go
-RUN chmod a+rwx -R /var/cache/pacman/pkg
 
 ARG user=makepkg
 RUN useradd --system --create-home $user \
     && echo "$user ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user
 USER $user
 WORKDIR /home/$user
+RUN sudo chmod a+rwx /var/cache/pacman/pkg
+
 COPY . .
 
 RUN git clone https://aur.archlinux.org/yay.git \

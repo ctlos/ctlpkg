@@ -15,9 +15,7 @@ message AddRequest {
   string packages = 1;
 }
 
-message AddResponse {
-  repeated string message = 2;
-}
+message AddResponse {}
 
 message SearchRequest {
   string pattern = 1;

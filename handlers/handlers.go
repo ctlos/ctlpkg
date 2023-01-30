@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"strings"
 
 	pb "gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb/proto/v1"
 	"gitea.dancheg97.ru/dancheg97/go-pacman/packages"
@@ -17,13 +16,11 @@ type Handlers struct {
 var ErrUnknown = status.Error(codes.NotFound, `unknown error`)
 
 func (s Handlers) Add(ctx context.Context, in *pb.AddRequest) (*pb.AddResponse, error) {
-	out, err := s.Packager.Add(in.Packages)
+	_, err := s.Packager.Add(in.Packages)
 	if err != nil {
 		return nil, err
 	}
-	return &pb.AddResponse{
-		Message: strings.Split(*out, "\n"),
-	}, nil
+	return &pb.AddResponse{}, nil
 }
 
 func (s Handlers) Search(ctx context.Context, in *pb.SearchRequest) (*pb.SearchResponse, error) {

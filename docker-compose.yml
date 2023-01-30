@@ -9,7 +9,7 @@ services:
       INIT_PKGS: yay
       LOGS_FMT: pretty
     volumes:
-      - ./cache:/var/cache/pacman/pkg
+      - ./pacman:/var/cache/pacman/pkg
     ports:
       - 9080:9080
       - 8080:8080
