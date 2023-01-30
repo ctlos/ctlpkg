@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"gitea.dancheg97.ru/dancheg97/go-pacman/api"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/fileserver"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/handlers"
 	"gitea.dancheg97.ru/dancheg97/go-pacman/pkg"
-	"gitea.dancheg97.ru/dancheg97/go-pacman/server"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -25,7 +25,7 @@ func Run(cmd *cobra.Command, args []string) {
 	log := logrus.StandardLogger()
 	log.SetFormatter(&logrus.TextFormatter{})
 
-	go server.RunFileServer(pkgPath, viper.GetInt(`file-port`))
+	go fileserver.RunFileServer(pkgPath, viper.GetInt(`file-port`))
 
 	packager, err := pkg.Get(viper.GetString(`user`), pkgPath, viper.GetString(`repo`))
 	checkErr(err)
@@ -35,7 +35,7 @@ func Run(cmd *cobra.Command, args []string) {
 		packager.Add(start)
 	}
 
-	err = api.Run(&api.Params{
+	err = handlers.Run(&handlers.Params{
 		Port:     viper.GetInt(`grpc-port`),
 		Packager: packager,
 	})

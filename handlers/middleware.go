@@ -1,4 +1,4 @@
-package api
+package handlers
 
 import (
 	grpc_logging "github.com/grpc-ecosystem/go-grpc-middleware/logging"
