@@ -13,13 +13,22 @@ volumes:
 
 steps:
   - name: lint
-    image: golangci/golangci-lint
+    image: gitea.dancheg97.ru/templates/golden-go:latest
     commands:
       - go fmt  ./...
       - go vet  ./...
       - golangci-lint run
+      - buf lint
 
   - name: build
+    image: docker
+    volumes:
+      - name: docker
+        path: /var/run/docker.sock
+    commands:
+      - docker build -t gitea.dancheg97.ru/$DRONE_REPO:latest -t gitea.dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y") .
+  
+  - name: push
     image: docker
     volumes:
       - name: docker
@@ -28,7 +37,6 @@ steps:
       PASS:
         from_secret: PASS
     commands:
-      - docker build -t gitea.dancheg97.ru/$DRONE_REPO:latest -t gitea.dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y") .
       - docker login -u dancheg97 -p $PASS gitea.dancheg97.ru
       - docker push gitea.dancheg97.ru/$DRONE_REPO:latest
       - docker push gitea.dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y")
