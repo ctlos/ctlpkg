@@ -10,6 +10,7 @@ RUN useradd --system --create-home $user \
 USER $user
 WORKDIR /home/$user
 RUN sudo chmod a+rwx /var/cache/pacman/pkg
+RUN mkdir -p /home/makepkg/.cache/yay
 
 COPY . .
 

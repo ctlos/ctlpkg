@@ -36,7 +36,12 @@ func (p *Packager) Add(packages string) (*string, error) {
 		return nil, fmt.Errorf("unable to execute yay for '"+packages+"': %w ", err)
 	}
 	logrus.Info("yay script succeed: ", string(out))
-	output += string(out)
+
+	out, err = exec.Command("bash", "-c", "sudo chmod a+rwx -R /home/makepkg/.cache/yay").Output()
+	if err != nil {
+		logrus.Error("yay script failed: ", string(out))
+		return nil, fmt.Errorf("unable to set proper permissions for yay build dir")
+	}
 
 	des, err := os.ReadDir(p.YayCacheDir)
 	if err != nil {
@@ -60,7 +65,6 @@ func (p *Packager) Add(packages string) (*string, error) {
 	}
 	logrus.Info("repo-add script succeed: ", string(out))
 
-	output += string(out)
 	return &output, nil
 }
 

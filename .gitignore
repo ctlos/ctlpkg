@@ -28,3 +28,4 @@ dump.sql
 go-pacman
 
 cache/**
+pacman/**

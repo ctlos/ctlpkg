@@ -36,6 +36,8 @@ services:
     environment:
       INIT_PKGS: onlyoffice-bin yay
       LOGS_FMT: pretty
+    volumes:
+      - ./go-pacman:/var/cache/pacman/pkg
     ports:
       - 9080:9080
       - 8080:8080
