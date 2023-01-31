@@ -17,12 +17,15 @@ import (
 type Params struct {
 	FilePort int
 	GrpcPort int
-	Packager *src.Packager
+	PkgPath  string
+	YayPath  string
+	RepoName string
+	Packager *src.OsHelper
 }
 
 func Run(params *Params) error {
 	go fileserver.RunFileServer(
-		params.Packager.PacmanCacheDir,
+		params.PkgPath,
 		viper.GetInt(`file-port`),
 	)
 
@@ -31,10 +34,12 @@ func Run(params *Params) error {
 		getStreamMiddleware(),
 	)
 
-	handlers := pacman.Handlers{
-		Packager: params.Packager,
-	}
-	pb.RegisterPacmanServiceServer(server, handlers)
+	pb.RegisterPacmanServiceServer(server, pacman.Handlers{
+		Helper:   params.Packager,
+		YayPath:  params.YayPath,
+		PkgPath:  params.PkgPath,
+		RepoName: params.RepoName,
+	})
 	reflection.Register(server)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(`:%d`, params.GrpcPort))

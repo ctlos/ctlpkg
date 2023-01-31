@@ -24,18 +24,18 @@ func Run(cmd *cobra.Command, args []string) {
 	log := logrus.StandardLogger()
 	log.SetFormatter(&logrus.TextFormatter{})
 
-	packager, err := src.Get(viper.GetString(`user`), pkgPath, viper.GetString(`repo`))
+	helper := &src.OsHelper{}
+
+	err := helper.Execute("yay -Sy " + viper.GetString(`init-pkgs`))
 	checkErr(err)
 
-	start := viper.GetString(`init-pkgs`)
-	if start != `` {
-		packager.Add(start)
-	}
-
-	err = services.Run(&services.Params{
-		GrpcPort: viper.GetInt(`file-port`),
-		FilePort: viper.GetInt(`grpc-port`),
-		Packager: packager,
+	services.Run(&services.Params{
+		FilePort: viper.GetInt("file-port"),
+		GrpcPort: viper.GetInt("grpc-port"),
+		PkgPath:  pkgPath,
+		YayPath:  "/home/" + viper.GetString("user") + "/.cache/yay",
+		RepoName: viper.GetString("repo"),
+		Packager: &src.OsHelper{},
 	})
 	checkErr(err)
 }
