@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 
@@ -53,7 +54,8 @@ func AddFlag(cmd Flag) {
 		if cmd.Value != "" {
 			i, err := strconv.Atoi(cmd.Value)
 			if err != nil {
-				panic(err)
+				err = fmt.Errorf("value for flag "+cmd.Name+" should be int: %w", err)
+				checkErr(err)
 			}
 			cmd.Cmd.PersistentFlags().IntP(cmd.Name, cmd.ShortName, i, cmd.Description)
 			err = viper.BindPFlag(cmd.Name, cmd.Cmd.PersistentFlags().Lookup(cmd.Name))

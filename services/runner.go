@@ -5,9 +5,9 @@ import (
 	"net"
 
 	pb "gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb/proto/v1"
-	"gitea.dancheg97.ru/dancheg97/go-pacman/packager"
 	"gitea.dancheg97.ru/dancheg97/go-pacman/services/fileserver"
 	"gitea.dancheg97.ru/dancheg97/go-pacman/services/pacman"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/src"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
@@ -17,7 +17,7 @@ import (
 type Params struct {
 	FilePort int
 	GrpcPort int
-	Packager *packager.Packager
+	Packager *src.Packager
 }
 
 func Run(params *Params) error {

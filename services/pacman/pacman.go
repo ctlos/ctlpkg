@@ -4,13 +4,13 @@ import (
 	"context"
 
 	pb "gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb/proto/v1"
-	"gitea.dancheg97.ru/dancheg97/go-pacman/packager"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/src"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
 type Handlers struct {
-	Packager *packager.Packager
+	Packager *src.Packager
 }
 
 var ErrUnknown = status.Error(codes.NotFound, `unknown error`)

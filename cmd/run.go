@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"gitea.dancheg97.ru/dancheg97/go-pacman/packager"
 	"gitea.dancheg97.ru/dancheg97/go-pacman/services"
+	"gitea.dancheg97.ru/dancheg97/go-pacman/src"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -24,7 +24,7 @@ func Run(cmd *cobra.Command, args []string) {
 	log := logrus.StandardLogger()
 	log.SetFormatter(&logrus.TextFormatter{})
 
-	packager, err := packager.Get(viper.GetString(`user`), pkgPath, viper.GetString(`repo`))
+	packager, err := src.Get(viper.GetString(`user`), pkgPath, viper.GetString(`repo`))
 	checkErr(err)
 
 	start := viper.GetString(`init-pkgs`)
