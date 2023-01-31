@@ -26,7 +26,7 @@ func Run(cmd *cobra.Command, args []string) {
 
 	helper := &src.OsHelper{}
 
-	err := helper.Execute("yay -Sy " + viper.GetString(`init-pkgs`))
+	err := helper.Execute("yay -Sy --noconfirm " + viper.GetString(`init-pkgs`))
 	checkErr(err)
 
 	services.Run(&services.Params{

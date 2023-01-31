@@ -17,7 +17,7 @@ type Handlers struct {
 }
 
 func (s Handlers) Add(ctx context.Context, in *pb.AddRequest) (*pb.AddResponse, error) {
-	err := s.Helper.Execute("yay -Sy " + in.Packages)
+	err := s.Helper.Execute("yay -Sy --noconfirm " + in.Packages)
 	if err != nil {
 		return nil, fmt.Errorf("unable to execute yay command: %w", err)
 	}
@@ -61,6 +61,6 @@ func (s Handlers) Search(ctx context.Context, in *pb.SearchRequest) (*pb.SearchR
 }
 
 func (s Handlers) Update(ctx context.Context, in *pb.UpdateRequest) (*pb.UpdateResponse, error) {
-	err := s.Helper.Execute("yay -Syu")
+	err := s.Helper.Execute("yay -Syu --noconfirm ")
 	return &pb.UpdateResponse{}, err
 }
