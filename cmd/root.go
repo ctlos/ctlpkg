@@ -25,6 +25,7 @@ var flags = []Flag{
 	{
 		Cmd:         rootCmd,
 		Name:        "repo",
+		ShortName:   "r",
 		Env:         "REPO",
 		Value:       "localhost",
 		Description: "📄 repository name on the web page",
@@ -32,6 +33,7 @@ var flags = []Flag{
 	{
 		Cmd:         rootCmd,
 		Name:        "user",
+		ShortName:   "u",
 		Env:         "USER",
 		Value:       "makepkg",
 		Description: "😀 user name in system",
@@ -39,6 +41,7 @@ var flags = []Flag{
 	{
 		Cmd:         rootCmd,
 		Name:        "grpc-port",
+		ShortName:   "g",
 		Env:         "GRPC_PORT",
 		Value:       "9080",
 		Type:        "int",
@@ -47,6 +50,7 @@ var flags = []Flag{
 	{
 		Cmd:         rootCmd,
 		Name:        "file-port",
+		ShortName:   "f",
 		Env:         "FILE_PORT",
 		Value:       "8080",
 		Type:        "int",
@@ -55,12 +59,14 @@ var flags = []Flag{
 	{
 		Cmd:         rootCmd,
 		Name:        "init-pkgs",
+		ShortName:   "i",
 		Env:         "INIT_PKGS",
 		Description: "📦 initial packages for download",
 	},
 	{
 		Cmd:         rootCmd,
 		Name:        "logs-fmt",
+		ShortName:   "l",
 		Env:         "LOGS_FMT",
 		Value:       "json",
 		Description: "📒 output format for logs",
