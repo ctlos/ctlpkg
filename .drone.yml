@@ -20,6 +20,11 @@ steps:
       - golangci-lint run
       - buf lint
 
+  - name: test
+    image: gitea.dancheg97.ru/templates/golden-go:latest
+    commands:
+      - go test ./...
+
   - name: build
     image: docker
     volumes:
