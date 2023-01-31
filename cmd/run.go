@@ -3,12 +3,9 @@ package cmd
 import (
 	"gitea.dancheg97.ru/dancheg97/go-pacman/services"
 	"gitea.dancheg97.ru/dancheg97/go-pacman/src"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
-
-const pkgPath = `/var/cache/pacman/pkg/`
 
 func init() {
 	rootCmd.AddCommand(runCmd)
@@ -21,20 +18,29 @@ var runCmd = &cobra.Command{
 }
 
 func Run(cmd *cobra.Command, args []string) {
-	log := logrus.StandardLogger()
-	log.SetFormatter(&logrus.TextFormatter{})
+	var (
+		pkgPath  = `/var/cache/pacman/pkg/`
+		yayPath  = "/home/" + viper.GetString("user") + "/.cache/yay"
+		filePort = viper.GetInt("file-port")
+		grpcPort = viper.GetInt("grpc-port")
+		repoName = viper.GetString("repo")
+		initPkgs = viper.GetString(`init-pkgs`)
+	)
 
 	helper := &src.OsHelper{}
 
-	err := helper.Execute("yay -Sy --noconfirm " + viper.GetString(`init-pkgs`))
+	err := helper.Execute("yay -Sy --noconfirm " + initPkgs)
+	checkErr(err)
+
+	err = helper.FormDb(yayPath, pkgPath, repoName)
 	checkErr(err)
 
 	services.Run(&services.Params{
-		FilePort: viper.GetInt("file-port"),
-		GrpcPort: viper.GetInt("grpc-port"),
+		FilePort: filePort,
+		GrpcPort: grpcPort,
 		PkgPath:  pkgPath,
-		YayPath:  "/home/" + viper.GetString("user") + "/.cache/yay",
-		RepoName: viper.GetString("repo"),
+		YayPath:  yayPath,
+		RepoName: repoName,
 		Packager: &src.OsHelper{},
 	})
 	checkErr(err)

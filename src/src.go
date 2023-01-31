@@ -13,7 +13,7 @@ import (
 type OsHelper struct{}
 
 // Executes bash call and loggs output to logrus.
-func (c *OsHelper) Execute(cmd string) error {
+func (o *OsHelper) Execute(cmd string) error {
 	commad := exec.Command("bash", "-c", cmd)
 
 	commad.Stdout = logrus.StandardLogger().Writer()
@@ -27,7 +27,7 @@ func (c *OsHelper) Execute(cmd string) error {
 }
 
 // Searches for all .zst files in dir and returns back list.
-func (s *OsHelper) Search(dir string, pattern string) ([]string, error) {
+func (o *OsHelper) Search(dir string, pattern string) ([]string, error) {
 	var packages []string
 	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -45,12 +45,19 @@ func (s *OsHelper) Search(dir string, pattern string) ([]string, error) {
 }
 
 // Moves all .zst files from one dir to another.
-func (z *OsHelper) Move(src string, dst string) error {
+func (o *OsHelper) Move(src string, dst string) error {
 	des, err := os.ReadDir(src)
 	if err != nil {
 		return err
 	}
-
+	err = o.Execute("sudo chmod a+rwx -R " + src)
+	if err != nil {
+		return err
+	}
+	err = o.Execute("sudo chmod a+rwx -R " + dst)
+	if err != nil {
+		return err
+	}
 	for _, de := range des {
 		if strings.HasSuffix(de.Name(), ".pkg.tar.zst") {
 			logrus.Info("moving package file: ", de.Name())
@@ -71,7 +78,7 @@ func (z *OsHelper) Move(src string, dst string) error {
 }
 
 // Removes all subdirectories and it's contents from directory.
-func (d *OsHelper) Clean(dir string) error {
+func (o *OsHelper) Clean(dir string) error {
 	entries, err := os.ReadDir(dir)
 	if err != nil {
 		return err
@@ -85,4 +92,23 @@ func (d *OsHelper) Clean(dir string) error {
 		}
 	}
 	return nil
+}
+
+func (o *OsHelper) FormDb(yay string, pkg string, repo string) error {
+	entires, err := os.ReadDir(yay)
+	if err != nil {
+		return err
+	}
+	for _, de := range entires {
+		if de.IsDir() {
+			err := o.Move(yay+"/"+de.Name(), pkg)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	repoPath := pkg + "/" + repo + ".db.tar.gz"
+	pkgsPath := pkg + "/*.pkg.tar.zst"
+	err = o.Execute("repo-add -n -q " + repoPath + " " + pkgsPath)
+	return err
 }

@@ -24,11 +24,6 @@ type Params struct {
 }
 
 func Run(params *Params) error {
-	go fileserver.RunFileServer(
-		params.PkgPath,
-		viper.GetInt(`file-port`),
-	)
-
 	server := grpc.NewServer(
 		getUnaryMiddleware(),
 		getStreamMiddleware(),
@@ -41,6 +36,11 @@ func Run(params *Params) error {
 		RepoName: params.RepoName,
 	})
 	reflection.Register(server)
+
+	go fileserver.RunFileServer(
+		params.PkgPath,
+		viper.GetInt(`file-port`),
+	)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(`:%d`, params.GrpcPort))
 	if err != nil {
