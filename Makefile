@@ -16,5 +16,6 @@ check:
 
 .PHONY: gen
 gen:
+	sudo chmod a+rwx -R .
 	docker run --rm -v ${pwd}:/src -w /src gitea.dancheg97.ru/templates/golden-go:latest buf format -w
 	docker run --rm -v ${pwd}:/src -w /src gitea.dancheg97.ru/templates/golden-go:latest buf generate

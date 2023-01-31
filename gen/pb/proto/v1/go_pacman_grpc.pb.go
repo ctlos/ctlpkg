@@ -18,162 +18,162 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// AurServiceClient is the client API for AurService service.
+// PacmanServiceClient is the client API for PacmanService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AurServiceClient interface {
+type PacmanServiceClient interface {
 	// Add new packages from AUR package registry
 	Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error)
 	// Check wether some package exists in repository
 	Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error)
-	// Update all packages from AUR at once
+	// Update all packages from AUR
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 }
 
-type aurServiceClient struct {
+type pacmanServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAurServiceClient(cc grpc.ClientConnInterface) AurServiceClient {
-	return &aurServiceClient{cc}
+func NewPacmanServiceClient(cc grpc.ClientConnInterface) PacmanServiceClient {
+	return &pacmanServiceClient{cc}
 }
 
-func (c *aurServiceClient) Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error) {
+func (c *pacmanServiceClient) Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error) {
 	out := new(AddResponse)
-	err := c.cc.Invoke(ctx, "/proto.v1.AurService/Add", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.v1.PacmanService/Add", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aurServiceClient) Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error) {
+func (c *pacmanServiceClient) Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error) {
 	out := new(SearchResponse)
-	err := c.cc.Invoke(ctx, "/proto.v1.AurService/Search", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.v1.PacmanService/Search", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aurServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+func (c *pacmanServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	out := new(UpdateResponse)
-	err := c.cc.Invoke(ctx, "/proto.v1.AurService/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.v1.PacmanService/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AurServiceServer is the server API for AurService service.
-// All implementations should embed UnimplementedAurServiceServer
+// PacmanServiceServer is the server API for PacmanService service.
+// All implementations should embed UnimplementedPacmanServiceServer
 // for forward compatibility
-type AurServiceServer interface {
+type PacmanServiceServer interface {
 	// Add new packages from AUR package registry
 	Add(context.Context, *AddRequest) (*AddResponse, error)
 	// Check wether some package exists in repository
 	Search(context.Context, *SearchRequest) (*SearchResponse, error)
-	// Update all packages from AUR at once
+	// Update all packages from AUR
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
 }
 
-// UnimplementedAurServiceServer should be embedded to have forward compatible implementations.
-type UnimplementedAurServiceServer struct {
+// UnimplementedPacmanServiceServer should be embedded to have forward compatible implementations.
+type UnimplementedPacmanServiceServer struct {
 }
 
-func (UnimplementedAurServiceServer) Add(context.Context, *AddRequest) (*AddResponse, error) {
+func (UnimplementedPacmanServiceServer) Add(context.Context, *AddRequest) (*AddResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Add not implemented")
 }
-func (UnimplementedAurServiceServer) Search(context.Context, *SearchRequest) (*SearchResponse, error) {
+func (UnimplementedPacmanServiceServer) Search(context.Context, *SearchRequest) (*SearchResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Search not implemented")
 }
-func (UnimplementedAurServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+func (UnimplementedPacmanServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
 
-// UnsafeAurServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AurServiceServer will
+// UnsafePacmanServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PacmanServiceServer will
 // result in compilation errors.
-type UnsafeAurServiceServer interface {
-	mustEmbedUnimplementedAurServiceServer()
+type UnsafePacmanServiceServer interface {
+	mustEmbedUnimplementedPacmanServiceServer()
 }
 
-func RegisterAurServiceServer(s grpc.ServiceRegistrar, srv AurServiceServer) {
-	s.RegisterService(&AurService_ServiceDesc, srv)
+func RegisterPacmanServiceServer(s grpc.ServiceRegistrar, srv PacmanServiceServer) {
+	s.RegisterService(&PacmanService_ServiceDesc, srv)
 }
 
-func _AurService_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PacmanService_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AurServiceServer).Add(ctx, in)
+		return srv.(PacmanServiceServer).Add(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/proto.v1.AurService/Add",
+		FullMethod: "/proto.v1.PacmanService/Add",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AurServiceServer).Add(ctx, req.(*AddRequest))
+		return srv.(PacmanServiceServer).Add(ctx, req.(*AddRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AurService_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PacmanService_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SearchRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AurServiceServer).Search(ctx, in)
+		return srv.(PacmanServiceServer).Search(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/proto.v1.AurService/Search",
+		FullMethod: "/proto.v1.PacmanService/Search",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AurServiceServer).Search(ctx, req.(*SearchRequest))
+		return srv.(PacmanServiceServer).Search(ctx, req.(*SearchRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AurService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PacmanService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AurServiceServer).Update(ctx, in)
+		return srv.(PacmanServiceServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/proto.v1.AurService/Update",
+		FullMethod: "/proto.v1.PacmanService/Update",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AurServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(PacmanServiceServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AurService_ServiceDesc is the grpc.ServiceDesc for AurService service.
+// PacmanService_ServiceDesc is the grpc.ServiceDesc for PacmanService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AurService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "proto.v1.AurService",
-	HandlerType: (*AurServiceServer)(nil),
+var PacmanService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "proto.v1.PacmanService",
+	HandlerType: (*PacmanServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Add",
-			Handler:    _AurService_Add_Handler,
+			Handler:    _PacmanService_Add_Handler,
 		},
 		{
 			MethodName: "Search",
-			Handler:    _AurService_Search_Handler,
+			Handler:    _PacmanService_Search_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _AurService_Update_Handler,
+			Handler:    _PacmanService_Update_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
