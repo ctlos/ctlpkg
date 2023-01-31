@@ -6,8 +6,8 @@ services:
       context: .
     command: run
     environment:
-      INIT_PKGS: ttf-droid adw-gtk-theme papirus-icon-theme-git git yay chromium telegram-desktop dconf-editor gnome-calculator gnome-control-center gnome-disk-utility dbus gnome-keyring gnome-logs gnome-system-monitor gnome-shell-extensions xdg-user-dirs-gtk gedit gnome-tweaks docker go python-pip make docker-compose geary drawing gnome-shell-extension-dash-to-dock gnome-shell-extension-gtile visual-studio-code-bin rtw89-dkms-git onlyoffice-bin gnome-browser-connector
-      LOGS_FMT: pretty
+      INIT_PKGS: ttf-droid adw-gtk-theme papirus-icon-theme-git git yay chromium telegram-desktop dconf-editor gnome-calculator gnome-control-center gnome-disk-utility dbus gnome-keyring gnome-logs gnome-system-monitor gnome-shell-extensions xdg-user-dirs-gtk gedit gnome-tweaks docker go python-pip make docker-compose geary drawing gnome-shell-extension-dash-to-dock gnome-shell-extension-gtile visual-studio-code-bin rtw89-dkms-git onlyoffice-bin
+      LOGS_FMT: text
     volumes:
       - ./pacman:/var/cache/pacman/pkg
     ports:

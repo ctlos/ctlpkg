@@ -27,6 +27,8 @@ func Run(cmd *cobra.Command, args []string) {
 		initPkgs = viper.GetString(`init-pkgs`)
 	)
 
+	setLogFormat()
+
 	helper := &src.OsHelper{}
 
 	err := helper.Execute("yay -Sy --noconfirm " + initPkgs)

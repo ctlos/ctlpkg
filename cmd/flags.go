@@ -84,3 +84,29 @@ func checkErr(err error) {
 		os.Exit(1)
 	}
 }
+
+// Included with:
+//
+//	{
+//		Cmd:         rootCmd,
+//		Name:        "logs-fmt",
+//		Env:         "LOGS_FMT",
+//		Value:       "json",
+//		Description: "📒 output format for logs",
+//	},
+func setLogFormat() {
+	switch viper.GetString(`logs-fmt`) {
+	case `json`:
+		logrus.SetFormatter(&logrus.JSONFormatter{})
+	case `text`:
+		logrus.SetFormatter(&logrus.TextFormatter{})
+	case `pretty`:
+		logrus.SetFormatter(&logrus.TextFormatter{
+			ForceColors:   true,
+			DisableQuote:  true,
+			FullTimestamp: true,
+		})
+	default:
+		logrus.SetFormatter(&logrus.JSONFormatter{})
+	}
+}
