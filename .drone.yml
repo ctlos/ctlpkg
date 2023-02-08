@@ -13,7 +13,7 @@ volumes:
 
 steps:
   - name: lint and test
-    image: dancheg97.ru/templates/golden-go:latest
+    image: dancheg97.ru/templates/gen-tools:latest
     commands:
       - go fmt  ./...
       - go vet  ./...
