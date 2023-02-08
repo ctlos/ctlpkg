@@ -13,7 +13,7 @@ volumes:
 
 steps:
   - name: lint
-    image: gitea.dancheg97.ru/templates/golden-go:latest
+    image: dancheg97.ru/templates/golden-go:latest
     commands:
       - go fmt  ./...
       - go vet  ./...
@@ -21,7 +21,7 @@ steps:
       - buf lint
 
   - name: test
-    image: gitea.dancheg97.ru/templates/golden-go:latest
+    image: dancheg97.ru/templates/golden-go:latest
     commands:
       - go test ./...
 
@@ -31,9 +31,19 @@ steps:
       - name: docker
         path: /var/run/docker.sock
     commands:
-      - docker build -t gitea.dancheg97.ru/$DRONE_REPO:latest -t gitea.dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y") .
+      - docker build -t dancheg97.ru/$DRONE_REPO:latest -t dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y") .
   
-  - name: push
+  - name: push github
+    image: appleboy/drone-git-push
+    settings:
+      branch: master
+      remote: ssh://git@github.com/dancheg97/go-pacman.git
+      force: false
+      commit: true
+      ssh_key:
+        from_secret: SSHKEY
+  
+  - name: push registry
     image: docker
     volumes:
       - name: docker
@@ -42,6 +52,6 @@ steps:
       PASS:
         from_secret: PASS
     commands:
-      - docker login -u dancheg97 -p $PASS gitea.dancheg97.ru
-      - docker push gitea.dancheg97.ru/$DRONE_REPO:latest
-      - docker push gitea.dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y")
+      - docker login -u dancheg97 -p $PASS dancheg97.ru
+      - docker push dancheg97.ru/$DRONE_REPO:latest
+      - docker push dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y")

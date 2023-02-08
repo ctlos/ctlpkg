@@ -1,4 +1,4 @@
-module gitea.dancheg97.ru/dancheg97/go-pacman
+module dancheg97.ru/dancheg97/go-pacman
 
 go 1.19
 

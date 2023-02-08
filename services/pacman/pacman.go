@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	pb "gitea.dancheg97.ru/dancheg97/go-pacman/gen/pb/proto/v1"
-	"gitea.dancheg97.ru/dancheg97/go-pacman/src"
+	pb "dancheg97.ru/dancheg97/go-pacman/gen/pb/proto/v1"
+	"dancheg97.ru/dancheg97/go-pacman/src"
 )
 
 type Handlers struct {
