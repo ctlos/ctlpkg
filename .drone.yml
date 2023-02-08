@@ -12,38 +12,16 @@ volumes:
       path: /var/run/docker.sock
 
 steps:
-  - name: lint
+  - name: lint and test
     image: dancheg97.ru/templates/golden-go:latest
     commands:
       - go fmt  ./...
       - go vet  ./...
       - golangci-lint run
       - buf lint
-
-  - name: test
-    image: dancheg97.ru/templates/golden-go:latest
-    commands:
       - go test ./...
 
-  - name: build
-    image: docker
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-    commands:
-      - docker build -t dancheg97.ru/$DRONE_REPO:latest -t dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y") .
-  
-  - name: push github
-    image: appleboy/drone-git-push
-    settings:
-      branch: master
-      remote: ssh://git@github.com/dancheg97/go-pacman.git
-      force: false
-      commit: true
-      ssh_key:
-        from_secret: SSHKEY
-  
-  - name: push registry
+  - name: build and push docker registry
     image: docker
     volumes:
       - name: docker
@@ -52,6 +30,17 @@ steps:
       PASS:
         from_secret: PASS
     commands:
+      - docker build -t dancheg97.ru/$DRONE_REPO:latest -t dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y") .
       - docker login -u dancheg97 -p $PASS dancheg97.ru
       - docker push dancheg97.ru/$DRONE_REPO:latest
       - docker push dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y")
+  
+  - name: push github mirrot
+    image: appleboy/drone-git-push
+    settings:
+      branch: master
+      remote: ssh://git@github.com/dancheg97/go-pacman.git
+      force: false
+      commit: true
+      ssh_key:
+        from_secret: SSHKEY
