@@ -34,8 +34,8 @@ steps:
       - docker login -u dancheg97 -p $PASS dancheg97.ru
       - docker push dancheg97.ru/$DRONE_REPO:latest
       - docker push dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y")
-  
-  - name: push github mirrot
+
+  - name: push github mirror
     image: appleboy/drone-git-push
     settings:
       branch: master
