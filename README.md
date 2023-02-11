@@ -1,5 +1,5 @@
 <p align="center">
-<img style="align: center; padding-left: 10px; padding-right: 10px; padding-bottom: 10px;" width="238px" height="238px" src="https://dancheg97.ru/repo-avatars/65-c2b763bfe9d206d7f362412b1e59e301" />
+<img style="align: center; padding-left: 10px; padding-right: 10px; padding-bottom: 10px;" width="238px" height="238px" src="./logo.png" />
 </p>
 
 <h2 align="center">Go pacman</h2>
