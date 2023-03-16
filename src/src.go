@@ -14,6 +14,8 @@ type OsHelper struct{}
 
 // Executes bash call and loggs output to logrus.
 func (o *OsHelper) Execute(cmd string) error {
+	logrus.Info(`executing system call: `, cmd)
+
 	commad := exec.Command("bash", "-c", cmd)
 
 	commad.Stdout = logrus.StandardLogger().Writer()
@@ -61,7 +63,7 @@ func (o *OsHelper) Move(src string, dst string) error {
 	for _, de := range des {
 		if strings.HasSuffix(de.Name(), ".pkg.tar.zst") {
 			logrus.Info("moving package file: ", de.Name())
-
+			
 			input, err := os.ReadFile(src + "/" + de.Name())
 			if err != nil {
 				return err
@@ -74,6 +76,7 @@ func (o *OsHelper) Move(src string, dst string) error {
 		}
 	}
 
+	logrus.Info("moved file, success: ", de.Name())
 	return nil
 }
 
