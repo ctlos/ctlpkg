@@ -63,7 +63,7 @@ func (o *OsHelper) Move(src string, dst string) error {
 	for _, de := range des {
 		if strings.HasSuffix(de.Name(), ".pkg.tar.zst") {
 			logrus.Info("moving package file: ", de.Name())
-			
+
 			input, err := os.ReadFile(src + "/" + de.Name())
 			if err != nil {
 				return err
@@ -73,10 +73,10 @@ func (o *OsHelper) Move(src string, dst string) error {
 			if err != nil {
 				return err
 			}
+			logrus.Info("moved file, success: ", de.Name())
 		}
 	}
 
-	logrus.Info("moved file, success: ", de.Name())
 	return nil
 }
 
