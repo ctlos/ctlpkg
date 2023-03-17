@@ -15,6 +15,5 @@ check:
 
 .PHONY: gen
 gen:
-	sudo chmod a+rwx -R .
 	buf format -w
 	buf generate

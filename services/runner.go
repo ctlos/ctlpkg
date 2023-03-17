@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net"
 
-	pb "dancheg97.ru/dancheg97/ctlpkg/gen/pb/proto/v1"
+	pb "dancheg97.ru/dancheg97/ctlpkg/gen/proto/v1"
 	"dancheg97.ru/dancheg97/ctlpkg/services/fileserver"
 	"dancheg97.ru/dancheg97/ctlpkg/services/pacman"
 	"dancheg97.ru/dancheg97/ctlpkg/src"
