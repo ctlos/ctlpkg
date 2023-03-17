@@ -28,29 +28,24 @@ func Run(params *Params) error {
 		getStreamMiddleware(),
 	)
 
-	pb.RegisterPacmanServiceServer(server, pacman.Handlers{
+	pacmanService := pacman.Handlers{
 		Helper:   params.Packager,
 		YayPath:  params.YayPath,
 		PkgPath:  params.PkgPath,
 		RepoName: params.RepoName,
-	})
+	}
+	pb.RegisterPacmanServiceServer(server, pacmanService)
 	reflection.Register(server)
 
 	go func() {
-		httpservers.RunHttp(httpservers.Params{
-			HttpPort: params.HttpPort,
-			GrpcPort: params.GrpcPort,
-			StaticFileServers: []httpservers.PathPair{
-				{
-					LocalPath:  `/web`,
-					HandlePath: `/`,
-				},
-				{
-					LocalPath:  params.PkgPath,
-					HandlePath: `/pkg`,
-				},
-			},
+		err := httpservers.RunHttpWrapper(httpservers.Params{
+			HttpPort:  params.HttpPort,
+			GrpcPort:  params.GrpcPort,
+			ServeDir:  params.PkgPath,
+			PacmanSvc: pacmanService,
+			ApiPath:   `/api`,
 		})
+		panic(err)
 	}()
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(`:%d`, params.GrpcPort))

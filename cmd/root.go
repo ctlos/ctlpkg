@@ -10,8 +10,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "go-pacman",
 	Short: "📦 Tool for managing personal pacman repository written in go.",
-	Long: `
-	📦 Tool for managing personal pacman repository written in go.
+	Long: `📦 Tool for managing personal pacman repository written in go.
 
 	go-pacman  Copyright (C) 2023  Dancheg97
 	

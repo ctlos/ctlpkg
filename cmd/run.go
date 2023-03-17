@@ -19,7 +19,7 @@ var runCmd = &cobra.Command{
 
 func Run(cmd *cobra.Command, args []string) {
 	var (
-		pkgPath  = `/var/cache/pacman/pkg`
+		pkgPath  = "/var/cache/pacman/pkg"
 		yayPath  = "/home/" + viper.GetString("user") + "/.cache/yay"
 		httpPort = viper.GetInt("http-port")
 		grpcPort = viper.GetInt("grpc-port")

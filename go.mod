@@ -3,6 +3,7 @@ module dancheg97.ru/dancheg97/ctlpkg
 go 1.19
 
 require (
+	github.com/gorilla/mux v1.8.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2
 	github.com/sirupsen/logrus v1.9.0

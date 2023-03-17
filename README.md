@@ -43,3 +43,10 @@ services:
       - 9080:9080
       - 8080:8080
 ```
+
+## Roadmap
+
+- add list with added packages to flutter app
+- add auth to flutter app
+- add ability to update and add packages from UI
+- fix problem with static file servers
