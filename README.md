@@ -8,11 +8,9 @@
 [![Generic badge](https://img.shields.io/badge/GITEA-REPO-red.svg)](https://dancheg97.ru/dancheg97/ctlpkg)
 [![Generic badge](https://img.shields.io/badge/GITHUB-REPO-white.svg)](https://github.com/ctlos/ctlpkg)
 [![Generic badge](https://img.shields.io/badge/DOCKER-REGISTRY-blue.svg)](https://dancheg97.ru/dancheg97/-/packages/container/ctlpkg/latest)
-[![Build Status](https://drone.dancheg97.ru/api/badges/ctlpkg/services/status.svg)](https://drone.dancheg97.ru/dancheg97/ctlpkg)
+[![Build Status](https://drone.dancheg97.ru/api/badges/dancheg97/ctlpkg/status.svg)](https://drone.dancheg97.ru/dancheg97/ctlpkg)
 
 Dockerized pacman repository with friendly user interface and public API. Project goal is to quickly set up personal pacman repostitory without pain and hustle.
-
-gRPC API is available at port `9080` by default, and should not be exposed publicly, because it executes `yay` shell command under the hood. Also, this API supports reflection, so you can explore it using `grpcurl`, `grpclicker-vscode` or `insomnia`.
 
 ---
 

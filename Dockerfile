@@ -1,10 +1,15 @@
-FROM golang:latest AS build
+FROM golang:latest AS go-build
 WORKDIR /
 COPY go.mod ./
 COPY go.sum ./
 RUN go mod download
 COPY . .
 RUN go build -o go-pacman ./main.go
+
+FROM instrumentisto/flutter AS flutter-build
+WORKDIR /
+COPY . .
+RUN flutter build web
 
 FROM archlinux/archlinux:base-devel
 LABEL maintainer="Dancheg97 <dangdancheg@gmail.com>"
@@ -21,7 +26,8 @@ RUN git clone https://aur.archlinux.org/yay.git
 RUN cd yay && makepkg -sri --needed --noconfirm
 RUN cd && rm -rf .cache yay
 
-COPY --from=build /go-pacman .
+COPY --from=go-build /go-pacman .
+COPY --from=flutter-build /build/web /web
 
 ENTRYPOINT ["./go-pacman"]
 CMD ["--help"]
