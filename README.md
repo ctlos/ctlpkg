@@ -16,7 +16,7 @@ gRPC API is available at port `9080` by default, and should not be exposed publi
 
 ---
 
-### Configurations
+## Environment configurations
 
 Environment variables/flags:
 
@@ -26,6 +26,8 @@ Environment variables/flags:
 - 🌐 - `FILE_PORT` - `file-port` - port for static file server to access packages
 - 📦 - `INIT_PKGS` - `init-pkgs` - initial packages to download on start
 - 📒 - `LOGS_FMT` - `logs-fmt` - format for logs (can be text/json/pretty)
+
+## Start docker service
 
 You can run repository via `docker-compose`:
 
@@ -42,18 +44,4 @@ services:
     ports:
       - 9080:9080
       - 8080:8080
-```
-
-Or, alternatively, if you have virtual machine without password for sudo user,
-you can install package using go:
-
-```sh
-go install dancheg97.ru/dancheg97/go-pacman@latest
-```
-
-And run it as a CLI programm:
-
-```sh
-go-pacman -h
-go-pacman run -h
 ```

@@ -13,10 +13,10 @@ func TestMove(t *testing.T) {
 	assert.NoError(t, err)
 	exPath := filepath.Dir(ex)
 
-	err = os.MkdirAll(exPath+"/first", 0777)
+	err = os.MkdirAll(exPath+"/first", 0o777)
 	assert.NoError(t, err)
 
-	err = os.MkdirAll(exPath+"/second", 0777)
+	err = os.MkdirAll(exPath+"/second", 0o777)
 	assert.NoError(t, err)
 
 	err = os.WriteFile(exPath+"/first/nani.pkg.tar.zst", []byte("nani"), 0o600)
@@ -36,7 +36,7 @@ func TestClean(t *testing.T) {
 
 	err = os.MkdirAll(exPath+"/test", 0o600)
 	assert.NoError(t, err)
-	err = os.Chmod(exPath+"/test", 0777)
+	err = os.Chmod(exPath+"/test", 0o777)
 	assert.NoError(t, err)
 
 	cleaner := OsHelper{}
@@ -61,7 +61,7 @@ func TestSear(t *testing.T) {
 	assert.NoError(t, err)
 	exPath := filepath.Dir(ex)
 
-	err = os.MkdirAll(exPath+"/search", 0777)
+	err = os.MkdirAll(exPath+"/search", 0o777)
 	assert.NoError(t, err)
 
 	err = os.WriteFile(exPath+"/search/nani.pkg.tar.zst", []byte("nani"), 0o600)

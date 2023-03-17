@@ -32,14 +32,6 @@ var flags = []Flag{
 	},
 	{
 		Cmd:         rootCmd,
-		Name:        "user",
-		ShortName:   "u",
-		Env:         "USER",
-		Value:       "makepkg",
-		Description: "😀 user name in system",
-	},
-	{
-		Cmd:         rootCmd,
 		Name:        "grpc-port",
 		ShortName:   "g",
 		Env:         "GRPC_PORT",

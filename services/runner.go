@@ -15,12 +15,13 @@ import (
 )
 
 type Params struct {
-	FilePort int
-	GrpcPort int
-	PkgPath  string
-	YayPath  string
-	RepoName string
-	Packager *src.OsHelper
+	FilePort     int
+	GrpcPort     int
+	PkgPath      string
+	YayPath      string
+	FrontendPath string
+	RepoName     string
+	Packager     *src.OsHelper
 }
 
 func Run(params *Params) error {
@@ -32,13 +33,22 @@ func Run(params *Params) error {
 	pb.RegisterPacmanServiceServer(server, pacman.Handlers{
 		Helper:   params.Packager,
 		YayPath:  params.YayPath,
-		PkgPath:  params.PkgPath,
+		PkgPath:  `/var/cache/pacman/pkg/`,
 		RepoName: params.RepoName,
 	})
 	reflection.Register(server)
 
-	go fileserver.RunFileServer(
-		params.PkgPath,
+	go fileserver.RunStaticFileServer(
+		[]fileserver.PathPair{
+			{
+				LocalPath:  params.FrontendPath,
+				HandlePath: `/`,
+			},
+			{
+				LocalPath:  params.PkgPath,
+				HandlePath: `/pkg`,
+			},
+		},
 		viper.GetInt(`file-port`),
 	)
 
