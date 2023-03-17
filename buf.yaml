@@ -11,5 +11,5 @@ lint:
   use:
     - DEFAULT
   ignore:
-    - google/api/annotations.proto
-    - google/api/http.proto
+    - proto/annotations/annotations.proto
+    - proto/annotations/http.proto
