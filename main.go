@@ -1,6 +1,6 @@
 package main
 
-import "dancheg97.ru/dancheg97/go-pacman/cmd"
+import "dancheg97.ru/dancheg97/ctlpkg/cmd"
 
 func main() {
 	cmd.Execute()

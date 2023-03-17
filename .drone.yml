@@ -38,8 +38,8 @@ steps:
   - name: push github mirror
     image: appleboy/drone-git-push
     settings:
-      branch: master
-      remote: ssh://git@github.com/dancheg97/go-pacman.git
+      branch: main
+      remote: ssh://git@github.com:ctlos/ctlpkg.git
       force: false
       commit: true
       ssh_key:

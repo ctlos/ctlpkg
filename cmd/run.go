@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"dancheg97.ru/dancheg97/go-pacman/services"
-	"dancheg97.ru/dancheg97/go-pacman/src"
+	"dancheg97.ru/ctlpkg/services/services"
+	"dancheg97.ru/ctlpkg/services/src"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
