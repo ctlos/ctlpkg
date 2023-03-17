@@ -1,4 +1,4 @@
-package http
+package httpservers
 
 import (
 	"fmt"
@@ -31,7 +31,7 @@ func RunHttp(params Params) error {
 	mux := runtime.NewServeMux()
 
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	err := pb.RegisterPacmanServiceHandlerFromEndpoint(ctx, mux, "localhost"+fmt.Sprint(params.GrpcPort), opts)
+	err := pb.RegisterPacmanServiceHandlerFromEndpoint(ctx, mux, "localhost:"+fmt.Sprint(params.GrpcPort), opts)
 	if err != nil {
 		return err
 	}

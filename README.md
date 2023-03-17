@@ -18,11 +18,12 @@ Dockerized pacman repository with friendly user interface and public API. Projec
 
 Environment variables/flags:
 
-- 📄 - `REPO` - `repo` - repository name on the web page
-- 😀 - `USER` - `user` - user name in system, will be used to eject `yay` packages
-- 🌐 - `PORT` - `port` - port for static file server to access packages
-- 📦 - `INIT_PKGS` - `init-pkgs` - initial packages to download on start
-- 📒 - `LOGS_FMT` - `logs-fmt` - format for logs (can be text/json/pretty)
+- 📄 - `CTLPKG_REPO` - `repo` - repository name on the web page
+- 😀 - `CTLPKG_USER` - `user` - user name in system, will be used to eject `yay` packages
+- 🌐 - `CTLPKG_HTTP_PORT` - `http-port` - port for static file servers and rest API
+- 🌐 - `CTLPKG_GRPC_PORT` - `grpc-port` - port for gRPC API
+- 📦 - `CTLPKG_INIT_PKGS` - `init-pkgs` - initial packages to download on start
+- 📒 - `CTLPKG_LOGS_FMT` - `logs-fmt` - format for logs (can be text/json/pretty)
 
 ## Start docker service
 

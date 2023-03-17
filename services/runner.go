@@ -5,7 +5,7 @@ import (
 	"net"
 
 	pb "dancheg97.ru/dancheg97/ctlpkg/gen/proto/v1"
-	"dancheg97.ru/dancheg97/ctlpkg/services/http"
+	"dancheg97.ru/dancheg97/ctlpkg/services/httpservers"
 	"dancheg97.ru/dancheg97/ctlpkg/services/pacman"
 	"dancheg97.ru/dancheg97/ctlpkg/src"
 	"github.com/sirupsen/logrus"
@@ -31,16 +31,16 @@ func Run(params *Params) error {
 	pb.RegisterPacmanServiceServer(server, pacman.Handlers{
 		Helper:   params.Packager,
 		YayPath:  params.YayPath,
-		PkgPath:  `/var/cache/pacman/pkg/`,
+		PkgPath:  params.PkgPath,
 		RepoName: params.RepoName,
 	})
 	reflection.Register(server)
 
 	go func() {
-		http.RunHttp(http.Params{
+		httpservers.RunHttp(httpservers.Params{
 			HttpPort: params.HttpPort,
 			GrpcPort: params.GrpcPort,
-			StaticFileServers: []http.PathPair{
+			StaticFileServers: []httpservers.PathPair{
 				{
 					LocalPath:  `/web`,
 					HandlePath: `/`,

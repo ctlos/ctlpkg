@@ -112,6 +112,6 @@ func (o *OsHelper) FormDb(yay string, pkg string, repo string) error {
 	}
 	repoPath := pkg + "/" + repo + ".db.tar.gz"
 	pkgsPath := pkg + "/*.pkg.tar.zst"
-	err = o.Execute("repo-add -n -q " + repoPath + " " + pkgsPath)
+	err = o.Execute("sudo repo-add -n -q " + repoPath + " " + pkgsPath)
 	return err
 }
