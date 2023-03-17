@@ -10,3 +10,6 @@ breaking:
 lint:
   use:
     - DEFAULT
+  ignore:
+    - google/api/annotations.proto
+    - google/api/http.proto
