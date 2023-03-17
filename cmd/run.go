@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"dancheg97.ru/dancheg97/ctlpkg/services/services"
-	"dancheg97.ru/dancheg97/ctlpkg/services/src"
+	"dancheg97.ru/dancheg97/ctlpkg/services"
+	"dancheg97.ru/dancheg97/ctlpkg/src"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
