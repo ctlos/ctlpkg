@@ -5,23 +5,21 @@ import (
 	"net"
 
 	pb "dancheg97.ru/dancheg97/ctlpkg/gen/proto/v1"
-	"dancheg97.ru/dancheg97/ctlpkg/services/fileserver"
+	"dancheg97.ru/dancheg97/ctlpkg/services/http"
 	"dancheg97.ru/dancheg97/ctlpkg/services/pacman"
 	"dancheg97.ru/dancheg97/ctlpkg/src"
 	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
 
 type Params struct {
-	FilePort     int
-	GrpcPort     int
-	PkgPath      string
-	YayPath      string
-	FrontendPath string
-	RepoName     string
-	Packager     *src.OsHelper
+	HttpPort int
+	GrpcPort int
+	PkgPath  string
+	YayPath  string
+	RepoName string
+	Packager *src.OsHelper
 }
 
 func Run(params *Params) error {
@@ -38,19 +36,22 @@ func Run(params *Params) error {
 	})
 	reflection.Register(server)
 
-	go fileserver.RunStaticFileServer(
-		[]fileserver.PathPair{
-			{
-				LocalPath:  params.FrontendPath,
-				HandlePath: `/`,
+	go func() {
+		http.RunHttp(http.Params{
+			HttpPort: params.HttpPort,
+			GrpcPort: params.GrpcPort,
+			StaticFileServers: []http.PathPair{
+				{
+					LocalPath:  `/web`,
+					HandlePath: `/`,
+				},
+				{
+					LocalPath:  params.PkgPath,
+					HandlePath: `/pkg`,
+				},
 			},
-			{
-				LocalPath:  params.PkgPath,
-				HandlePath: `/pkg`,
-			},
-		},
-		viper.GetInt(`file-port`),
-	)
+		})
+	}()
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(`:%d`, params.GrpcPort))
 	if err != nil {

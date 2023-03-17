@@ -41,7 +41,7 @@ var flags = []Flag{
 	},
 	{
 		Cmd:         rootCmd,
-		Name:        "file-port",
+		Name:        "http-port",
 		ShortName:   "f",
 		Env:         "FILE_PORT",
 		Value:       "8080",

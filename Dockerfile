@@ -6,9 +6,10 @@ RUN go mod download
 COPY . .
 RUN go build -o go-pacman ./main.go
 
-FROM instrumentisto/flutter AS flutter-build
-WORKDIR /
-COPY . .
+FROM cirrusci/flutter AS flutter-build
+WORKDIR /flutter
+COPY . /flutter
+RUN flutter pub get
 RUN flutter build web
 
 FROM archlinux/archlinux:base-devel
