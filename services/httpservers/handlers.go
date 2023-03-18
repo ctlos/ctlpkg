@@ -23,7 +23,7 @@ type Params struct {
 }
 
 func WebForward(w http.ResponseWriter, r *http.Request, pathParams map[string]string) {
-	http.Redirect(w, r, "/web", 200)
+	http.Redirect(w, r, "/web", http.StatusOK)
 }
 
 func RunHttpWrapper(params Params) error {
