@@ -28,7 +28,7 @@ RUN cd yay && makepkg -sri --needed --noconfirm
 RUN cd && rm -rf .cache yay
 
 COPY --from=go-build /go-pacman .
-COPY --from=flutter-build /flutter/build/web /var/cache/pacman/pkg
+COPY --from=flutter-build /flutter/build/web /web
 
 ENTRYPOINT ["./go-pacman"]
 CMD ["--help"]

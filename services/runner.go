@@ -41,7 +41,7 @@ func Run(params *Params) error {
 		err := httpservers.RunHttpWrapper(httpservers.Params{
 			HttpPort:  params.HttpPort,
 			GrpcPort:  params.GrpcPort,
-			ServeDir:  params.PkgPath,
+			PkgsDir:   params.PkgPath,
 			PacmanSvc: pacmanService,
 			ApiPath:   `/api`,
 		})

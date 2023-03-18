@@ -70,6 +70,14 @@ var flags = []Flag{
 		Value:       "json",
 		Description: "📒 output format for logs",
 	},
+	{
+		Cmd:         rootCmd,
+		Name:        "web-dir",
+		ShortName:   "w",
+		Env:         "CTLPKG_WEB_DIR",
+		Value:       "/web",
+		Description: "📂 directory with flutter web app",
+	},
 }
 
 func Execute() {
