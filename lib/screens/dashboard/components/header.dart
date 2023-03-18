@@ -1,4 +1,4 @@
-import 'package:ctlpkg/controllers/MenuAppController.dart';
+import 'package:ctlpkg/controllers/menu_app_controller.dart';
 import 'package:ctlpkg/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,18 +17,18 @@ class Header extends StatelessWidget {
       children: [
         if (!Responsive.isDesktop(context))
           IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: context.read<MenuAppController>().controlMenu,
           ),
         if (!Responsive.isMobile(context))
           Text(
             "Ctlos package repo",
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
-        Spacer(),
-        AddButton(),
+        const Spacer(),
+        const AddButton(),
       ],
     );
   }
@@ -48,8 +48,8 @@ class AddButton extends StatelessWidget {
         backgroundColor: primaryColor,
       ),
       onPressed: () {},
-      icon: Icon(Icons.add),
-      label: Text("Add New"),
+      icon: const Icon(Icons.add),
+      label: const Text("Add New"),
     );
   }
 }
@@ -66,18 +66,18 @@ class SearchField extends StatelessWidget {
         hintText: "Package search",
         fillColor: secondaryColor,
         filled: true,
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         suffixIcon: InkWell(
           onTap: () {},
           child: Container(
-            padding: EdgeInsets.all(defaultPadding * 0.75),
-            margin: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.all(defaultPadding * 0.75),
+            margin: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+            decoration: const BoxDecoration(
               color: primaryColor,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             child: SvgPicture.asset("assets/icons/Search.svg"),
           ),

@@ -9,7 +9,6 @@ class MyFiles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
     return Column(
       children: [
         Row(
@@ -17,7 +16,7 @@ class MyFiles extends StatelessWidget {
           children: [
             Text(
               "My Files",
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             ElevatedButton.icon(
               style: TextButton.styleFrom(
@@ -29,12 +28,12 @@ class MyFiles extends StatelessWidget {
                 backgroundColor: primaryColor,
               ),
               onPressed: () {},
-              icon: Icon(Icons.add),
-              label: Text("Add New"),
+              icon: const Icon(Icons.add),
+              label: const Text("Add New"),
             ),
           ],
         ),
-        SizedBox(height: defaultPadding),
+        const SizedBox(height: defaultPadding),
       ],
     );
   }

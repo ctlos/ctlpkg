@@ -15,7 +15,7 @@ class SideMenu extends StatelessWidget {
           DrawerHeader(
             child: Image.asset("assets/images/logo.png"),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(8),
             child: SearchField(),
           ),
@@ -64,7 +64,7 @@ class DrawerListTile extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: TextStyle(color: Colors.white54),
+        style: const TextStyle(color: Colors.white54),
       ),
     );
   }
