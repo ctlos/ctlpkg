@@ -14,10 +14,12 @@ service PacmanService {
       body: "*"
     };
   }
+
   // Check wether some package exists in repository
   rpc Search(SearchRequest) returns (SearchResponse) {
     option (google.api.http) = {get: "/search/{pattern}"};
   }
+
   // Update all packages from AUR
   rpc Update(UpdateRequest) returns (UpdateResponse) {
     option (google.api.http) = {post: "/update"};

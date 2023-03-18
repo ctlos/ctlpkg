@@ -240,7 +240,7 @@ issues:
         - gochecknoinits
     - text: 'shadow: declaration of "err" shadows declaration at'
       linters: [govet]
-    - text: 'Subprocess launched with a potential tainted input or cmd arguments'
+    - text: "Subprocess launched with a potential tainted input or cmd arguments"
       linters: [gosec]
     - path: "cmd/root.go"
       linters: [gochecknoglobals, gochecknoinits, errcheck]
