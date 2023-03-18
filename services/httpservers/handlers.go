@@ -4,9 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"net/url"
-	"path"
-	"strings"
 	"time"
 
 	pb "dancheg97.ru/dancheg97/ctlpkg/gen/proto/v1"
@@ -26,39 +23,7 @@ type Params struct {
 }
 
 func WebForward(w http.ResponseWriter, r *http.Request, pathParams map[string]string) {
-	urlStr := "/web"
-	if u, err := url.Parse(urlStr); err == nil {
-		oldpath := r.URL.Path
-		if oldpath == "" {
-			oldpath = "/"
-		}
-		if u.Scheme == "" {
-			if urlStr == "" || urlStr[0] != '/' {
-				olddir, _ := path.Split(oldpath)
-				urlStr = olddir + urlStr
-			}
-
-			var query string
-			if i := strings.Index(urlStr, "?"); i != -1 {
-				urlStr, query = urlStr[:i], urlStr[i:]
-			}
-
-			trailing := strings.HasSuffix(urlStr, "/")
-			urlStr = path.Clean(urlStr)
-			if trailing && !strings.HasSuffix(urlStr, "/") {
-				urlStr += "/"
-			}
-			urlStr += query
-		}
-	}
-
-	w.Header().Set("Location", urlStr)
-	w.WriteHeader(200)
-
-	if r.Method == "GET" {
-		note := "<a href=\"" + urlStr + "\"> redirected </a>.\n"
-		fmt.Fprintln(w, note)
-	}
+	http.Redirect(w, r, "/web", 200)
 }
 
 func RunHttpWrapper(params Params) error {
@@ -73,10 +38,10 @@ func RunHttpWrapper(params Params) error {
 	}
 
 	fs1 := http.FileServer(http.Dir(params.WebDir))
-	r.PathPrefix("/web/").Handler(http.StripPrefix("/web/", fs1))
+	r.PathPrefix("/web").Handler(http.StripPrefix("/web", fs1))
 
 	fs2 := http.FileServer(http.Dir(params.PkgsDir))
-	r.PathPrefix("/pkg/").Handler(http.StripPrefix("/pkg/", fs2))
+	r.PathPrefix("/pkg").Handler(http.StripPrefix("/pkg", fs2))
 
 	rootPatt := runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{""}, ""))
 	svmux.Handle("GET", rootPatt, WebForward)
