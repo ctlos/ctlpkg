@@ -18,6 +18,7 @@ type Params struct {
 	GrpcPort int
 	PkgPath  string
 	YayPath  string
+	WebPath  string
 	RepoName string
 	Packager *src.OsHelper
 }
@@ -42,8 +43,8 @@ func Run(params *Params) error {
 			HttpPort:  params.HttpPort,
 			GrpcPort:  params.GrpcPort,
 			PkgsDir:   params.PkgPath,
+			WebDir:    params.WebPath,
 			PacmanSvc: pacmanService,
-			ApiPath:   `/api`,
 		})
 		panic(err)
 	}()

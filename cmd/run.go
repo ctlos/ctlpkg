@@ -21,6 +21,7 @@ func Run(cmd *cobra.Command, args []string) {
 	var (
 		pkgPath  = "/var/cache/pacman/pkg"
 		yayPath  = "/home/" + viper.GetString("user") + "/.cache/yay"
+		webPath  = viper.GetString("web-dir")
 		httpPort = viper.GetInt("http-port")
 		grpcPort = viper.GetInt("grpc-port")
 		repoName = viper.GetString("repo")
@@ -42,6 +43,7 @@ func Run(cmd *cobra.Command, args []string) {
 		GrpcPort: grpcPort,
 		PkgPath:  pkgPath,
 		YayPath:  yayPath,
+		WebPath:  webPath,
 		RepoName: repoName,
 		Packager: &src.OsHelper{},
 	})

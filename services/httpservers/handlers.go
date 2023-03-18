@@ -20,7 +20,6 @@ import (
 type Params struct {
 	HttpPort  int
 	GrpcPort  int
-	ApiPath   string
 	PkgsDir   string
 	WebDir    string
 	PacmanSvc pb.PacmanServiceServer
