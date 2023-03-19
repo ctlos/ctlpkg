@@ -7,6 +7,7 @@ check:
 
 run:
 	docker build -t ctlpkg:latest  -f dockerfiles/main.dockerfile .
+	docker run -p 8080:8080 -p 9080:9080 ctlpkg:latest run
 
 run-backend:
 	docker build -t ctlpkg:backend  -f dockerfiles/backend.dockerfile .
