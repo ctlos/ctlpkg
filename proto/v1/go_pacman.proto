@@ -73,10 +73,6 @@ message StatsResponse {
   int32 packages_count = 1;
   // Count of outdated packages, that needs upgrade (can be shown in chart)
   int32 outdated_count = 2;
-  // Space taken by packages
-  string used_space = 3;
-  // Available space for container (can be shown in chart)
-  string available_space = 4;
   // List of packages that require update
-  repeated string outdated_packages = 5;
+  repeated string outdated_packages = 3;
 }

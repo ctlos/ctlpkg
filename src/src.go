@@ -140,3 +140,12 @@ func (o *OsHelper) ParsePkgInfo(inp string) map[string]string {
 	}
 	return out
 }
+
+func (o *OsHelper) ParseOutdatedPackages(inp string) []string {
+	out := []string{}
+	for _, s := range strings.Split(inp, "\n") {
+		splitted := strings.Split(s, " ")
+		out = append(out, splitted[0])
+	}
+	return out
+}

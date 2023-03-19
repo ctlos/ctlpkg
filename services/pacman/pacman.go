@@ -3,6 +3,7 @@ package pacman
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"strings"
 
 	pb "dancheg97.ru/dancheg97/ctlpkg/gen/proto/v1"
@@ -20,7 +21,7 @@ type Handlers struct {
 func (s Handlers) Describe(ctx context.Context, in *pb.DescribeRequest) (*pb.DescribeResponse, error) {
 	info, err := s.Helper.Call(`yay -Qi ` + in.Package)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf(`unable to execute yay command: %w`, err)
 	}
 	return &pb.DescribeResponse{
 		Fields: s.Helper.ParsePkgInfo(info),
@@ -28,8 +29,32 @@ func (s Handlers) Describe(ctx context.Context, in *pb.DescribeRequest) (*pb.Des
 }
 
 // Stats implements pb.PacmanServiceServer
-func (Handlers) Stats(context.Context, *pb.StatsRequest) (*pb.StatsResponse, error) {
-	panic("unimplemented")
+func (s Handlers) Stats(ctx context.Context, in *pb.StatsRequest) (*pb.StatsResponse, error) {
+	pkgCountString, err := s.Helper.Call(`sudo pacman -Q | wc -l`)
+	if err != nil {
+		return nil, fmt.Errorf(`unable to execute pacman command: %w`, err)
+	}
+	pkgCountInt, err := strconv.Atoi(pkgCountString)
+	if err != nil {
+		return nil, fmt.Errorf(`unable convert number output: %w`, err)
+	}
+	outdatedCountString, err := s.Helper.Call(`sudo pacman -Qu | wc -l`)
+	if err != nil {
+		return nil, fmt.Errorf(`unable to execute pacman command: %w`, err)
+	}
+	outdatedCount, err := strconv.Atoi(outdatedCountString)
+	if err != nil {
+		return nil, fmt.Errorf(`unable convert number output: %w`, err)
+	}
+	outdatedList, err := s.Helper.Call(`sudo pacman -Qu`)
+	if err != nil {
+		return nil, fmt.Errorf(`unable to execute pacman command: %w`, err)
+	}
+	return &pb.StatsResponse{
+		PackagesCount:    int32(pkgCountInt),
+		OutdatedCount:    int32(outdatedCount),
+		OutdatedPackages: s.Helper.ParseOutdatedPackages(outdatedList),
+	}, nil
 }
 
 func (s Handlers) Add(ctx context.Context, in *pb.AddRequest) (*pb.AddResponse, error) {

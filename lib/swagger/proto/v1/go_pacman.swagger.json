@@ -241,14 +241,6 @@
           "format": "int32",
           "title": "Count of outdated packages, that needs upgrade (can be shown in chart)"
         },
-        "usedSpace": {
-          "type": "string",
-          "title": "Space taken by packages"
-        },
-        "availableSpace": {
-          "type": "string",
-          "title": "Available space for container (can be shown in chart)"
-        },
         "outdatedPackages": {
           "type": "array",
           "items": {

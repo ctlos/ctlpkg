@@ -5,7 +5,7 @@ import (
 	"net"
 
 	pb "dancheg97.ru/dancheg97/ctlpkg/gen/proto/v1"
-	"dancheg97.ru/dancheg97/ctlpkg/services/httpservers"
+	"dancheg97.ru/dancheg97/ctlpkg/services/fileservers"
 	"dancheg97.ru/dancheg97/ctlpkg/services/pacman"
 	"dancheg97.ru/dancheg97/ctlpkg/src"
 	"github.com/sirupsen/logrus"
@@ -39,7 +39,7 @@ func Run(params *Params) error {
 	reflection.Register(server)
 
 	go func() {
-		err := httpservers.RunHttpWrapper(httpservers.Params{
+		err := fileservers.RunHttpWrapper(fileservers.Params{
 			HttpPort:  params.HttpPort,
 			GrpcPort:  params.GrpcPort,
 			PkgsDir:   params.PkgPath,
