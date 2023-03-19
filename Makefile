@@ -2,8 +2,9 @@ pwd := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 .PHONY: gen
 gen:
+	buf format -w
 	buf generate
-	flutter pub run build_runner build
+	# flutter pub run build_runner build
 
 check:
 	gofumpt -l -w .

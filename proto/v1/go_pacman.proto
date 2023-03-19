@@ -22,7 +22,10 @@ service PacmanService {
 
   // Update all packages from AUR
   rpc Update(UpdateRequest) returns (UpdateResponse) {
-    option (google.api.http) = {post: "/update"};
+    option (google.api.http) = {
+      post: "/update"
+      body: "*"
+    };
   }
 
   // Get package description from pacman
@@ -54,7 +57,9 @@ message SearchResponse {
   repeated string packages = 1;
 }
 
-message UpdateRequest {}
+message UpdateRequest {
+  string token = 1;
+}
 
 message UpdateResponse {}
 

@@ -17,7 +17,7 @@ type Handlers struct {
 	RepoName string
 }
 
-// Describe implements pb.PacmanServiceServer
+// Describe implements pb.PacmanServiceServer.
 func (s Handlers) Describe(ctx context.Context, in *pb.DescribeRequest) (*pb.DescribeResponse, error) {
 	info, err := s.Helper.Call(`yay -Qi ` + in.Package)
 	if err != nil {
@@ -28,13 +28,13 @@ func (s Handlers) Describe(ctx context.Context, in *pb.DescribeRequest) (*pb.Des
 	}, nil
 }
 
-// Stats implements pb.PacmanServiceServer
+// Stats implements pb.PacmanServiceServer.
 func (s Handlers) Stats(ctx context.Context, in *pb.StatsRequest) (*pb.StatsResponse, error) {
 	pkgCountString, err := s.Helper.Call(`sudo pacman -Q | wc -l`)
 	if err != nil {
 		return nil, fmt.Errorf(`unable to execute pacman command: %w`, err)
 	}
-	pkgCountInt, err := strconv.Atoi(pkgCountString)
+	pkgCountInt, err := strconv.ParseInt(pkgCountString, 10, 32)
 	if err != nil {
 		return nil, fmt.Errorf(`unable convert number output: %w`, err)
 	}
@@ -42,7 +42,7 @@ func (s Handlers) Stats(ctx context.Context, in *pb.StatsRequest) (*pb.StatsResp
 	if err != nil {
 		return nil, fmt.Errorf(`unable to execute pacman command: %w`, err)
 	}
-	outdatedCount, err := strconv.Atoi(outdatedCountString)
+	outdatedCount, err := strconv.ParseInt(outdatedCountString, 10, 32)
 	if err != nil {
 		return nil, fmt.Errorf(`unable convert number output: %w`, err)
 	}

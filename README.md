@@ -1,5 +1,5 @@
 <p align="center">
-<img style="align: center; padding-left: 10px; padding-right: 10px; padding-bottom: 10px;" width="238px" height="238px" src="./logo.png" />
+<img style="align: center; padding-left: 10px; padding-right: 10px; padding-bottom: 10px;" width="238px" height="238px" src="./assets/images/logo.png" />
 </p>
 
 <h2 align="center">Ctlos package repository - ctlpkg</h2>
@@ -20,10 +20,11 @@ Environment variables/flags:
 
 - 📄 - `CTLPKG_REPO` - `repo` - repository name on the web page
 - 😀 - `CTLPKG_USER` - `user` - user name in system, will be used to eject `yay` packages
-- 🌐 - `CTLPKG_HTTP_PORT` - `http-port` - port for static file servers and rest API
 - 🌐 - `CTLPKG_GRPC_PORT` - `grpc-port` - port for gRPC API
+- 🌐 - `CTLPKG_HTTP_PORT` - `http-port` - port for static file servers and rest API
 - 📦 - `CTLPKG_INIT_PKGS` - `init-pkgs` - initial packages to download on start
 - 📒 - `CTLPKG_LOGS_FMT` - `logs-fmt` - format for logs (can be text/json/pretty)
+- 📂 - `CTLPKG_WEB_DIR` - `web-dir` - directory with flutter web app
 
 ## Start docker service
 
