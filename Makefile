@@ -1,22 +1,17 @@
 pwd := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
-run:
-	docker compose down 
-	docker compose up --build app -d
-
-test:
-	docker compose up -d
-	go test -count 1 -cover ./...
-
 check:
 	gofumpt -l -w .
 	golangci-lint run
 	buf lint
 
-flutter-docker:
-	docker run --rm -it -v ${pwd}:/src -w /src -p 80:80 cirrusci/flutter bash -c "flutter pub get && flutter build web && cd build/web && python3 -m http.server 80"
+run:
+	docker build -t ctlpkg:latest  -f dockerfiles/main.dockerfile .
 
-.PHONY: gen
-gen:
-	buf format -w
-	buf generate
+run-backend:
+	docker build -t ctlpkg:backend  -f dockerfiles/backend.dockerfile .
+	docker run -p 8080:8080 -p 9080:9080 ctlpkg:backend
+
+run-frontend:
+	docker build -t ctlpkg:frontend  -f dockerfiles/frontend.dockerfile .
+	docker run -p 80:80 ctlpkg:frontend
