@@ -1,6 +1,7 @@
 package src
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"os/exec"
@@ -21,11 +22,23 @@ func (o *OsHelper) Execute(cmd string) error {
 	commad.Stdout = logrus.StandardLogger().Writer()
 	commad.Stderr = logrus.StandardLogger().Writer()
 
-	err := commad.Run()
+	return commad.Run()
+}
+
+func (o *OsHelper) Call(cmd string) (string, error) {
+	logrus.Info(`executing system call: `, cmd)
+
+	command := exec.Command("bash", "-c", cmd)
+
+	out := bytes.Buffer{}
+	command.Stdout = &out
+	command.Stderr = &out
+
+	err := command.Run()
 	if err != nil {
-		return err
+		return ``, err
 	}
-	return nil
+	return out.String(), nil
 }
 
 // Searches for all .zst files in dir and returns back list.
@@ -114,4 +127,16 @@ func (o *OsHelper) FormDb(yay string, pkg string, repo string) error {
 	pkgsPath := pkg + "/*.pkg.tar.zst"
 	err = o.Execute("sudo repo-add -n -q " + repoPath + " " + pkgsPath)
 	return err
+}
+
+func (o *OsHelper) ParsePkgInfo(inp string) map[string]string {
+	out := map[string]string{}
+	for _, s := range strings.Split(inp, "\n") {
+		if strings.HasPrefix(s, " ") {
+			continue
+		}
+		splitted := strings.Split(s, ":")
+		out[strings.TrimSpace(splitted[0])] = strings.TrimSpace(splitted[1])
+	}
+	return out
 }

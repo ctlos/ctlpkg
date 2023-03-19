@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/addpkg": {
+    "/add": {
       "put": {
         "summary": "Add new packages from AUR package registry",
         "operationId": "PacmanService_Add",
@@ -42,6 +42,37 @@
             "schema": {
               "$ref": "#/definitions/v1AddRequest"
             }
+          }
+        ],
+        "tags": [
+          "PacmanService"
+        ]
+      }
+    },
+    "/describe": {
+      "get": {
+        "summary": "Get package description from pacman",
+        "operationId": "PacmanService_Describe",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DescribeResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "package",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -75,6 +106,29 @@
             "type": "string"
           }
         ],
+        "tags": [
+          "PacmanService"
+        ]
+      }
+    },
+    "/stats": {
+      "get": {
+        "summary": "Get overall statistics from service",
+        "operationId": "PacmanService_Stats",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1StatsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
         "tags": [
           "PacmanService"
         ]
@@ -137,12 +191,30 @@
       "type": "object",
       "properties": {
         "packages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "token": {
           "type": "string"
         }
-      }
+      },
+      "title": "List of packages from AUR to add"
     },
     "v1AddResponse": {
       "type": "object"
+    },
+    "v1DescribeResponse": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
     },
     "v1SearchResponse": {
       "type": "object",
@@ -152,6 +224,37 @@
           "items": {
             "type": "string"
           }
+        }
+      },
+      "title": "List of package names"
+    },
+    "v1StatsResponse": {
+      "type": "object",
+      "properties": {
+        "packagesCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Overall count of installed packages"
+        },
+        "outdatedCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of outdated packages, that needs upgrade (can be shown in chart)"
+        },
+        "usedSpace": {
+          "type": "string",
+          "title": "Space taken by packages"
+        },
+        "availableSpace": {
+          "type": "string",
+          "title": "Available space for container (can be shown in chart)"
+        },
+        "outdatedPackages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "List of packages that require update"
         }
       }
     },

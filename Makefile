@@ -1,5 +1,10 @@
 pwd := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
+.PHONY: gen
+gen:
+	buf generate
+	flutter pub run build_runner build
+
 check:
 	gofumpt -l -w .
 	golangci-lint run

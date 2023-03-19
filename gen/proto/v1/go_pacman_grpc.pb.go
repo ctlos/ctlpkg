@@ -19,9 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PacmanService_Add_FullMethodName    = "/proto.v1.PacmanService/Add"
-	PacmanService_Search_FullMethodName = "/proto.v1.PacmanService/Search"
-	PacmanService_Update_FullMethodName = "/proto.v1.PacmanService/Update"
+	PacmanService_Add_FullMethodName      = "/proto.v1.PacmanService/Add"
+	PacmanService_Search_FullMethodName   = "/proto.v1.PacmanService/Search"
+	PacmanService_Update_FullMethodName   = "/proto.v1.PacmanService/Update"
+	PacmanService_Describe_FullMethodName = "/proto.v1.PacmanService/Describe"
+	PacmanService_Stats_FullMethodName    = "/proto.v1.PacmanService/Stats"
 )
 
 // PacmanServiceClient is the client API for PacmanService service.
@@ -34,6 +36,10 @@ type PacmanServiceClient interface {
 	Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error)
 	// Update all packages from AUR
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
+	// Get package description from pacman
+	Describe(ctx context.Context, in *DescribeRequest, opts ...grpc.CallOption) (*DescribeResponse, error)
+	// Get overall statistics from service
+	Stats(ctx context.Context, in *StatsRequest, opts ...grpc.CallOption) (*StatsResponse, error)
 }
 
 type pacmanServiceClient struct {
@@ -71,6 +77,24 @@ func (c *pacmanServiceClient) Update(ctx context.Context, in *UpdateRequest, opt
 	return out, nil
 }
 
+func (c *pacmanServiceClient) Describe(ctx context.Context, in *DescribeRequest, opts ...grpc.CallOption) (*DescribeResponse, error) {
+	out := new(DescribeResponse)
+	err := c.cc.Invoke(ctx, PacmanService_Describe_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pacmanServiceClient) Stats(ctx context.Context, in *StatsRequest, opts ...grpc.CallOption) (*StatsResponse, error) {
+	out := new(StatsResponse)
+	err := c.cc.Invoke(ctx, PacmanService_Stats_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PacmanServiceServer is the server API for PacmanService service.
 // All implementations should embed UnimplementedPacmanServiceServer
 // for forward compatibility
@@ -81,6 +105,10 @@ type PacmanServiceServer interface {
 	Search(context.Context, *SearchRequest) (*SearchResponse, error)
 	// Update all packages from AUR
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
+	// Get package description from pacman
+	Describe(context.Context, *DescribeRequest) (*DescribeResponse, error)
+	// Get overall statistics from service
+	Stats(context.Context, *StatsRequest) (*StatsResponse, error)
 }
 
 // UnimplementedPacmanServiceServer should be embedded to have forward compatible implementations.
@@ -95,6 +123,12 @@ func (UnimplementedPacmanServiceServer) Search(context.Context, *SearchRequest) 
 }
 func (UnimplementedPacmanServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+func (UnimplementedPacmanServiceServer) Describe(context.Context, *DescribeRequest) (*DescribeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Describe not implemented")
+}
+func (UnimplementedPacmanServiceServer) Stats(context.Context, *StatsRequest) (*StatsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Stats not implemented")
 }
 
 // UnsafePacmanServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -162,6 +196,42 @@ func _PacmanService_Update_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PacmanService_Describe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PacmanServiceServer).Describe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PacmanService_Describe_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PacmanServiceServer).Describe(ctx, req.(*DescribeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PacmanService_Stats_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PacmanServiceServer).Stats(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PacmanService_Stats_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PacmanServiceServer).Stats(ctx, req.(*StatsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PacmanService_ServiceDesc is the grpc.ServiceDesc for PacmanService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -180,6 +250,14 @@ var PacmanService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Update",
 			Handler:    _PacmanService_Update_Handler,
+		},
+		{
+			MethodName: "Describe",
+			Handler:    _PacmanService_Describe_Handler,
+		},
+		{
+			MethodName: "Stats",
+			Handler:    _PacmanService_Stats_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
