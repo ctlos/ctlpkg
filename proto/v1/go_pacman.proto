@@ -10,7 +10,7 @@ service PacmanService {
   // Add new packages from AUR package registry
   rpc Add(AddRequest) returns (AddResponse) {
     option (google.api.http) = {
-      put: "/addpkg"
+      put: "/add"
       body: "*"
     };
   }
@@ -24,18 +24,32 @@ service PacmanService {
   rpc Update(UpdateRequest) returns (UpdateResponse) {
     option (google.api.http) = {post: "/update"};
   }
+
+  // Get package description from pacman
+  rpc Describe(DescribeRequest) returns (DescribeResponse) {
+    option (google.api.http) = {get: "/describe"};
+  }
+
+  // Get overall statistics from service
+  rpc Stats(StatsRequest) returns (StatsResponse) {
+    option (google.api.http) = {get: "/stats"};
+  }
 }
 
+// List of packages from AUR to add
 message AddRequest {
-  string packages = 1;
+  repeated string packages = 1;
+  string token = 2;
 }
 
 message AddResponse {}
 
+// Search pattern that will be used in search text field
 message SearchRequest {
   string pattern = 1;
 }
 
+// List of package names
 message SearchResponse {
   repeated string packages = 1;
 }
@@ -43,3 +57,26 @@ message SearchResponse {
 message UpdateRequest {}
 
 message UpdateResponse {}
+
+message DescribeRequest {
+  string package = 1;
+}
+
+message DescribeResponse {
+  map<string, string> fields = 1;
+}
+
+message StatsRequest {}
+
+message StatsResponse {
+  // Overall count of installed packages
+  int32 packages_count = 1;
+  // Count of outdated packages, that needs upgrade (can be shown in chart)
+  int32 outdated_count = 2;
+  // Space taken by packages
+  string used_space = 3;
+  // Available space for container (can be shown in chart)
+  string available_space = 4;
+  // List of packages that require update
+  repeated string outdated_packages = 5;
+}
