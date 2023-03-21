@@ -1,3 +1,4 @@
+import 'package:ctlpkg/client/v1/pacman.pbgrpc.dart';
 import 'package:ctlpkg/controllers/menu_app_controller.dart';
 import 'package:ctlpkg/responsive.dart';
 import 'package:flutter/material.dart';
@@ -47,9 +48,18 @@ class AddButton extends StatelessWidget {
         ),
         backgroundColor: primaryColor,
       ),
-      onPressed: () {},
+      onPressed: () async {
+        var resp = await stub.describe(DescribeRequest(
+          package: "git",
+        ));
+        var snackBar = SnackBar(
+          content: Text(resp.fields.toString()),
+        );
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      },
       icon: const Icon(Icons.add),
-      label: const Text("Add New"),
+      label: const Text("Add new"),
     );
   }
 }
