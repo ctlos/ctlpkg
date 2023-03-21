@@ -4,7 +4,7 @@ pwd := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 gen:
 	buf format -w
 	buf generate
-	# flutter pub run build_runner build
+	protoc --proto_path=. --dart_out=gen/dart proto/v1/go_pacman.proto
 
 check:
 	gofumpt -l -w .

@@ -9,5 +9,4 @@ services:
       INIT_PKGS: geary
       LOGS_FMT: text
     ports:
-      - 9080:9080
       - 8080:8080

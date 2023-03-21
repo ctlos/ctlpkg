@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	pb "dancheg97.ru/dancheg97/ctlpkg/gen/proto/v1"
+	pb "dancheg97.ru/dancheg97/ctlpkg/gen/go/proto/v1"
 	"dancheg97.ru/dancheg97/ctlpkg/src"
 )
 

@@ -1,42 +1,24 @@
 syntax = "proto3";
 package proto.v1;
 
-import "proto/annotations/annotations.proto";
-
 option go_package = "gen/go/pb";
 
 // Service containing method for adding aur packages
 service PacmanService {
   // Add new packages from AUR package registry
-  rpc Add(AddRequest) returns (AddResponse) {
-    option (google.api.http) = {
-      put: "/add"
-      body: "*"
-    };
-  }
+  rpc Add(AddRequest) returns (AddResponse);
 
   // Check wether some package exists in repository
-  rpc Search(SearchRequest) returns (SearchResponse) {
-    option (google.api.http) = {get: "/search/{pattern}"};
-  }
+  rpc Search(SearchRequest) returns (SearchResponse);
 
   // Update all packages from AUR
-  rpc Update(UpdateRequest) returns (UpdateResponse) {
-    option (google.api.http) = {
-      post: "/update"
-      body: "*"
-    };
-  }
+  rpc Update(UpdateRequest) returns (UpdateResponse);
 
   // Get package description from pacman
-  rpc Describe(DescribeRequest) returns (DescribeResponse) {
-    option (google.api.http) = {get: "/describe"};
-  }
+  rpc Describe(DescribeRequest) returns (DescribeResponse);
 
   // Get overall statistics from service
-  rpc Stats(StatsRequest) returns (StatsResponse) {
-    option (google.api.http) = {get: "/stats"};
-  }
+  rpc Stats(StatsRequest) returns (StatsResponse);
 }
 
 // List of packages from AUR to add

@@ -1,64 +1,36 @@
 package fileservers
 
 import (
-	"context"
-	"fmt"
+	"net"
 	"net/http"
 	"time"
 
-	pb "dancheg97.ru/dancheg97/ctlpkg/gen/proto/v1"
-	"github.com/gorilla/mux"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/sirupsen/logrus"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 type Params struct {
-	HttpPort  int
-	GrpcPort  int
-	PkgsDir   string
-	WebDir    string
-	PacmanSvc pb.PacmanServiceServer
-}
-
-func WebForward(w http.ResponseWriter, r *http.Request, pathParams map[string]string) {
-	http.Redirect(w, r, "/web", http.StatusOK)
+	Listener net.Listener
+	PkgsDir  string
+	WebDir   string
 }
 
 func RunHttpWrapper(params Params) error {
-	ctx := context.Background()
-	svmux := runtime.NewServeMux()
-	r := mux.NewRouter()
+	mux := http.NewServeMux()
 
-	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	err := pb.RegisterPacmanServiceHandlerFromEndpoint(ctx, svmux, `localhost:9080`, opts)
-	if err != nil {
-		return err
-	}
+	appfs := http.FileServer(http.Dir(params.WebDir))
+	mux.Handle("/", http.StripPrefix("/", appfs))
 
-	fs1 := http.FileServer(http.Dir(params.WebDir))
-	r.PathPrefix("/web").Handler(http.StripPrefix("/web", fs1))
-
-	fs2 := http.FileServer(http.Dir(params.PkgsDir))
-	r.PathPrefix("/pkg").Handler(http.StripPrefix("/pkg", fs2))
-
-	rootPatt := runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{""}, ""))
-	svmux.Handle("GET", rootPatt, WebForward)
-
-	r.PathPrefix("/").Handler(svmux)
-
-	http.Handle("/", r)
-	logrus.Info("server running...")
+	pkgfs := http.FileServer(http.Dir(params.PkgsDir))
+	mux.Handle("/pkg/", http.StripPrefix("/pkg/", pkgfs))
 
 	server := http.Server{
-		Addr:              fmt.Sprintf(`:%d`, params.HttpPort),
-		Handler:           r,
+		Handler:           mux,
 		ReadTimeout:       time.Minute,
 		ReadHeaderTimeout: time.Minute,
 		WriteTimeout:      time.Minute,
 		IdleTimeout:       time.Minute,
 	}
 
-	return server.ListenAndServe()
+	logrus.Info("HTTP server running...")
+	return server.Serve(params.Listener)
 }
