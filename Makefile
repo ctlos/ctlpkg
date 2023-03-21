@@ -4,7 +4,7 @@ pwd := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 gen:
 	buf format -w
 	buf generate
-	protoc --proto_path=. --dart_out=gen/dart proto/v1/go_pacman.proto
+	protoc --dart_out=grpc:gen/dart -Iproto proto/v1/pacman.proto
 
 check:
 	gofumpt -l -w .

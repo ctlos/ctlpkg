@@ -21,7 +21,7 @@ func Run(cmd *cobra.Command, args []string) {
 	var (
 		pkgPath  = "/var/cache/pacman/pkg"
 		yayPath  = "/home/" + viper.GetString("user") + "/.cache/yay"
-		Port     = viper.GetInt("port")
+		port     = viper.GetInt("port")
 		repoName = viper.GetString("repo")
 		webPath  = viper.GetString("web-dir")
 		initPkgs = viper.GetString(`init-pkgs`)
@@ -38,7 +38,7 @@ func Run(cmd *cobra.Command, args []string) {
 	checkErr(err)
 
 	services.Run(&services.Params{
-		Port:     Port,
+		Port:     port,
 		PkgPath:  pkgPath,
 		YayPath:  yayPath,
 		WebPath:  webPath,

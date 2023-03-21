@@ -33,7 +33,7 @@ RUN cd && rm -rf .cache yay
 
 COPY --from=go-build /src/go-pacman .
 COPY --from=flutter-build /src/build/web /web
-RUN sudo sed -i 's,href="/,href="/web/,g' /web/index.html
+# RUN sudo sed -i 's,href="/,href="/web/,g' /web/index.html
 
 ENTRYPOINT ["./go-pacman"]
 CMD ["--help"]

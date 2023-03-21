@@ -16,6 +16,8 @@ dependencies:
   data_table_2: ^2.0.3
   chopper: ^4.0.1
   json_annotation: ^4.4.0
+  protobuf: ^2.1.0
+  grpc: ^3.1.0
 
 dev_dependencies:
   flutter_test:
