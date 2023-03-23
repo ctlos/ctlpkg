@@ -130,12 +130,16 @@ func (o *OsHelper) FormDb(yay string, pkg string, repo string) error {
 }
 
 func (o *OsHelper) ParsePkgInfo(inp string) map[string]string {
+	logrus.Info("parsing package info: ", inp)
 	out := map[string]string{}
 	for _, s := range strings.Split(inp, "\n") {
 		if strings.HasPrefix(s, " ") {
 			continue
 		}
 		splitted := strings.Split(s, ":")
+		if len(splitted) < 2 {
+			continue
+		}
 		out[strings.TrimSpace(splitted[0])] = strings.TrimSpace(splitted[1])
 	}
 	return out

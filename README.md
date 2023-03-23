@@ -50,3 +50,4 @@ services:
 - add auth to flutter app
 - add ability to update and add packages from UI
 - fix problem with static file servers
+

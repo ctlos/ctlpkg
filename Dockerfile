@@ -11,8 +11,11 @@ RUN go build -o go-pacman ./main.go
 FROM cirrusci/flutter AS flutter-build
 
 WORKDIR /src
-COPY . /src
+COPY /web /src/web
+COPY pubspec.yaml /src
+RUN flutter pub get
 
+COPY . /src
 RUN flutter clean
 RUN flutter build web
 

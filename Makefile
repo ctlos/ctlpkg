@@ -12,5 +12,5 @@ check:
 	buf lint
 
 run:
-	docker build -t ctlpkg:latest .
-	docker run -p 8080:8080 ctlpkg:latest run
+	docker compose down
+	docker compose up --build app -d

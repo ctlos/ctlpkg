@@ -8,6 +8,8 @@ import (
 	"dancheg97.ru/dancheg97/ctlpkg/services/fileservers"
 	"dancheg97.ru/dancheg97/ctlpkg/services/pacman"
 	"dancheg97.ru/dancheg97/ctlpkg/src"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	"github.com/sirupsen/logrus"
 	"github.com/soheilhy/cmux"
 	"golang.org/x/sync/errgroup"
@@ -35,37 +37,40 @@ func Run(params *Params) error {
 	grpcListener := m.MatchWithWriters(cmux.HTTP2MatchHeaderFieldSendSettings("content-type", "application/grpc"))
 	httpListener := m.Match(cmux.Any())
 
+	grpcServer := grpc.NewServer(
+		grpc_middleware.WithUnaryServerChain(
+			grpc_recovery.UnaryServerInterceptor(),
+			getUnaryLogger(),
+		),
+		grpc_middleware.WithStreamServerChain(
+			grpc_recovery.StreamServerInterceptor(),
+			getStreamLogger(),
+		),
+	)
+
 	g := new(errgroup.Group)
-	g.Go(func() error { return grpcServe(params, grpcListener) })
-	g.Go(func() error { return httpServe(params, httpListener) })
+	g.Go(func() error {
+		pacmanService := pacman.Handlers{
+			Helper:   params.Packager,
+			YayPath:  params.YayPath,
+			PkgPath:  params.PkgPath,
+			RepoName: params.RepoName,
+		}
+		pb.RegisterPacmanServiceServer(grpcServer, pacmanService)
+		reflection.Register(grpcServer)
+
+		logrus.Infof(`gRPC server running...`)
+		return grpcServer.Serve(grpcListener)
+	})
+	g.Go(func() error {
+		return fileservers.RunHttpWrapper(fileservers.Params{
+			Listener:   httpListener,
+			GrpcServer: grpcServer,
+			PkgsDir:    params.PkgPath,
+			WebDir:     params.WebPath,
+		})
+	})
 	g.Go(func() error { return m.Serve() })
 
 	return g.Wait()
-}
-
-func grpcServe(params *Params, lis net.Listener) error {
-	server := grpc.NewServer(
-		getUnaryMiddleware(),
-		getStreamMiddleware(),
-	)
-
-	pacmanService := pacman.Handlers{
-		Helper:   params.Packager,
-		YayPath:  params.YayPath,
-		PkgPath:  params.PkgPath,
-		RepoName: params.RepoName,
-	}
-	pb.RegisterPacmanServiceServer(server, pacmanService)
-	reflection.Register(server)
-
-	logrus.Infof(`gRPC server running...`)
-	return server.Serve(lis)
-}
-
-func httpServe(params *Params, lis net.Listener) error {
-	return fileservers.RunHttpWrapper(fileservers.Params{
-		Listener: lis,
-		PkgsDir:  params.PkgPath,
-		WebDir:   params.WebPath,
-	})
 }
