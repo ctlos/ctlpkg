@@ -37,7 +37,7 @@ func Run(cmd *cobra.Command, args []string) {
 	err = helper.FormDb(yayPath, pkgPath, repoName)
 	checkErr(err)
 
-	services.Run(&services.Params{
+	err = services.Run(&services.Params{
 		Port:     port,
 		PkgPath:  pkgPath,
 		YayPath:  yayPath,
