@@ -137,7 +137,8 @@ func (o *OsHelper) ParsePkgInfo(inp string) map[string]string {
 			continue
 		}
 		splitted := strings.Split(s, ":")
-		if len(splitted) < 2 {
+		correctdElementAmount := 2
+		if len(splitted) < correctdElementAmount {
 			continue
 		}
 		out[strings.TrimSpace(splitted[0])] = strings.TrimSpace(splitted[1])
