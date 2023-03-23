@@ -6,7 +6,7 @@ services:
       context: .
     command: run
     environment:
-      INIT_PKGS: geary
-      LOGS_FMT: text
+      CTLPKG_INIT_PKGS: geary
+      CTLPKG_LOGS_FMT: text
     ports:
       - 8080:8080

@@ -5,12 +5,15 @@ import (
 	"net/http"
 	"time"
 
+	pb "dancheg97.ru/dancheg97/ctlpkg/gen/go/proto/v1"
+	"dancheg97.ru/dancheg97/ctlpkg/services/pacman"
 	"dancheg97.ru/dancheg97/ctlpkg/src"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type Params struct {
@@ -35,6 +38,8 @@ func Run(params *Params) error {
 			getStreamLogger(),
 		),
 	)
+	pb.RegisterPacmanServiceServer(grpcServer, pacman.Handlers{})
+	reflection.Register(grpcServer)
 
 	appfs := http.FileServer(http.Dir(params.WebPath))
 	mux.Handle("/", http.StripPrefix("/", appfs))
