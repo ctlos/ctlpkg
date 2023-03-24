@@ -19,19 +19,27 @@ var runCmd = &cobra.Command{
 
 func Run(cmd *cobra.Command, args []string) {
 	var (
-		pkgPath  = "/var/cache/pacman/pkg"
-		yayPath  = "/home/" + viper.GetString("user") + "/.cache/yay"
-		port     = viper.GetInt("port")
-		repoName = viper.GetString("repo")
-		webPath  = viper.GetString("web-dir")
-		initPkgs = viper.GetString(`init-pkgs`)
+		pkgPath   = "/var/cache/pacman/pkg"
+		yayPath   = "/home/" + viper.GetString("user") + "/.cache/yay"
+		port      = viper.GetInt("port")
+		repoName  = viper.GetString("repo")
+		webPath   = viper.GetString("web-dir")
+		initPkgs  = viper.GetString(`init-pkgs`)
+		apiAdress = viper.GetString(`api-adress`)
 	)
 
 	setLogFormat()
 
 	helper := &src.OsHelper{}
 
-	err := helper.Execute("yay -Sy --noconfirm " + initPkgs)
+	err := helper.ReplaceFileString(
+		webPath+`/main.dart.js`,
+		`http://localhost:8080/`,
+		apiAdress,
+	)
+	checkErr(err)
+
+	err = helper.Execute("yay -Sy --noconfirm " + initPkgs)
 	checkErr(err)
 
 	err = helper.FormDb(yayPath, pkgPath, repoName)
@@ -43,7 +51,7 @@ func Run(cmd *cobra.Command, args []string) {
 		YayPath:  yayPath,
 		WebPath:  webPath,
 		RepoName: repoName,
-		Packager: &src.OsHelper{},
+		Packager: helper,
 	})
 	checkErr(err)
 }

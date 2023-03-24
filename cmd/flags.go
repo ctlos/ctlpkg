@@ -10,6 +10,65 @@ import (
 	"github.com/spf13/viper"
 )
 
+var flags = []Flag{
+	{
+		Cmd:         rootCmd,
+		Name:        "repo",
+		ShortName:   "r",
+		Env:         "CTLPKG_REPO",
+		Value:       "localhost",
+		Description: "📄 repository name on the web page",
+	},
+	{
+		Cmd:         rootCmd,
+		Name:        "user",
+		ShortName:   "u",
+		Env:         "CTLPKG_USER",
+		Value:       "makepkg",
+		Description: "😀 user name in system, setted in dockerfile aswell",
+	},
+	{
+		Cmd:         rootCmd,
+		Name:        "port",
+		ShortName:   "g",
+		Env:         "CTLPKG_PORT",
+		Value:       "8080",
+		Type:        "int",
+		Description: "🌐 publically exposed port for both HTTP and gRPC calls",
+	},
+	{
+		Cmd:         rootCmd,
+		Name:        "init-pkgs",
+		ShortName:   "i",
+		Env:         "CTLPKG_INIT_PKGS",
+		Description: "📦 initial packages for download",
+	},
+	{
+		Cmd:         rootCmd,
+		Name:        "logs-fmt",
+		ShortName:   "l",
+		Env:         "CTLPKG_LOGS_FMT",
+		Value:       "json",
+		Description: "📒 output format for logs",
+	},
+	{
+		Cmd:         rootCmd,
+		Name:        "web-dir",
+		ShortName:   "w",
+		Env:         "CTLPKG_WEB_DIR",
+		Value:       "/web",
+		Description: "📂 directory with flutter web app",
+	},
+	{
+		Cmd:         rootCmd,
+		Name:        "api-adress",
+		ShortName:   "a",
+		Env:         "CTLPKG_API_ADRESS",
+		Value:       "http://localhost:8080/",
+		Description: "📫 adress for backend api calls via grpc-web",
+	},
+}
+
 // Short description of contents for command.
 type Flag struct {
 	// Cobra command that we will bound our cmd to

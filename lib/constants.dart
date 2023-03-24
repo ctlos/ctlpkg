@@ -8,5 +8,5 @@ const bgColor = Color(0xFF212332);
 
 const defaultPadding = 16.0;
 
-var chan = GrpcWebClientChannel.xhr(Uri.parse("https://pacman.dancheg97.ru/"));
+var chan = GrpcWebClientChannel.xhr(Uri.parse("http://localhost:8080/"));
 var stub = PacmanServiceClient(chan);

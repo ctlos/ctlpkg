@@ -154,3 +154,12 @@ func (o *OsHelper) ParseOutdatedPackages(inp string) []string {
 	}
 	return out
 }
+
+func (o *OsHelper) ReplaceFileString(file string, old string, new string) error {
+	contents, err := os.ReadFile(file)
+	if err != nil {
+		return err
+	}
+	replaced := strings.ReplaceAll(string(contents), old, new)
+	return os.WriteFile(file, []byte(replaced), 0o600)
+}
