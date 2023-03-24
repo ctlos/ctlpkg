@@ -11,7 +11,6 @@ RUN go build -o go-pacman ./main.go
 FROM cirrusci/flutter AS flutter-build
 
 WORKDIR /src
-COPY /web /src/web
 COPY pubspec.yaml /src
 RUN flutter pub get
 
@@ -36,6 +35,7 @@ RUN cd && rm -rf .cache yay
 
 COPY --from=go-build /src/go-pacman .
 COPY --from=flutter-build /src/build/web /web
+RUN sudo chmod a+rwx -R /web
 
 ENTRYPOINT ["./go-pacman"]
 CMD ["--help"]

@@ -1,4 +1,4 @@
-package services
+package service
 
 import (
 	grpc_logging "github.com/grpc-ecosystem/go-grpc-middleware/logging"

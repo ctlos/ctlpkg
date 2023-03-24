@@ -1,4 +1,4 @@
-package pacman
+package service
 
 import (
 	"context"
@@ -6,12 +6,12 @@ import (
 	"strconv"
 	"strings"
 
-	pb "dancheg97.ru/dancheg97/ctlpkg/gen/go/proto/v1"
-	"dancheg97.ru/dancheg97/ctlpkg/src"
+	pb "dancheg97.ru/dancheg97/ctlpkg/cmd/generated/proto/v1"
+	"dancheg97.ru/dancheg97/ctlpkg/cmd/utils"
 )
 
 type Handlers struct {
-	Helper   *src.OsHelper
+	Helper   *utils.OsHelper
 	YayPath  string
 	PkgPath  string
 	RepoName string

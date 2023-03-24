@@ -1,13 +1,13 @@
-package services
+package service
 
 import (
 	"fmt"
 	"net/http"
 	"time"
 
-	pb "dancheg97.ru/dancheg97/ctlpkg/gen/go/proto/v1"
-	"dancheg97.ru/dancheg97/ctlpkg/services/pacman"
-	"dancheg97.ru/dancheg97/ctlpkg/src"
+	pb "dancheg97.ru/dancheg97/ctlpkg/cmd/generated/proto/v1"
+	"dancheg97.ru/dancheg97/ctlpkg/cmd/utils"
+
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
@@ -21,7 +21,7 @@ type Params struct {
 	YayPath  string
 	WebPath  string
 	RepoName string
-	Packager *src.OsHelper
+	Packager *utils.OsHelper
 }
 
 func Run(params *Params) error {
@@ -37,7 +37,7 @@ func Run(params *Params) error {
 			getStreamLogger(),
 		),
 	)
-	pb.RegisterPacmanServiceServer(grpcServer, pacman.Handlers{})
+	pb.RegisterPacmanServiceServer(grpcServer, Handlers{})
 
 	appfs := http.FileServer(http.Dir(params.WebPath))
 	mux.Handle("/", http.StripPrefix("/", appfs))

@@ -2,12 +2,11 @@ version: v1
 
 plugins:
   - plugin: go
-    out: gen/go
+    out: cmd/generated
     opt: paths=source_relative
 
   - plugin: go-grpc
-    out: gen/go
+    out: cmd/generated
     opt:
       - paths=source_relative
       - require_unimplemented_servers=false
-  

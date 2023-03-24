@@ -248,3 +248,7 @@ issues:
       linters: [gochecknoglobals, gochecknoinits, errcheck]
     - path: "cmd/migrate.go"
       linters: [gochecknoglobals, gochecknoinits, errcheck]
+    - path: "cmd/flags.go"
+      linters: [gochecknoglobals, gochecknoinits, errcheck]
+    - path: "cmd/utils/src.go"
+      linters: [predeclared]

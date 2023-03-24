@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"dancheg97.ru/dancheg97/ctlpkg/services"
-	"dancheg97.ru/dancheg97/ctlpkg/src"
+	"dancheg97.ru/dancheg97/ctlpkg/cmd/service"
+	"dancheg97.ru/dancheg97/ctlpkg/cmd/utils"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -30,7 +30,7 @@ func Run(cmd *cobra.Command, args []string) {
 
 	setLogFormat()
 
-	helper := &src.OsHelper{}
+	helper := &utils.OsHelper{}
 
 	err := helper.ReplaceFileString(
 		webPath+`/main.dart.js`,
@@ -45,7 +45,7 @@ func Run(cmd *cobra.Command, args []string) {
 	err = helper.FormDb(yayPath, pkgPath, repoName)
 	checkErr(err)
 
-	err = services.Run(&services.Params{
+	err = service.Run(&service.Params{
 		Port:     port,
 		PkgPath:  pkgPath,
 		YayPath:  yayPath,

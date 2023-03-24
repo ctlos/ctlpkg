@@ -1,4 +1,4 @@
-import 'package:ctlpkg/client/v1/pacman.pbgrpc.dart';
+import 'package:ctlpkg/generated/v1/pacman.pbgrpc.dart';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc_web.dart';
 
