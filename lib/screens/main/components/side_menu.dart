@@ -1,38 +1,53 @@
+import 'package:ctlpkg/constants.dart';
+import 'package:ctlpkg/generated/v1/pacman.pb.dart';
 import 'package:ctlpkg/screens/dashboard/components/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class SideMenu extends StatelessWidget {
-  const SideMenu({
+class SideMenu extends StatefulWidget {
+  SideMenu({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<SideMenu> createState() => _SideMenuState();
+}
+
+class _SideMenuState extends State<SideMenu> {
+  final controller = TextEditingController();
+
+  List<Widget> items = [];
+
+  @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
+      child: Column(
         children: [
           DrawerHeader(
             child: Image.asset("assets/images/logo.png"),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8),
-            child: SearchField(),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: SearchField(
+              onSearch: () async {
+                var response = await stub.search(SearchRequest(
+                  pattern: controller.text,
+                ));
+                setState(() {
+                  for (var element in response.packages) {
+                    items.add(DrawerListTile(
+                      title: element,
+                      svgSrc: "assets/icons/menu_doc.svg",
+                      press: () {},
+                    ));
+                  }
+                });
+              },
+              controller: controller,
+            ),
           ),
-          DrawerListTile(
-            title: "git",
-            svgSrc: "assets/icons/menu_doc.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "yay",
-            svgSrc: "assets/icons/menu_doc.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "linux",
-            svgSrc: "assets/icons/menu_doc.svg",
-            press: () {},
+          ListView(
+            children: items,
           ),
         ],
       ),
@@ -67,5 +82,14 @@ class DrawerListTile extends StatelessWidget {
         style: const TextStyle(color: Colors.white54),
       ),
     );
+  }
+}
+
+class PackageList extends StatelessWidget {
+  const PackageList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

@@ -65,13 +65,19 @@ class AddButton extends StatelessWidget {
 }
 
 class SearchField extends StatelessWidget {
+  final void Function()? onSearch;
+  final TextEditingController controller;
   const SearchField({
     Key? key,
+    required this.onSearch,
+    required this.controller,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
+      onEditingComplete: onSearch,
       decoration: InputDecoration(
         hintText: "Package search",
         fillColor: secondaryColor,
@@ -81,7 +87,7 @@ class SearchField extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         suffixIcon: InkWell(
-          onTap: () {},
+          onTap: onSearch,
           child: Container(
             padding: const EdgeInsets.all(defaultPadding * 0.75),
             margin: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
