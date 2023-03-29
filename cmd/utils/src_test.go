@@ -55,20 +55,3 @@ func TestExecute(t *testing.T) {
 	err := c.Execute("ls")
 	assert.NoError(t, err)
 }
-
-func TestSear(t *testing.T) {
-	ex, err := os.Executable()
-	assert.NoError(t, err)
-	exPath := filepath.Dir(ex)
-
-	err = os.MkdirAll(exPath+"/search", 0o777)
-	assert.NoError(t, err)
-
-	err = os.WriteFile(exPath+"/search/nani.pkg.tar.zst", []byte("nani"), 0o600)
-	assert.NoError(t, err)
-
-	c := OsHelper{}
-	rez, err := c.Search(exPath+"/search", "nan")
-	assert.NoError(t, err)
-	assert.Contains(t, rez, "nani")
-}

@@ -16,5 +16,7 @@ run:
 	docker compose up --build app -d
 
 gorun:
-	docker compose down
+	docker compose down &
+	flutter build web &
+	chromium --disable-web-security &
 	go run . -w ${pwd}/build/web -u ${USER} -l pretty run

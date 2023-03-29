@@ -42,3 +42,14 @@ services:
     ports:
       - 8080:8080
 ```
+
+## Development
+
+For applicaiton development you need to install following software:
+
+- `go`
+- `gofumpt`
+- `golangci-lint`
+- `buf`
+- `flutter`
+- `flutter webkit`

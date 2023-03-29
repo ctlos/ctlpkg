@@ -53,7 +53,7 @@ func (s Handlers) Stats(ctx context.Context, in *pb.StatsRequest) (*pb.StatsResp
 	return &pb.StatsResponse{
 		PackagesCount:    int32(pkgCountInt),
 		OutdatedCount:    int32(outdatedCount),
-		OutdatedPackages: s.Helper.ParseOutdatedPackages(outdatedList),
+		OutdatedPackages: s.Helper.ParsePackages(outdatedList),
 	}, nil
 }
 
@@ -67,12 +67,15 @@ func (s Handlers) Add(ctx context.Context, in *pb.AddRequest) (*pb.AddResponse, 
 }
 
 func (s Handlers) Search(ctx context.Context, in *pb.SearchRequest) (*pb.SearchResponse, error) {
-	rez, err := s.Helper.Search(s.PkgPath, in.Pattern)
+	if in.Pattern == "" {
+		in.Pattern = "\"\""
+	}
+	out, err := s.Helper.Call("pacman -Q | grep " + in.Pattern)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("unable to execute pacman+grep command: %w", err)
 	}
 	return &pb.SearchResponse{
-		Packages: rez,
+		Packages: s.Helper.ParsePackages(out),
 	}, nil
 }
 

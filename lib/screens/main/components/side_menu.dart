@@ -15,8 +15,8 @@ class SideMenu extends StatefulWidget {
 class _SideMenuState extends State<SideMenu> {
   List<DrawerListTile> elements = [];
 
-  updateElements() async {
-    var resp = await stub.search(SearchRequest(pattern: "git"));
+  updateElements(String pattern) async {
+    var resp = await stub.search(SearchRequest(pattern: pattern));
     List<DrawerListTile> newElements = [];
     resp.packages.forEach((element) {
       newElements.add(DrawerListTile(
@@ -33,7 +33,7 @@ class _SideMenuState extends State<SideMenu> {
   @override
   void initState() {
     super.initState();
-    updateElements();
+    updateElements("");
   }
 
   @override
@@ -43,11 +43,16 @@ class _SideMenuState extends State<SideMenu> {
         DrawerHeader(
           child: Image.asset("assets/images/logo.png"),
         ),
-        SearchField(),
+        SearchField(
+          onChanged: (value) {
+            updateElements(value);
+          },
+        ),
         Expanded(
-            child: ListView(
-          children: elements,
-        ))
+          child: ListView(
+            children: elements,
+          ),
+        )
       ],
     );
   }
@@ -84,8 +89,10 @@ class DrawerListTile extends StatelessWidget {
 }
 
 class SearchField extends StatelessWidget {
+  final Function(String)? onChanged;
   const SearchField({
     Key? key,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -93,6 +100,7 @@ class SearchField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        onChanged: onChanged,
         decoration: InputDecoration(
           hintText: "Search",
           fillColor: secondaryColor,

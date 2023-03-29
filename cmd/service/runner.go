@@ -38,7 +38,12 @@ func Run(params *Params) error {
 			getStreamLogger(),
 		),
 	)
-	pb.RegisterPacmanServiceServer(grpcServer, Handlers{})
+	pb.RegisterPacmanServiceServer(grpcServer, Handlers{
+		Helper:   &utils.OsHelper{},
+		YayPath:  params.YayPath,
+		PkgPath:  params.PkgPath,
+		RepoName: params.RepoName,
+	})
 	reflection.Register(grpcServer)
 
 	appfs := http.FileServer(http.Dir(params.WebPath))

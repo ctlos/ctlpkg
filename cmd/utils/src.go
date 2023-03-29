@@ -2,10 +2,8 @@ package utils
 
 import (
 	"bytes"
-	"fmt"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"strings"
 
 	"github.com/sirupsen/logrus"
@@ -39,24 +37,6 @@ func (o *OsHelper) Call(cmd string) (string, error) {
 		return ``, err
 	}
 	return out.String(), nil
-}
-
-// Searches for all .zst files in dir and returns back list.
-func (o *OsHelper) Search(dir string, pattern string) ([]string, error) {
-	var packages []string
-	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return fmt.Errorf("unable to scan file: %w", err)
-		}
-		if strings.HasSuffix(info.Name(), ".pkg.tar.zst") && strings.Contains(info.Name(), pattern) {
-			packages = append(packages, strings.Replace(info.Name(), ".pkg.tar.zst", ``, 1))
-		}
-		return nil
-	})
-	if err != nil {
-		return nil, fmt.Errorf(`unable to search: %w`, err)
-	}
-	return packages, nil
 }
 
 // Moves all .zst files from one dir to another.
@@ -146,9 +126,12 @@ func (o *OsHelper) ParsePkgInfo(inp string) map[string]string {
 	return out
 }
 
-func (o *OsHelper) ParseOutdatedPackages(inp string) []string {
+func (o *OsHelper) ParsePackages(inp string) []string {
 	out := []string{}
 	for _, s := range strings.Split(inp, "\n") {
+		if inp == "" {
+			continue
+		}
 		splitted := strings.Split(s, " ")
 		out = append(out, splitted[0])
 	}
