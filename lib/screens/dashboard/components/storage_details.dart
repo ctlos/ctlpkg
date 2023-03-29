@@ -5,9 +5,28 @@ import 'chart.dart';
 import 'storage_info_card.dart';
 
 class StarageDetails extends StatelessWidget {
+  final double outdated;
+  final double uptodate;
+  final List<OutdatedPackage> outdatedPackagesList;
   const StarageDetails({
     Key? key,
+    required this.outdated,
+    required this.uptodate,
+    required this.outdatedPackagesList,
   }) : super(key: key);
+
+  List<StorageInfoCard> convertPackages(
+      List<OutdatedPackage> outdatedPackagesList) {
+    List<StorageInfoCard> output = [];
+    outdatedPackagesList.forEach((element) {
+      output.add(StorageInfoCard(
+        name: element.name,
+        latestVersion: element.latestVersion,
+        currVersion: element.currVersion,
+      ));
+    });
+    return output;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,40 +40,37 @@ class StarageDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Storage Details",
+            "Outdated packages",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),
           SizedBox(height: defaultPadding),
-          Chart(),
-          StorageInfoCard(
-            svgSrc: "assets/icons/Documents.svg",
-            title: "Documents Files",
-            amountOfFiles: "1.3GB",
-            numOfFiles: 1328,
+          Chart(
+            outdated: outdated,
+            uptodate: uptodate,
           ),
-          StorageInfoCard(
-            svgSrc: "assets/icons/media.svg",
-            title: "Media Files",
-            amountOfFiles: "15.3GB",
-            numOfFiles: 1328,
-          ),
-          StorageInfoCard(
-            svgSrc: "assets/icons/folder.svg",
-            title: "Other Files",
-            amountOfFiles: "1.3GB",
-            numOfFiles: 1328,
-          ),
-          StorageInfoCard(
-            svgSrc: "assets/icons/unknown.svg",
-            title: "Unknown",
-            amountOfFiles: "1.3GB",
-            numOfFiles: 140,
+          Container(
+            height: 420,
+            child: ListView(
+              children: convertPackages(outdatedPackagesList),
+            ),
           ),
         ],
       ),
     );
   }
+}
+
+class OutdatedPackage {
+  final String name;
+  final String currVersion;
+  final String latestVersion;
+
+  OutdatedPackage(
+    this.name,
+    this.currVersion,
+    this.latestVersion,
+  );
 }

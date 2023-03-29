@@ -63,3 +63,9 @@ message StatsResponse {
   // List of packages that require update
   repeated string outdated_packages = 3;
 }
+
+message OutdatedPackage {
+  string name = 1;
+  string current_version = 2;
+  string latest_version = 3;
+}

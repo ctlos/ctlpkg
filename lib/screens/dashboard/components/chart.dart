@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 class Chart extends StatelessWidget {
+  final double outdated;
+  final double uptodate;
   const Chart({
     Key? key,
+    required this.outdated,
+    required this.uptodate,
   }) : super(key: key);
 
   @override
@@ -19,7 +23,20 @@ class Chart extends StatelessWidget {
               sectionsSpace: 0,
               centerSpaceRadius: 70,
               startDegreeOffset: -90,
-              sections: paiChartSelectionDatas,
+              sections: [
+                PieChartSectionData(
+                  color: primaryColor,
+                  value: uptodate,
+                  showTitle: false,
+                  radius: 25,
+                ),
+                PieChartSectionData(
+                  color: Color(0xFFEE2727),
+                  value: outdated,
+                  showTitle: false,
+                  radius: 22,
+                ),
+              ],
             ),
           ),
           Positioned.fill(
@@ -28,14 +45,14 @@ class Chart extends StatelessWidget {
               children: [
                 SizedBox(height: defaultPadding),
                 Text(
-                  "29.1",
+                  "$outdated",
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                         height: 0.5,
                       ),
                 ),
-                Text("of 128GB")
+                Text("of $uptodate")
               ],
             ),
           ),
@@ -44,36 +61,3 @@ class Chart extends StatelessWidget {
     );
   }
 }
-
-List<PieChartSectionData> paiChartSelectionDatas = [
-  PieChartSectionData(
-    color: primaryColor,
-    value: 25,
-    showTitle: false,
-    radius: 25,
-  ),
-  PieChartSectionData(
-    color: Color(0xFF26E5FF),
-    value: 20,
-    showTitle: false,
-    radius: 22,
-  ),
-  PieChartSectionData(
-    color: Color(0xFFFFCF26),
-    value: 10,
-    showTitle: false,
-    radius: 19,
-  ),
-  PieChartSectionData(
-    color: Color(0xFFEE2727),
-    value: 15,
-    showTitle: false,
-    radius: 16,
-  ),
-  PieChartSectionData(
-    color: primaryColor.withOpacity(0.1),
-    value: 25,
-    showTitle: false,
-    radius: 13,
-  ),
-];

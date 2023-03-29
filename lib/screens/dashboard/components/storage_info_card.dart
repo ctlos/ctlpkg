@@ -6,14 +6,12 @@ import '../../../constants.dart';
 class StorageInfoCard extends StatelessWidget {
   const StorageInfoCard({
     Key? key,
-    required this.title,
-    required this.svgSrc,
-    required this.amountOfFiles,
-    required this.numOfFiles,
+    required this.name,
+    required this.latestVersion,
+    required this.currVersion,
   }) : super(key: key);
 
-  final String title, svgSrc, amountOfFiles;
-  final int numOfFiles;
+  final String name, latestVersion, currVersion;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +19,10 @@ class StorageInfoCard extends StatelessWidget {
       margin: EdgeInsets.only(top: defaultPadding),
       padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
-        border: Border.all(width: 2, color: primaryColor.withOpacity(0.15)),
+        border: Border.all(
+          width: 2,
+          color: primaryColor.withOpacity(0.15),
+        ),
         borderRadius: const BorderRadius.all(
           Radius.circular(defaultPadding),
         ),
@@ -31,7 +32,7 @@ class StorageInfoCard extends StatelessWidget {
           SizedBox(
             height: 20,
             width: 20,
-            child: SvgPicture.asset(svgSrc),
+            child: SvgPicture.asset("assets/icons/folder.svg"),
           ),
           Expanded(
             child: Padding(
@@ -40,12 +41,12 @@ class StorageInfoCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "$numOfFiles Files",
+                    "$currVersion",
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall!
@@ -55,7 +56,7 @@ class StorageInfoCard extends StatelessWidget {
               ),
             ),
           ),
-          Text(amountOfFiles)
+          Text(latestVersion)
         ],
       ),
     );

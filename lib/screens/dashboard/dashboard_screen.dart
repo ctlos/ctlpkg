@@ -31,7 +31,43 @@ class DashboardScreen extends StatelessWidget {
                       RecentFiles(),
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context)) StarageDetails(),
+                      if (Responsive.isMobile(context))
+                        StarageDetails(
+                          outdated: 5,
+                          uptodate: 124,
+                          outdatedPackagesList: [
+                            OutdatedPackage(
+                              "example",
+                              "v12345",
+                              "v23456",
+                            ),
+                            OutdatedPackage(
+                              "example",
+                              "v12345",
+                              "v23456",
+                            ),
+                            OutdatedPackage(
+                              "example",
+                              "v12345",
+                              "v23456",
+                            ),
+                            OutdatedPackage(
+                              "example",
+                              "v12345",
+                              "v23456",
+                            ),
+                            OutdatedPackage(
+                              "example",
+                              "v12345",
+                              "v23456",
+                            ),
+                            OutdatedPackage(
+                              "example",
+                              "v12345",
+                              "v23456",
+                            ),
+                          ],
+                        ),
                     ],
                   ),
                 ),
@@ -41,7 +77,42 @@ class DashboardScreen extends StatelessWidget {
                 if (!Responsive.isMobile(context))
                   Expanded(
                     flex: 2,
-                    child: StarageDetails(),
+                    child: StarageDetails(
+                      outdated: 5,
+                      uptodate: 124,
+                      outdatedPackagesList: [
+                        OutdatedPackage(
+                          "example",
+                          "v12345",
+                          "v23456",
+                        ),
+                        OutdatedPackage(
+                          "example",
+                          "v12345",
+                          "v23456",
+                        ),
+                        OutdatedPackage(
+                          "example",
+                          "v12345",
+                          "v23456",
+                        ),
+                        OutdatedPackage(
+                          "example",
+                          "v12345",
+                          "v23456",
+                        ),
+                        OutdatedPackage(
+                          "example",
+                          "v12345",
+                          "v23456",
+                        ),
+                        OutdatedPackage(
+                          "example",
+                          "v12345",
+                          "v23456",
+                        ),
+                      ],
+                    ),
                   ),
               ],
             )
