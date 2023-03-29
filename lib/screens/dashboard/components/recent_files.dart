@@ -13,16 +13,16 @@ class RecentFiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(defaultPadding),
-      decoration: const BoxDecoration(
+      padding: EdgeInsets.all(defaultPadding),
+      decoration: BoxDecoration(
         color: secondaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Git - description",
+            "Recent Files",
             style: Theme.of(context).textTheme.titleMedium,
           ),
           SizedBox(
@@ -30,7 +30,7 @@ class RecentFiles extends StatelessWidget {
             child: DataTable2(
               columnSpacing: defaultPadding,
               minWidth: 600,
-              columns: const [
+              columns: [
                 DataColumn(
                   label: Text("File Name"),
                 ),
