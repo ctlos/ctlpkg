@@ -1,61 +1,54 @@
+import 'package:ctlpkg/constants.dart';
+import 'package:ctlpkg/generated/v1/pacman.pb.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class SideMenu extends StatelessWidget {
+class SideMenu extends StatefulWidget {
   const SideMenu({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<SideMenu> createState() => _SideMenuState();
+}
+
+class _SideMenuState extends State<SideMenu> {
+  List<DrawerListTile> elements = [];
+
+  updateElements() async {
+    var resp = await stub.search(SearchRequest(pattern: "git"));
+    List<DrawerListTile> newElements = [];
+    resp.packages.forEach((element) {
+      newElements.add(DrawerListTile(
+        title: element,
+        svgSrc: "assets/icons/menu_doc.svg",
+        press: () {},
+      ));
+    });
+    setState(() {
+      elements = newElements;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updateElements();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        children: [
-          DrawerHeader(
-            child: Image.asset("assets/images/logo.png"),
-          ),
-          DrawerListTile(
-            title: "Dashboard",
-            svgSrc: "assets/icons/menu_dashbord.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Transaction",
-            svgSrc: "assets/icons/menu_tran.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Task",
-            svgSrc: "assets/icons/menu_task.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Documents",
-            svgSrc: "assets/icons/menu_doc.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Store",
-            svgSrc: "assets/icons/menu_store.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Notification",
-            svgSrc: "assets/icons/menu_notification.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Profile",
-            svgSrc: "assets/icons/menu_profile.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Settings",
-            svgSrc: "assets/icons/menu_setting.svg",
-            press: () {},
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        DrawerHeader(
+          child: Image.asset("assets/images/logo.png"),
+        ),
+        SearchField(),
+        Expanded(
+            child: ListView(
+          children: elements,
+        ))
+      ],
     );
   }
 }
@@ -85,6 +78,42 @@ class DrawerListTile extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(color: Colors.white54),
+      ),
+    );
+  }
+}
+
+class SearchField extends StatelessWidget {
+  const SearchField({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: "Search",
+          fillColor: secondaryColor,
+          filled: true,
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
+          suffixIcon: InkWell(
+            onTap: () {},
+            child: Container(
+              padding: EdgeInsets.all(defaultPadding * 0.75),
+              margin: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: SvgPicture.asset("assets/icons/Search.svg"),
+            ),
+          ),
+        ),
       ),
     );
   }

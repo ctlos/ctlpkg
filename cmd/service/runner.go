@@ -13,6 +13,7 @@ import (
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type Params struct {
@@ -38,6 +39,7 @@ func Run(params *Params) error {
 		),
 	)
 	pb.RegisterPacmanServiceServer(grpcServer, Handlers{})
+	reflection.Register(grpcServer)
 
 	appfs := http.FileServer(http.Dir(params.WebPath))
 	mux.Handle("/", http.StripPrefix("/", appfs))

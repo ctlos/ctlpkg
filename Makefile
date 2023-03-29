@@ -14,3 +14,7 @@ check:
 run:
 	docker compose down
 	docker compose up --build app -d
+
+gorun:
+	docker compose down
+	go run . -w ${pwd}/build/web -u ${USER} -l pretty run
