@@ -18,5 +18,8 @@ run:
 gorun:
 	docker compose down &
 	flutter build web &
-	chromium --disable-web-security &
+	chromium --disable-web-security http://localhost:8080/ &
 	go run . -w ${pwd}/build/web -u ${USER} -l pretty run
+
+evans:
+	evans --proto proto/v1/pacman.proto --web --host localhost -p 8080

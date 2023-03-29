@@ -129,7 +129,7 @@ func (o *OsHelper) ParsePkgInfo(inp string) map[string]string {
 func (o *OsHelper) ParsePackages(inp string) []string {
 	out := []string{}
 	for _, s := range strings.Split(inp, "\n") {
-		if inp == "" {
+		if s == "" {
 			continue
 		}
 		splitted := strings.Split(s, " ")
