@@ -24,8 +24,12 @@ type Handlers struct {
 
 // Login implements pb.PacmanServiceServer.
 func (s *Handlers) Login(ctx context.Context, in *pb.LoginRequest) (*pb.LoginResponse, error) {
-	if s.Logins[in.Login] != in.Password {
-		return nil, status.Error(codes.Unauthenticated, "bad login")
+	password, exists := s.Logins[in.Login]
+	if !exists {
+		return nil, status.Error(codes.Unauthenticated, "no user in list")
+	}
+	if password != in.Password {
+		return nil, status.Error(codes.Unauthenticated, "wrong password")
 	}
 	token := uuid.New()
 	s.Tokens[token.String()] = true

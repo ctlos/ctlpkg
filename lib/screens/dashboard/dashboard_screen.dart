@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:ctlpkg/generated/v1/pacman.pb.dart';
 import 'package:ctlpkg/responsive.dart';
 import 'package:ctlpkg/screens/dashboard/components/my_fields.dart';
@@ -9,7 +11,31 @@ import 'components/header.dart';
 import 'components/recent_files.dart';
 import 'components/storage_details.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  double outdated = 0;
+  double uptodate = 20;
+  List<OutdatedPackage> outdatedPackages = [];
+
+  updatePackages() async {
+    var resp = await stub.stats(StatsRequest());
+    setState(() {
+      outdated = resp.outdatedCount.toDouble();
+      uptodate = resp.packagesCount.toDouble() - outdated;
+      outdatedPackages = resp.outdatedPackages;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updatePackages();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -34,30 +60,9 @@ class DashboardScreen extends StatelessWidget {
                         SizedBox(height: defaultPadding),
                       if (Responsive.isMobile(context))
                         StarageDetails(
-                          outdated: 4,
-                          uptodate: 124,
-                          outdatedPackagesList: [
-                            OutdatedPackage(
-                              name: "example",
-                              currentVersion: "v1.23.2",
-                              latestVersion: "v1.24.1",
-                            ),
-                            OutdatedPackage(
-                              name: "example",
-                              currentVersion: "v1.23.2",
-                              latestVersion: "v1.24.1",
-                            ),
-                            OutdatedPackage(
-                              name: "example",
-                              currentVersion: "v1.23.2",
-                              latestVersion: "v1.24.1",
-                            ),
-                            OutdatedPackage(
-                              name: "example",
-                              currentVersion: "v1.23.2",
-                              latestVersion: "v1.24.1",
-                            ),
-                          ],
+                          outdated: outdated,
+                          uptodate: uptodate,
+                          outdatedPackagesList: outdatedPackages,
                         ),
                     ],
                   ),
@@ -69,30 +74,9 @@ class DashboardScreen extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: StarageDetails(
-                      outdated: 4,
-                      uptodate: 124,
-                      outdatedPackagesList: [
-                        OutdatedPackage(
-                          name: "example",
-                          currentVersion: "v1.23.2",
-                          latestVersion: "v1.24.1",
-                        ),
-                        OutdatedPackage(
-                          name: "example",
-                          currentVersion: "v1.23.2",
-                          latestVersion: "v1.24.1",
-                        ),
-                        OutdatedPackage(
-                          name: "example",
-                          currentVersion: "v1.23.2",
-                          latestVersion: "v1.24.1",
-                        ),
-                        OutdatedPackage(
-                          name: "example",
-                          currentVersion: "v1.23.2",
-                          latestVersion: "v1.24.1",
-                        ),
-                      ],
+                      outdated: outdated,
+                      uptodate: uptodate,
+                      outdatedPackagesList: outdatedPackages,
                     ),
                   ),
               ],

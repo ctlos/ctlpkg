@@ -27,7 +27,7 @@ class Header extends StatelessWidget {
           ),
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
-        ProfileCard()
+        ProfileCard(),
       ],
     );
   }
@@ -49,7 +49,11 @@ class _ProfileCardState extends State<ProfileCard> {
   void initState() {
     super.initState();
     var token = storage.getItem("token") ?? "";
-    if (token == "") {}
+    if (token == "" || token == null) {
+      //
+    } else {
+      //
+    }
   }
 
   @override
