@@ -55,6 +55,7 @@ func (s *Handlers) Stats(ctx context.Context, in *pb.StatsRequest) (*pb.StatsRes
 	if err != nil {
 		return nil, fmt.Errorf(`unable to execute pacman command: %w`, err)
 	}
+	pkgCountString = strings.ReplaceAll(pkgCountString, "\n", "")
 	pkgCountInt, err := strconv.ParseInt(pkgCountString, 10, 32)
 	if err != nil {
 		return nil, fmt.Errorf(`unable convert number output: %w`, err)
@@ -63,6 +64,7 @@ func (s *Handlers) Stats(ctx context.Context, in *pb.StatsRequest) (*pb.StatsRes
 	if err != nil {
 		return nil, fmt.Errorf(`unable to execute pacman command: %w`, err)
 	}
+	outdatedCountString = strings.ReplaceAll(outdatedCountString, "\n", "")
 	outdatedCount, err := strconv.ParseInt(outdatedCountString, 10, 32)
 	if err != nil {
 		return nil, fmt.Errorf(`unable convert number output: %w`, err)
