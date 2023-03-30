@@ -38,6 +38,10 @@ class PacmanServiceClient extends $grpc.Client {
       '/proto.v1.PacmanService/Stats',
       ($0.StatsRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.StatsResponse.fromBuffer(value));
+  static final _$login = $grpc.ClientMethod<$0.LoginRequest, $0.LoginResponse>(
+      '/proto.v1.PacmanService/Login',
+      ($0.LoginRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.LoginResponse.fromBuffer(value));
 
   PacmanServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -67,6 +71,11 @@ class PacmanServiceClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.StatsResponse> stats($0.StatsRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$stats, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.LoginResponse> login($0.LoginRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$login, request, options: options);
   }
 }
 
@@ -109,6 +118,13 @@ abstract class PacmanServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.StatsRequest.fromBuffer(value),
         ($0.StatsResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.LoginRequest, $0.LoginResponse>(
+        'Login',
+        login_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.LoginRequest.fromBuffer(value),
+        ($0.LoginResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.AddResponse> add_Pre(
@@ -136,6 +152,11 @@ abstract class PacmanServiceBase extends $grpc.Service {
     return stats(call, await request);
   }
 
+  $async.Future<$0.LoginResponse> login_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.LoginRequest> request) async {
+    return login(call, await request);
+  }
+
   $async.Future<$0.AddResponse> add(
       $grpc.ServiceCall call, $0.AddRequest request);
   $async.Future<$0.SearchResponse> search(
@@ -146,4 +167,6 @@ abstract class PacmanServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.DescribeRequest request);
   $async.Future<$0.StatsResponse> stats(
       $grpc.ServiceCall call, $0.StatsRequest request);
+  $async.Future<$0.LoginResponse> login(
+      $grpc.ServiceCall call, $0.LoginRequest request);
 }

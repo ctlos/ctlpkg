@@ -22,6 +22,7 @@ type Params struct {
 	YayPath  string
 	WebPath  string
 	RepoName string
+	Logins   map[string]string
 	Packager *utils.OsHelper
 }
 
@@ -38,11 +39,12 @@ func Run(params *Params) error {
 			getStreamLogger(),
 		),
 	)
-	pb.RegisterPacmanServiceServer(grpcServer, Handlers{
+	pb.RegisterPacmanServiceServer(grpcServer, &Handlers{
 		Helper:   &utils.OsHelper{},
 		YayPath:  params.YayPath,
 		PkgPath:  params.PkgPath,
 		RepoName: params.RepoName,
+		Logins:   params.Logins,
 	})
 	reflection.Register(grpcServer)
 

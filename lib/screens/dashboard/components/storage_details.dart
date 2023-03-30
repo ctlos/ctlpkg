@@ -1,3 +1,4 @@
+import 'package:ctlpkg/generated/v1/pacman.pb.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -22,7 +23,7 @@ class StarageDetails extends StatelessWidget {
       output.add(StorageInfoCard(
         name: element.name,
         latestVersion: element.latestVersion,
-        currVersion: element.currVersion,
+        currVersion: element.currentVersion,
       ));
     });
     return output;
@@ -61,16 +62,4 @@ class StarageDetails extends StatelessWidget {
       ),
     );
   }
-}
-
-class OutdatedPackage {
-  final String name;
-  final String currVersion;
-  final String latestVersion;
-
-  OutdatedPackage(
-    this.name,
-    this.currVersion,
-    this.latestVersion,
-  );
 }

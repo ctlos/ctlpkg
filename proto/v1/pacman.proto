@@ -7,18 +7,21 @@ option go_package = "gen/go/pb";
 service PacmanService {
   // Add new packages from AUR package registry
   rpc Add(AddRequest) returns (AddResponse);
+  
+  // Update all packages from AUR
+  rpc Update(UpdateRequest) returns (UpdateResponse);
 
   // Check wether some package exists in repository
   rpc Search(SearchRequest) returns (SearchResponse);
-
-  // Update all packages from AUR
-  rpc Update(UpdateRequest) returns (UpdateResponse);
 
   // Get package description from pacman
   rpc Describe(DescribeRequest) returns (DescribeResponse);
 
   // Get overall statistics from service
   rpc Stats(StatsRequest) returns (StatsResponse);
+
+  // Login and recieve token for other communications
+  rpc Login(LoginRequest) returns (LoginResponse);
 }
 
 // List of packages from AUR to add
@@ -61,11 +64,20 @@ message StatsResponse {
   // Count of outdated packages, that needs upgrade (can be shown in chart)
   int32 outdated_count = 2;
   // List of packages that require update
-  repeated string outdated_packages = 3;
+  repeated OutdatedPackage outdated_packages = 3;
 }
 
 message OutdatedPackage {
   string name = 1;
   string current_version = 2;
   string latest_version = 3;
+}
+
+message LoginRequest {
+  string login = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string token = 1;
 }

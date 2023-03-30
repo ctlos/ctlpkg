@@ -22,8 +22,9 @@ Environment variables/flags:
 - 😀 - `CTLPKG_USER` - `user` - user name in system, will be used to eject `yay` packages
 - 🌐 - `CTLPKG_PORT` - `port` - publically exposed port, `8080` default
 - 📦 - `CTLPKG_INIT_PKGS` - `init-pkgs` - initial packages to download on start
-- 📒 - `CTLPKG_LOGS_FMT` - `logs-fmt` - format for logs (can be text/json/pretty)
+- 📒 - `CTLPKG_LOGS_FORMAT` - `logs-fmt` - format for logs (can be text/json/pretty)
 - 📂 - `CTLPKG_WEB_DIR` - `web-dir` - directory with flutter web app
+- 🔐 - `CTLPKG_LOGINS` - `logins` - list of logins and passwords separated by '|' symbol
 
 ## Start docker service
 

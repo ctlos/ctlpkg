@@ -6,6 +6,7 @@ import (
 	"os/exec"
 	"strings"
 
+	pb "dancheg97.ru/dancheg97/ctlpkg/cmd/generated/proto/v1"
 	"github.com/sirupsen/logrus"
 )
 
@@ -136,6 +137,26 @@ func (o *OsHelper) ParsePackages(inp string) []string {
 		out = append(out, splitted[0])
 	}
 	return out
+}
+
+func (o *OsHelper) GetOutdatedPacakges() ([]*pb.OutdatedPackage, error) {
+	output, err := o.Call("sudo pacman -Qu")
+	if err != nil {
+		return nil, err
+	}
+	out := []*pb.OutdatedPackage{}
+	for _, s := range strings.Split(output, "\n") {
+		if s == `` {
+			continue
+		}
+		splitted := strings.Split(s, ` `)
+		out = append(out, &pb.OutdatedPackage{
+			Name:           splitted[0],
+			CurrentVersion: splitted[1],
+			LatestVersion:  splitted[3],
+		})
+	}
+	return out, nil
 }
 
 func (o *OsHelper) ReplaceFileString(file string, old string, new string) error {

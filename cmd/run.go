@@ -1,6 +1,9 @@
 package cmd
 
 import (
+	"errors"
+	"strings"
+
 	"dancheg97.ru/dancheg97/ctlpkg/cmd/service"
 	"dancheg97.ru/dancheg97/ctlpkg/cmd/utils"
 	"github.com/spf13/cobra"
@@ -26,6 +29,7 @@ func Run(cmd *cobra.Command, args []string) {
 		webPath   = viper.GetString("web-dir")
 		initPkgs  = viper.GetString(`init-pkgs`)
 		apiAdress = viper.GetString(`api-adress`)
+		logins    = viper.GetString(`logins`)
 	)
 
 	setLogFormat()
@@ -45,6 +49,9 @@ func Run(cmd *cobra.Command, args []string) {
 	err = helper.FormDb(yayPath, pkgPath, repoName)
 	checkErr(err)
 
+	formattedLogins, err := formatLogins(logins)
+	checkErr(err)
+
 	err = service.Run(&service.Params{
 		Port:     port,
 		PkgPath:  pkgPath,
@@ -52,6 +59,21 @@ func Run(cmd *cobra.Command, args []string) {
 		WebPath:  webPath,
 		RepoName: repoName,
 		Packager: helper,
+		Logins:   formattedLogins,
 	})
 	checkErr(err)
+}
+
+func formatLogins(raw string) (map[string]string, error) {
+	splitted := strings.Split(raw, "|")
+	if len(splitted)%2 != 0 {
+		return nil, errors.New("bad count of login/passwords, check input")
+	}
+	formattedLogins := map[string]string{}
+	for i, v := range splitted {
+		if i%2 == 1 {
+			formattedLogins[splitted[i-1]] = v
+		}
+	}
+	return formattedLogins, nil
 }

@@ -12,10 +12,6 @@ check:
 	buf lint
 
 run:
-	docker compose down
-	docker compose up --build app -d
-
-gorun:
 	docker compose down &
 	flutter build web &
 	# chromium --disable-web-security http://localhost:8080/ &

@@ -25,7 +25,7 @@ var flags = []Flag{
 		ShortName:   "u",
 		Env:         "CTLPKG_USER",
 		Value:       "makepkg",
-		Description: "😀 user name in system, setted in dockerfile aswell",
+		Description: "😀 user name in underlying linux system",
 	},
 	{
 		Cmd:         rootCmd,
@@ -45,11 +45,11 @@ var flags = []Flag{
 	},
 	{
 		Cmd:         rootCmd,
-		Name:        "logs-fmt",
-		ShortName:   "l",
-		Env:         "CTLPKG_LOGS_FMT",
+		Name:        "logs-format",
+		ShortName:   "f",
+		Env:         "CTLPKG_LOGS_FORMAT",
 		Value:       "json",
-		Description: "📒 output format for logs",
+		Description: "📒 output format for logs (json/text/pretty)",
 	},
 	{
 		Cmd:         rootCmd,
@@ -66,6 +66,14 @@ var flags = []Flag{
 		Env:         "CTLPKG_API_ADRESS",
 		Value:       "http://localhost:8080/",
 		Description: "📫 adress for backend api calls via grpc-web",
+	},
+	{
+		Cmd:         rootCmd,
+		Name:        "logins",
+		ShortName:   "l",
+		Env:         "CTLPKG_LOGINS",
+		Value:       "user|password",
+		Description: "🔐 list of logins and passwords separated by '|' symbol",
 	},
 }
 
@@ -144,15 +152,6 @@ func checkErr(err error) {
 	}
 }
 
-// Included with:
-//
-//	{
-//		Cmd:         rootCmd,
-//		Name:        "logs-fmt",
-//		Env:         "LOGS_FMT",
-//		Value:       "json",
-//		Description: "📒 output format for logs",
-//	},
 func setLogFormat() {
 	switch viper.GetString(`logs-fmt`) {
 	case `json`:
