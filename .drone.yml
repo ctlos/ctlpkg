@@ -30,10 +30,9 @@ steps:
       PASS:
         from_secret: PASS
     commands:
-      - docker build -t dancheg97.ru/$DRONE_REPO:latest -t dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y") .
+      - docker build -t dancheg97.ru/$DRONE_REPO:latest
       - docker login -u dancheg97 -p $PASS dancheg97.ru
       - docker push dancheg97.ru/$DRONE_REPO:latest
-      - docker push dancheg97.ru/$DRONE_REPO:$(date +"%m-%d-%y")
 
   - name: push github mirror
     image: appleboy/drone-git-push
