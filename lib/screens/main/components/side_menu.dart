@@ -38,22 +38,24 @@ class _SideMenuState extends State<SideMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        DrawerHeader(
-          child: Image.asset("assets/images/logo.png"),
-        ),
-        SearchField(
-          onChanged: (value) {
-            updateElements(value);
-          },
-        ),
-        Expanded(
-          child: ListView(
-            children: elements,
+    return Drawer(
+      child: Column(
+        children: [
+          DrawerHeader(
+            child: Image.asset("assets/images/logo.png"),
           ),
-        )
-      ],
+          SearchField(
+            onChanged: (value) {
+              updateElements(value);
+            },
+          ),
+          Expanded(
+            child: ListView(
+              children: elements,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

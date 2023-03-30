@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	"dancheg97.ru/dancheg97/ctlpkg/cmd/service"
@@ -67,7 +68,7 @@ func Run(cmd *cobra.Command, args []string) {
 func formatLogins(raw string) (map[string]string, error) {
 	splitted := strings.Split(raw, "|")
 	if len(splitted)%2 != 0 {
-		return nil, errors.New("bad count of login/passwords, check input")
+		return nil, errors.New("bad logins/passwords: " + fmt.Sprint(splitted))
 	}
 	formattedLogins := map[string]string{}
 	for i, v := range splitted {

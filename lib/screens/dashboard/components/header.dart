@@ -1,7 +1,7 @@
 import 'package:ctlpkg/controllers/menu_app_controller.dart';
 import 'package:ctlpkg/responsive.dart';
+import 'package:ctlpkg/screens/dashboard/components/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
@@ -33,10 +33,24 @@ class Header extends StatelessWidget {
   }
 }
 
-class ProfileCard extends StatelessWidget {
+class ProfileCard extends StatefulWidget {
   const ProfileCard({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<ProfileCard> createState() => _ProfileCardState();
+}
+
+class _ProfileCardState extends State<ProfileCard> {
+  Widget placeholder = UnauthorizedWidget();
+
+  @override
+  void initState() {
+    super.initState();
+    var token = storage.getItem("token") ?? "";
+    if (token == "") {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,26 +60,77 @@ class ProfileCard extends StatelessWidget {
         horizontal: defaultPadding,
         vertical: defaultPadding / 2,
       ),
-      decoration: BoxDecoration(
-        color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        border: Border.all(color: Colors.white10),
-      ),
-      child: Row(
-        children: [
-          // Image.asset(
-          //   "assets/images/profile_pic.png",
-          //   height: 38,
-          // ),
-          if (!Responsive.isMobile(context))
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text("Angelina Jolie"),
+      child: placeholder,
+    );
+  }
+}
+
+class UnauthorizedWidget extends StatelessWidget {
+  const UnauthorizedWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        ElevatedButton.icon(
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.symmetric(
+              horizontal: defaultPadding * 1.5,
+              vertical: defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
             ),
-          Icon(Icons.keyboard_arrow_down),
-        ],
-      ),
+            backgroundColor: primaryColor,
+          ),
+          onPressed: showLoginScreen(context),
+          icon: Icon(Icons.lock_open),
+          label: Text("Authorize"),
+        ),
+      ],
+    );
+  }
+}
+
+class AuthorizedActions extends StatelessWidget {
+  final void Function()? update;
+  final void Function()? add;
+  const AuthorizedActions({
+    Key? key,
+    this.update,
+    this.add,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        ElevatedButton.icon(
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.symmetric(
+              horizontal: defaultPadding * 1.5,
+              vertical: defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
+            ),
+            backgroundColor: primaryColor,
+          ),
+          onPressed: update,
+          icon: Icon(Icons.refresh),
+          label: Text("Update"),
+        ),
+        ElevatedButton.icon(
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.symmetric(
+              horizontal: defaultPadding * 1.5,
+              vertical: defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
+            ),
+            backgroundColor: primaryColor,
+          ),
+          onPressed: add,
+          icon: Icon(Icons.add),
+          label: Text("Add"),
+        ),
+      ],
     );
   }
 }

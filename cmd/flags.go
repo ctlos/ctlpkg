@@ -153,7 +153,7 @@ func checkErr(err error) {
 }
 
 func setLogFormat() {
-	switch viper.GetString(`logs-fmt`) {
+	switch viper.GetString(`logs-format`) {
 	case `json`:
 		logrus.SetFormatter(&logrus.JSONFormatter{})
 	case `text`:

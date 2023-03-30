@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Ctlos package repo',
+      title: 'CtlOS package repo',
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: bgColor,
+        scaffoldBackgroundColor: backgroundColor,
         textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
             .apply(bodyColor: Colors.white),
         canvasColor: secondaryColor,

@@ -22,7 +22,7 @@ type Handlers struct {
 	Tokens   map[string]bool
 }
 
-// Login implements pb.PacmanServiceServer
+// Login implements pb.PacmanServiceServer.
 func (s *Handlers) Login(ctx context.Context, in *pb.LoginRequest) (*pb.LoginResponse, error) {
 	if s.Logins[in.Login] != in.Password {
 		return nil, status.Error(codes.Unauthenticated, "bad login")
