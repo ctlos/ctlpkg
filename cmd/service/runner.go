@@ -45,6 +45,7 @@ func Run(params *Params) error {
 		PkgPath:  params.PkgPath,
 		RepoName: params.RepoName,
 		Logins:   params.Logins,
+		Tokens:   map[string]bool{},
 	})
 	reflection.Register(grpcServer)
 

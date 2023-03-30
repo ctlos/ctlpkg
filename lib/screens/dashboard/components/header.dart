@@ -83,7 +83,9 @@ class UnauthorizedWidget extends StatelessWidget {
             ),
             backgroundColor: primaryColor,
           ),
-          onPressed: showLoginScreen(context),
+          onPressed: () {
+            showLoginScreen(context);
+          },
           icon: Icon(Icons.lock_open),
           label: Text("Authorize"),
         ),

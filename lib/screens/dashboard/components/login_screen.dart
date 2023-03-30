@@ -71,7 +71,7 @@ class LoginContents extends StatelessWidget {
         Center(
           child: Padding(
             padding: const EdgeInsets.all(defaultPadding / 2),
-            child: TextButton(
+            child: ElevatedButton.icon(
               style: TextButton.styleFrom(
                 padding: EdgeInsets.symmetric(
                   horizontal: defaultPadding * 1.5,
@@ -79,9 +79,7 @@ class LoginContents extends StatelessWidget {
                       defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
                 ),
                 backgroundColor: primaryColor,
-                textStyle: Theme.of(context).textTheme.titleMedium,
               ),
-              child: Text("Authorize"),
               onPressed: () async {
                 try {
                   var resp = await stub.login(LoginRequest(
@@ -91,10 +89,11 @@ class LoginContents extends StatelessWidget {
                   storage.setItem("token", resp.token);
                   Navigator.of(context).pop();
                 } catch (e) {
-                  //catch
-                  Navigator.of(context).pop();
+                  print("failed $e");
                 }
               },
+              icon: Icon(Icons.person),
+              label: Text("Authorize"),
             ),
           ),
         ),
