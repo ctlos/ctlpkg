@@ -13,12 +13,11 @@ volumes:
 
 steps:
   - name: lint and test
-    image: dancheg97.ru/templates/gen-tools:latest
+    image: golangci/golangci-lint:latest
     commands:
       - go fmt  ./...
       - go vet  ./...
       - golangci-lint run
-      - buf lint
       - go test ./...
 
   - name: build and push docker registry
