@@ -54,3 +54,9 @@ For applicaiton development you need to install following software:
 - `buf`
 - `flutter`
 - `flutter webkit`
+
+<!--
+Kinda TODO
+Fix white color stuff in UI
+Add auth check on open
+-->

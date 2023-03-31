@@ -5,21 +5,27 @@ import 'package:flutter_shake_animated/flutter_shake_animated.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../constants.dart';
 
-showLoginScreen(BuildContext context) {
+showLoginScreen(BuildContext context, void Function() loggedCallback) {
   showDialog(
     context: context,
     barrierColor: secondaryColor,
     builder: (BuildContext context) {
       return AlertDialog(
         backgroundColor: backgroundColor,
-        title: LoginContents(),
+        title: LoginContents(
+          loggedCallback: loggedCallback,
+        ),
       );
     },
   );
 }
 
 class LoginContents extends StatefulWidget {
-  LoginContents({Key? key}) : super(key: key);
+  final void Function() loggedCallback;
+  LoginContents({
+    Key? key,
+    required this.loggedCallback,
+  }) : super(key: key);
 
   @override
   State<LoginContents> createState() => _LoginContentsState();
@@ -99,6 +105,7 @@ class _LoginContentsState extends State<LoginContents> {
                     ));
                     var prefs = await SharedPreferences.getInstance();
                     prefs.setString("token", resp.token);
+                    widget.loggedCallback();
                     Navigator.of(context).pop();
                   } catch (e) {
                     setState(() {

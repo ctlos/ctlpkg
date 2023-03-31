@@ -1,5 +1,6 @@
 import 'package:ctlpkg/controllers/menu_app_controller.dart';
 import 'package:ctlpkg/responsive.dart';
+import 'package:ctlpkg/screens/dashboard/components/add_package.dart';
 import 'package:ctlpkg/screens/dashboard/components/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,22 +45,32 @@ class ProfileCard extends StatefulWidget {
 }
 
 class _ProfileCardState extends State<ProfileCard> {
-  Widget placeholder = UnauthorizedWidget();
+  trySetAuthorized() async {
+    var prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString("token") ?? "";
+    if (token != "") {
+      setState(() {
+        placeholder = AuthorizedActions(
+          add: () {
+            showAddPackage(context);
+          },
+          update: () {
+            print("yo");
+          },
+        );
+      });
+    }
+  }
+
+  Widget placeholder = UnauthorizedWidget(loggedCallback: () {});
 
   @override
   void initState() {
+    placeholder = UnauthorizedWidget(loggedCallback: () async {
+      await trySetAuthorized();
+    });
     super.initState();
-
-    SharedPreferences.getInstance().then(
-      (prefs) => () {
-        var token = prefs.getString("token") ?? "";
-        if (token != "") {
-          setState(() {
-            placeholder = AuthorizedActions();
-          });
-        }
-      },
-    );
+    trySetAuthorized();
   }
 
   @override
@@ -76,8 +87,10 @@ class _ProfileCardState extends State<ProfileCard> {
 }
 
 class UnauthorizedWidget extends StatelessWidget {
+  final void Function() loggedCallback;
   const UnauthorizedWidget({
     Key? key,
+    required this.loggedCallback,
   }) : super(key: key);
 
   @override
@@ -94,7 +107,7 @@ class UnauthorizedWidget extends StatelessWidget {
             backgroundColor: primaryColor,
           ),
           onPressed: () {
-            showLoginScreen(context);
+            showLoginScreen(context, loggedCallback);
           },
           icon: Icon(Icons.lock_open),
           label: Text("Authorize"),
@@ -130,6 +143,7 @@ class AuthorizedActions extends StatelessWidget {
           icon: Icon(Icons.refresh),
           label: Text("Update"),
         ),
+        Container(width: 8),
         ElevatedButton.icon(
           style: TextButton.styleFrom(
             padding: EdgeInsets.symmetric(

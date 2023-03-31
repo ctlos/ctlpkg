@@ -32,11 +32,7 @@ func Run(params *Params) error {
 	grpcServer := grpc.NewServer(
 		grpc_middleware.WithUnaryServerChain(
 			grpc_recovery.UnaryServerInterceptor(),
-			getUnaryLogger(),
-		),
-		grpc_middleware.WithStreamServerChain(
-			grpc_recovery.StreamServerInterceptor(),
-			getStreamLogger(),
+			UnaryLogger(),
 		),
 	)
 	pb.RegisterPacmanServiceServer(grpcServer, &Handlers{

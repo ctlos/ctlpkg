@@ -1,30 +1,20 @@
 package service
 
 import (
-	grpc_logging "github.com/grpc-ecosystem/go-grpc-middleware/logging"
-	grpc_logrus "github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
+	"context"
+
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 )
 
-func getUnaryLogger() grpc.UnaryServerInterceptor {
-	entry := logrus.NewEntry(logrus.StandardLogger())
-	opts := []grpc_logrus.Option{
-		grpc_logrus.WithCodes(grpc_logging.DefaultErrorToCode),
-		grpc_logrus.WithLevels(grpc_logrus.DefaultClientCodeToLevel),
-		grpc_logrus.WithDurationField(grpc_logrus.DefaultDurationToField),
+func UnaryLogger() grpc.UnaryServerInterceptor {
+	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
+		resp, err := handler(ctx, req)
+		if err != nil {
+			logrus.Errorf("Request [%s] error, req: [%s], resp: [%s], err: [%s]", info.FullMethod, req, resp, err.Error())
+			return resp, err
+		}
+		logrus.Infof("Request [%s] success, req: [%s], resp: [%s]", info.FullMethod, req, resp)
+		return resp, err
 	}
-	grpc_logrus.ReplaceGrpcLogger(entry)
-	return grpc_logrus.UnaryServerInterceptor(entry, opts...)
-}
-
-func getStreamLogger() grpc.StreamServerInterceptor {
-	entry := logrus.NewEntry(logrus.StandardLogger())
-	opts := []grpc_logrus.Option{
-		grpc_logrus.WithCodes(grpc_logging.DefaultErrorToCode),
-		grpc_logrus.WithLevels(grpc_logrus.DefaultClientCodeToLevel),
-		grpc_logrus.WithDurationField(grpc_logrus.DefaultDurationToField),
-	}
-	grpc_logrus.ReplaceGrpcLogger(entry)
-	return grpc_logrus.StreamServerInterceptor(entry, opts...)
 }

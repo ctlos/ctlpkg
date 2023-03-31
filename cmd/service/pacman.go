@@ -84,8 +84,11 @@ func (s *Handlers) Add(ctx context.Context, in *pb.AddRequest) (*pb.AddResponse,
 	if !s.Tokens[in.Token] {
 		return nil, status.Error(codes.Unauthenticated, "not authorized")
 	}
-	err := s.Helper.Execute("yay -Sy --noconfirm " + strings.Join(in.Packages, ` `))
+	out, err := s.Helper.Call("yay -Sy --noconfirm " + strings.Join(in.Packages, ` `))
 	if err != nil {
+		if strings.Contains(out, "Could not find") {
+			return nil, status.Error(codes.NotFound, "unable to find package")
+		}
 		return nil, fmt.Errorf("unable to execute yay command: %w", err)
 	}
 	err = s.Helper.FormDb(s.YayPath, s.PkgPath, s.RepoName)

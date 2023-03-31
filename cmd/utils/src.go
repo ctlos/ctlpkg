@@ -35,7 +35,7 @@ func (o *OsHelper) Call(cmd string) (string, error) {
 
 	err := command.Run()
 	if err != nil {
-		return ``, err
+		return out.String(), err
 	}
 	return out.String(), nil
 }
