@@ -2,6 +2,7 @@ import 'package:ctlpkg/generated/v1/pacman.pb.dart';
 import 'package:ctlpkg/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../constants.dart';
 
 showLoginScreen(BuildContext context) {
@@ -96,7 +97,8 @@ class _LoginContentsState extends State<LoginContents> {
                       login: loginController.text,
                       password: passwordController.text,
                     ));
-                    storage.setItem("token", resp.token);
+                    var prefs = await SharedPreferences.getInstance();
+                    prefs.setString("token", resp.token);
                     Navigator.of(context).pop();
                   } catch (e) {
                     setState(() {

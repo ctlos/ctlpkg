@@ -29,7 +29,7 @@ steps:
       PASS:
         from_secret: PASS
     commands:
-      - docker build -t dancheg97.ru/$DRONE_REPO:latest
+      - docker build -t dancheg97.ru/$DRONE_REPO:latest .
       - docker login -u dancheg97 -p $PASS dancheg97.ru
       - docker push dancheg97.ru/$DRONE_REPO:latest
 

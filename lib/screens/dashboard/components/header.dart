@@ -3,6 +3,7 @@ import 'package:ctlpkg/responsive.dart';
 import 'package:ctlpkg/screens/dashboard/components/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants.dart';
 
@@ -48,12 +49,17 @@ class _ProfileCardState extends State<ProfileCard> {
   @override
   void initState() {
     super.initState();
-    var token = storage.getItem("token") ?? "";
-    if (token == "" || token == null) {
-      //
-    } else {
-      //
-    }
+
+    SharedPreferences.getInstance().then(
+      (prefs) => () {
+        var token = prefs.getString("token") ?? "";
+        if (token != "") {
+          setState(() {
+            placeholder = AuthorizedActions();
+          });
+        }
+      },
+    );
   }
 
   @override
