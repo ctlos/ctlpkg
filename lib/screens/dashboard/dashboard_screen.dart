@@ -26,7 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
       outdatedPackages = OutdatedPackages(
         outdated: resp.outdatedCount.toDouble(),
-        uptodate: resp.packagesCount.toDouble() - resp.outdatedCount.toDouble(),
+        total: resp.packagesCount.toDouble(),
         outdatedPackagesList: resp.outdatedPackages,
       );
     });

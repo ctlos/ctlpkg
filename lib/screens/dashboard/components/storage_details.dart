@@ -7,12 +7,12 @@ import 'storage_info_card.dart';
 
 class OutdatedPackages extends StatelessWidget {
   final double outdated;
-  final double uptodate;
+  final double total;
   final List<OutdatedPackage> outdatedPackagesList;
   const OutdatedPackages({
     Key? key,
     required this.outdated,
-    required this.uptodate,
+    required this.total,
     required this.outdatedPackagesList,
   }) : super(key: key);
 
@@ -50,7 +50,7 @@ class OutdatedPackages extends StatelessWidget {
           SizedBox(height: defaultPadding),
           Chart(
             outdated: outdated,
-            uptodate: uptodate,
+            uptodate: total - outdated,
           ),
           Container(
             height: 420,

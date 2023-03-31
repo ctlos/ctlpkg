@@ -3,6 +3,7 @@ import 'package:ctlpkg/generated/v1/pacman.pb.dart';
 import 'package:ctlpkg/responsive.dart';
 import 'package:ctlpkg/screens/dashboard/components/add_package.dart';
 import 'package:ctlpkg/screens/dashboard/components/login_screen.dart';
+import 'package:ctlpkg/screens/dashboard/components/update_packages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,14 +56,7 @@ class _ProfileCardState extends State<ProfileCard> {
       ));
       if (resp.upToDate) {
         setState(() {
-          placeholder = AuthorizedActions(
-            add: () {
-              showAddPackage(context);
-            },
-            update: () {
-              print("yo");
-            },
-          );
+          placeholder = AuthorizedActions();
         });
       }
     }
@@ -124,12 +118,8 @@ class UnauthorizedWidget extends StatelessWidget {
 }
 
 class AuthorizedActions extends StatelessWidget {
-  final void Function()? update;
-  final void Function()? add;
   const AuthorizedActions({
     Key? key,
-    this.update,
-    this.add,
   }) : super(key: key);
 
   @override
@@ -145,7 +135,9 @@ class AuthorizedActions extends StatelessWidget {
             ),
             backgroundColor: primaryColor,
           ),
-          onPressed: update,
+          onPressed: () {
+            showUpdateNotification(context);
+          },
           icon: Icon(Icons.refresh),
           label: Text("Update"),
         ),
@@ -158,7 +150,9 @@ class AuthorizedActions extends StatelessWidget {
             ),
             backgroundColor: primaryColor,
           ),
-          onPressed: add,
+          onPressed: () {
+            showAddPackage(context);
+          },
           icon: Icon(Icons.add),
           label: Text("Add"),
         ),
