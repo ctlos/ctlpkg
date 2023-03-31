@@ -146,3 +146,23 @@ const LoginResponse$json = const {
 
 /// Descriptor for `LoginResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List loginResponseDescriptor = $convert.base64Decode('Cg1Mb2dpblJlc3BvbnNlEhQKBXRva2VuGAEgASgJUgV0b2tlbg==');
+@$core.Deprecated('Use checkTokenRequestDescriptor instead')
+const CheckTokenRequest$json = const {
+  '1': 'CheckTokenRequest',
+  '2': const [
+    const {'1': 'token', '3': 1, '4': 1, '5': 9, '10': 'token'},
+  ],
+};
+
+/// Descriptor for `CheckTokenRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List checkTokenRequestDescriptor = $convert.base64Decode('ChFDaGVja1Rva2VuUmVxdWVzdBIUCgV0b2tlbhgBIAEoCVIFdG9rZW4=');
+@$core.Deprecated('Use checkTokenResponseDescriptor instead')
+const CheckTokenResponse$json = const {
+  '1': 'CheckTokenResponse',
+  '2': const [
+    const {'1': 'up_to_date', '3': 1, '4': 1, '5': 8, '10': 'upToDate'},
+  ],
+};
+
+/// Descriptor for `CheckTokenResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List checkTokenResponseDescriptor = $convert.base64Decode('ChJDaGVja1Rva2VuUmVzcG9uc2USHAoKdXBfdG9fZGF0ZRgBIAEoCFIIdXBUb0RhdGU=');

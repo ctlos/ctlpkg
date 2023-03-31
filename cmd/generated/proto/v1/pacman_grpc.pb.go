@@ -24,16 +24,18 @@ const _ = grpc.SupportPackageIsVersion7
 type PacmanServiceClient interface {
 	// Add new packages from AUR package registry
 	Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error)
-	// Check wether some package exists in repository
-	Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error)
 	// Update all packages from AUR
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
+	// Check wether some package exists in repository
+	Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error)
 	// Get package description from pacman
 	Describe(ctx context.Context, in *DescribeRequest, opts ...grpc.CallOption) (*DescribeResponse, error)
 	// Get overall statistics from service
 	Stats(ctx context.Context, in *StatsRequest, opts ...grpc.CallOption) (*StatsResponse, error)
 	// Login and recieve token for other communications
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	// A call used to check wether token is up to date in current session
+	CheckToken(ctx context.Context, in *CheckTokenRequest, opts ...grpc.CallOption) (*CheckTokenResponse, error)
 }
 
 type pacmanServiceClient struct {
@@ -53,18 +55,18 @@ func (c *pacmanServiceClient) Add(ctx context.Context, in *AddRequest, opts ...g
 	return out, nil
 }
 
-func (c *pacmanServiceClient) Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error) {
-	out := new(SearchResponse)
-	err := c.cc.Invoke(ctx, "/proto.v1.PacmanService/Search", in, out, opts...)
+func (c *pacmanServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+	out := new(UpdateResponse)
+	err := c.cc.Invoke(ctx, "/proto.v1.PacmanService/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *pacmanServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
-	out := new(UpdateResponse)
-	err := c.cc.Invoke(ctx, "/proto.v1.PacmanService/Update", in, out, opts...)
+func (c *pacmanServiceClient) Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error) {
+	out := new(SearchResponse)
+	err := c.cc.Invoke(ctx, "/proto.v1.PacmanService/Search", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -98,22 +100,33 @@ func (c *pacmanServiceClient) Login(ctx context.Context, in *LoginRequest, opts 
 	return out, nil
 }
 
+func (c *pacmanServiceClient) CheckToken(ctx context.Context, in *CheckTokenRequest, opts ...grpc.CallOption) (*CheckTokenResponse, error) {
+	out := new(CheckTokenResponse)
+	err := c.cc.Invoke(ctx, "/proto.v1.PacmanService/CheckToken", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PacmanServiceServer is the server API for PacmanService service.
 // All implementations should embed UnimplementedPacmanServiceServer
 // for forward compatibility
 type PacmanServiceServer interface {
 	// Add new packages from AUR package registry
 	Add(context.Context, *AddRequest) (*AddResponse, error)
-	// Check wether some package exists in repository
-	Search(context.Context, *SearchRequest) (*SearchResponse, error)
 	// Update all packages from AUR
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
+	// Check wether some package exists in repository
+	Search(context.Context, *SearchRequest) (*SearchResponse, error)
 	// Get package description from pacman
 	Describe(context.Context, *DescribeRequest) (*DescribeResponse, error)
 	// Get overall statistics from service
 	Stats(context.Context, *StatsRequest) (*StatsResponse, error)
 	// Login and recieve token for other communications
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
+	// A call used to check wether token is up to date in current session
+	CheckToken(context.Context, *CheckTokenRequest) (*CheckTokenResponse, error)
 }
 
 // UnimplementedPacmanServiceServer should be embedded to have forward compatible implementations.
@@ -123,11 +136,11 @@ type UnimplementedPacmanServiceServer struct {
 func (UnimplementedPacmanServiceServer) Add(context.Context, *AddRequest) (*AddResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Add not implemented")
 }
-func (UnimplementedPacmanServiceServer) Search(context.Context, *SearchRequest) (*SearchResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Search not implemented")
-}
 func (UnimplementedPacmanServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+func (UnimplementedPacmanServiceServer) Search(context.Context, *SearchRequest) (*SearchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Search not implemented")
 }
 func (UnimplementedPacmanServiceServer) Describe(context.Context, *DescribeRequest) (*DescribeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Describe not implemented")
@@ -137,6 +150,9 @@ func (UnimplementedPacmanServiceServer) Stats(context.Context, *StatsRequest) (*
 }
 func (UnimplementedPacmanServiceServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
+func (UnimplementedPacmanServiceServer) CheckToken(context.Context, *CheckTokenRequest) (*CheckTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckToken not implemented")
 }
 
 // UnsafePacmanServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -168,24 +184,6 @@ func _PacmanService_Add_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PacmanService_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PacmanServiceServer).Search(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/proto.v1.PacmanService/Search",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PacmanServiceServer).Search(ctx, req.(*SearchRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _PacmanService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
@@ -200,6 +198,24 @@ func _PacmanService_Update_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PacmanServiceServer).Update(ctx, req.(*UpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PacmanService_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PacmanServiceServer).Search(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.v1.PacmanService/Search",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PacmanServiceServer).Search(ctx, req.(*SearchRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -258,6 +274,24 @@ func _PacmanService_Login_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PacmanService_CheckToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PacmanServiceServer).CheckToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.v1.PacmanService/CheckToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PacmanServiceServer).CheckToken(ctx, req.(*CheckTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PacmanService_ServiceDesc is the grpc.ServiceDesc for PacmanService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -270,12 +304,12 @@ var PacmanService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PacmanService_Add_Handler,
 		},
 		{
-			MethodName: "Search",
-			Handler:    _PacmanService_Search_Handler,
-		},
-		{
 			MethodName: "Update",
 			Handler:    _PacmanService_Update_Handler,
+		},
+		{
+			MethodName: "Search",
+			Handler:    _PacmanService_Search_Handler,
 		},
 		{
 			MethodName: "Describe",
@@ -288,6 +322,10 @@ var PacmanService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Login",
 			Handler:    _PacmanService_Login_Handler,
+		},
+		{
+			MethodName: "CheckToken",
+			Handler:    _PacmanService_CheckToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -18,16 +18,16 @@ class PacmanServiceClient extends $grpc.Client {
       '/proto.v1.PacmanService/Add',
       ($0.AddRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.AddResponse.fromBuffer(value));
-  static final _$search =
-      $grpc.ClientMethod<$0.SearchRequest, $0.SearchResponse>(
-          '/proto.v1.PacmanService/Search',
-          ($0.SearchRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $0.SearchResponse.fromBuffer(value));
   static final _$update =
       $grpc.ClientMethod<$0.UpdateRequest, $0.UpdateResponse>(
           '/proto.v1.PacmanService/Update',
           ($0.UpdateRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.UpdateResponse.fromBuffer(value));
+  static final _$search =
+      $grpc.ClientMethod<$0.SearchRequest, $0.SearchResponse>(
+          '/proto.v1.PacmanService/Search',
+          ($0.SearchRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.SearchResponse.fromBuffer(value));
   static final _$describe =
       $grpc.ClientMethod<$0.DescribeRequest, $0.DescribeResponse>(
           '/proto.v1.PacmanService/Describe',
@@ -42,6 +42,12 @@ class PacmanServiceClient extends $grpc.Client {
       '/proto.v1.PacmanService/Login',
       ($0.LoginRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.LoginResponse.fromBuffer(value));
+  static final _$checkToken =
+      $grpc.ClientMethod<$0.CheckTokenRequest, $0.CheckTokenResponse>(
+          '/proto.v1.PacmanService/CheckToken',
+          ($0.CheckTokenRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.CheckTokenResponse.fromBuffer(value));
 
   PacmanServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -53,14 +59,14 @@ class PacmanServiceClient extends $grpc.Client {
     return $createUnaryCall(_$add, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.SearchResponse> search($0.SearchRequest request,
-      {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$search, request, options: options);
-  }
-
   $grpc.ResponseFuture<$0.UpdateResponse> update($0.UpdateRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$update, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.SearchResponse> search($0.SearchRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$search, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.DescribeResponse> describe($0.DescribeRequest request,
@@ -77,6 +83,12 @@ class PacmanServiceClient extends $grpc.Client {
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$login, request, options: options);
   }
+
+  $grpc.ResponseFuture<$0.CheckTokenResponse> checkToken(
+      $0.CheckTokenRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$checkToken, request, options: options);
+  }
 }
 
 abstract class PacmanServiceBase extends $grpc.Service {
@@ -90,13 +102,6 @@ abstract class PacmanServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.AddRequest.fromBuffer(value),
         ($0.AddResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.SearchRequest, $0.SearchResponse>(
-        'Search',
-        search_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $0.SearchRequest.fromBuffer(value),
-        ($0.SearchResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.UpdateRequest, $0.UpdateResponse>(
         'Update',
         update_Pre,
@@ -104,6 +109,13 @@ abstract class PacmanServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.UpdateRequest.fromBuffer(value),
         ($0.UpdateResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.SearchRequest, $0.SearchResponse>(
+        'Search',
+        search_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.SearchRequest.fromBuffer(value),
+        ($0.SearchResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.DescribeRequest, $0.DescribeResponse>(
         'Describe',
         describe_Pre,
@@ -125,6 +137,13 @@ abstract class PacmanServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.LoginRequest.fromBuffer(value),
         ($0.LoginResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.CheckTokenRequest, $0.CheckTokenResponse>(
+        'CheckToken',
+        checkToken_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.CheckTokenRequest.fromBuffer(value),
+        ($0.CheckTokenResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.AddResponse> add_Pre(
@@ -132,14 +151,14 @@ abstract class PacmanServiceBase extends $grpc.Service {
     return add(call, await request);
   }
 
-  $async.Future<$0.SearchResponse> search_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.SearchRequest> request) async {
-    return search(call, await request);
-  }
-
   $async.Future<$0.UpdateResponse> update_Pre(
       $grpc.ServiceCall call, $async.Future<$0.UpdateRequest> request) async {
     return update(call, await request);
+  }
+
+  $async.Future<$0.SearchResponse> search_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.SearchRequest> request) async {
+    return search(call, await request);
   }
 
   $async.Future<$0.DescribeResponse> describe_Pre(
@@ -157,16 +176,23 @@ abstract class PacmanServiceBase extends $grpc.Service {
     return login(call, await request);
   }
 
+  $async.Future<$0.CheckTokenResponse> checkToken_Pre($grpc.ServiceCall call,
+      $async.Future<$0.CheckTokenRequest> request) async {
+    return checkToken(call, await request);
+  }
+
   $async.Future<$0.AddResponse> add(
       $grpc.ServiceCall call, $0.AddRequest request);
-  $async.Future<$0.SearchResponse> search(
-      $grpc.ServiceCall call, $0.SearchRequest request);
   $async.Future<$0.UpdateResponse> update(
       $grpc.ServiceCall call, $0.UpdateRequest request);
+  $async.Future<$0.SearchResponse> search(
+      $grpc.ServiceCall call, $0.SearchRequest request);
   $async.Future<$0.DescribeResponse> describe(
       $grpc.ServiceCall call, $0.DescribeRequest request);
   $async.Future<$0.StatsResponse> stats(
       $grpc.ServiceCall call, $0.StatsRequest request);
   $async.Future<$0.LoginResponse> login(
       $grpc.ServiceCall call, $0.LoginRequest request);
+  $async.Future<$0.CheckTokenResponse> checkToken(
+      $grpc.ServiceCall call, $0.CheckTokenRequest request);
 }

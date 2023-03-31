@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:ctlpkg/generated/v1/pacman.pb.dart';
 import 'package:ctlpkg/responsive.dart';
 import 'package:ctlpkg/screens/dashboard/components/my_fields.dart';
@@ -17,23 +15,27 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  double outdated = 0;
-  double uptodate = 20;
-  List<OutdatedPackage> outdatedPackages = [];
+  Widget outdatedPackages = Container();
+  bool showOutdated = false;
 
-  updatePackages() async {
+  setPackageStatistics() async {
     var resp = await stub.stats(StatsRequest());
     setState(() {
-      outdated = resp.outdatedCount.toDouble();
-      uptodate = resp.packagesCount.toDouble() - outdated;
-      outdatedPackages = resp.outdatedPackages;
+      if (resp.outdatedCount > 0) {
+        showOutdated = true;
+      }
+      outdatedPackages = OutdatedPackages(
+        outdated: resp.outdatedCount.toDouble(),
+        uptodate: resp.packagesCount.toDouble() - resp.outdatedCount.toDouble(),
+        outdatedPackagesList: resp.outdatedPackages,
+      );
     });
   }
 
   @override
   void initState() {
     super.initState();
-    updatePackages();
+    setPackageStatistics();
   }
 
   @override
@@ -58,27 +60,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       RecentFiles(),
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context))
-                        StarageDetails(
-                          outdated: outdated,
-                          uptodate: uptodate,
-                          outdatedPackagesList: outdatedPackages,
-                        ),
+                      if (Responsive.isMobile(context) && showOutdated)
+                        outdatedPackages,
                     ],
                   ),
                 ),
                 if (!Responsive.isMobile(context))
                   SizedBox(width: defaultPadding),
-                // On Mobile means if the screen is less than 850 we dont want to show it
-                if (!Responsive.isMobile(context))
-                  Expanded(
-                    flex: 2,
-                    child: StarageDetails(
-                      outdated: outdated,
-                      uptodate: uptodate,
-                      outdatedPackagesList: outdatedPackages,
-                    ),
-                  ),
+                if (!Responsive.isMobile(context) && showOutdated)
+                  Expanded(flex: 2, child: outdatedPackages),
               ],
             )
           ],

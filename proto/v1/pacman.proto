@@ -7,7 +7,7 @@ option go_package = "gen/go/pb";
 service PacmanService {
   // Add new packages from AUR package registry
   rpc Add(AddRequest) returns (AddResponse);
-  
+
   // Update all packages from AUR
   rpc Update(UpdateRequest) returns (UpdateResponse);
 
@@ -22,6 +22,9 @@ service PacmanService {
 
   // Login and recieve token for other communications
   rpc Login(LoginRequest) returns (LoginResponse);
+
+  // A call used to check wether token is up to date in current session
+  rpc CheckToken(CheckTokenRequest) returns (CheckTokenResponse);
 }
 
 // List of packages from AUR to add
@@ -80,4 +83,12 @@ message LoginRequest {
 
 message LoginResponse {
   string token = 1;
+}
+
+message CheckTokenRequest {
+  string token = 1;
+}
+
+message CheckTokenResponse {
+  bool up_to_date = 1;
 }

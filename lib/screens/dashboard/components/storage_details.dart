@@ -5,11 +5,11 @@ import '../../../constants.dart';
 import 'chart.dart';
 import 'storage_info_card.dart';
 
-class StarageDetails extends StatelessWidget {
+class OutdatedPackages extends StatelessWidget {
   final double outdated;
   final double uptodate;
   final List<OutdatedPackage> outdatedPackagesList;
-  const StarageDetails({
+  const OutdatedPackages({
     Key? key,
     required this.outdated,
     required this.uptodate,

@@ -626,3 +626,97 @@ class LoginResponse extends $pb.GeneratedMessage {
   void clearToken() => clearField(1);
 }
 
+class CheckTokenRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CheckTokenRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto.v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'token')
+    ..hasRequiredFields = false
+  ;
+
+  CheckTokenRequest._() : super();
+  factory CheckTokenRequest({
+    $core.String? token,
+  }) {
+    final _result = create();
+    if (token != null) {
+      _result.token = token;
+    }
+    return _result;
+  }
+  factory CheckTokenRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CheckTokenRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CheckTokenRequest clone() => CheckTokenRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CheckTokenRequest copyWith(void Function(CheckTokenRequest) updates) => super.copyWith((message) => updates(message as CheckTokenRequest)) as CheckTokenRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CheckTokenRequest create() => CheckTokenRequest._();
+  CheckTokenRequest createEmptyInstance() => create();
+  static $pb.PbList<CheckTokenRequest> createRepeated() => $pb.PbList<CheckTokenRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CheckTokenRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CheckTokenRequest>(create);
+  static CheckTokenRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get token => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set token($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasToken() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearToken() => clearField(1);
+}
+
+class CheckTokenResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CheckTokenResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto.v1'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'upToDate')
+    ..hasRequiredFields = false
+  ;
+
+  CheckTokenResponse._() : super();
+  factory CheckTokenResponse({
+    $core.bool? upToDate,
+  }) {
+    final _result = create();
+    if (upToDate != null) {
+      _result.upToDate = upToDate;
+    }
+    return _result;
+  }
+  factory CheckTokenResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CheckTokenResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CheckTokenResponse clone() => CheckTokenResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CheckTokenResponse copyWith(void Function(CheckTokenResponse) updates) => super.copyWith((message) => updates(message as CheckTokenResponse)) as CheckTokenResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CheckTokenResponse create() => CheckTokenResponse._();
+  CheckTokenResponse createEmptyInstance() => create();
+  static $pb.PbList<CheckTokenResponse> createRepeated() => $pb.PbList<CheckTokenResponse>();
+  @$core.pragma('dart2js:noInline')
+  static CheckTokenResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CheckTokenResponse>(create);
+  static CheckTokenResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get upToDate => $_getBF(0);
+  @$pb.TagNumber(1)
+  set upToDate($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUpToDate() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUpToDate() => clearField(1);
+}
+

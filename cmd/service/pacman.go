@@ -22,6 +22,18 @@ type Handlers struct {
 	Tokens   map[string]bool
 }
 
+// CheckToken implements pb.PacmanServiceServer
+func (s *Handlers) CheckToken(ctx context.Context, in *pb.CheckTokenRequest) (*pb.CheckTokenResponse, error) {
+	if s.Tokens[in.Token] {
+		return &pb.CheckTokenResponse{
+			UpToDate: true,
+		}, nil
+	}
+	return &pb.CheckTokenResponse{
+		UpToDate: false,
+	}, nil
+}
+
 // Login implements pb.PacmanServiceServer.
 func (s *Handlers) Login(ctx context.Context, in *pb.LoginRequest) (*pb.LoginResponse, error) {
 	password, exists := s.Logins[in.Login]

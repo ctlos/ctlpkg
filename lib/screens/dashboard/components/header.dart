@@ -1,4 +1,5 @@
 import 'package:ctlpkg/controllers/menu_app_controller.dart';
+import 'package:ctlpkg/generated/v1/pacman.pb.dart';
 import 'package:ctlpkg/responsive.dart';
 import 'package:ctlpkg/screens/dashboard/components/add_package.dart';
 import 'package:ctlpkg/screens/dashboard/components/login_screen.dart';
@@ -49,16 +50,21 @@ class _ProfileCardState extends State<ProfileCard> {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("token") ?? "";
     if (token != "") {
-      setState(() {
-        placeholder = AuthorizedActions(
-          add: () {
-            showAddPackage(context);
-          },
-          update: () {
-            print("yo");
-          },
-        );
-      });
+      var resp = await stub.checkToken(CheckTokenRequest(
+        token: token,
+      ));
+      if (resp.upToDate) {
+        setState(() {
+          placeholder = AuthorizedActions(
+            add: () {
+              showAddPackage(context);
+            },
+            update: () {
+              print("yo");
+            },
+          );
+        });
+      }
     }
   }
 
