@@ -113,6 +113,9 @@ func (s *Handlers) Search(ctx context.Context, in *pb.SearchRequest) (*pb.Search
 	}
 	out, err := s.Helper.Call("pacman -Q | grep " + in.Pattern)
 	if err != nil {
+		if out == `` {
+			return &pb.SearchResponse{}, nil
+		}
 		return nil, fmt.Errorf("unable to execute pacman+grep command: %w", err)
 	}
 	return &pb.SearchResponse{
