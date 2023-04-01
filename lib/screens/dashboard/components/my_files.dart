@@ -1,4 +1,5 @@
 import 'package:ctlpkg/responsive.dart';
+import 'package:ctlpkg/screens/dashboard/components/button.dart';
 import 'package:flutter/material.dart';
 import 'package:ctlpkg/models/my_files.dart';
 import '../../../constants.dart';
@@ -21,17 +22,10 @@ class MyFiles extends StatelessWidget {
               "My Files",
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            ElevatedButton.icon(
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                  horizontal: defaultPadding * 1.5,
-                  vertical:
-                      defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
-                ),
-              ),
+            CtlButton(
+              text: "Add new",
+              icon: Icons.add,
               onPressed: () {},
-              icon: Icon(Icons.add),
-              label: Text("Add New"),
             ),
           ],
         ),

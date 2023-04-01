@@ -59,4 +59,5 @@ For applicaiton development you need to install following software:
 Kinda TODO
 Fix white color stuff in UI
 Add auth check on open
+Expand updated packages
 -->

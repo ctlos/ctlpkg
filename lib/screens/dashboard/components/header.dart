@@ -2,6 +2,7 @@ import 'package:ctlpkg/controllers/menu_app_controller.dart';
 import 'package:ctlpkg/generated/v1/pacman.pb.dart';
 import 'package:ctlpkg/responsive.dart';
 import 'package:ctlpkg/screens/dashboard/components/add_package.dart';
+import 'package:ctlpkg/screens/dashboard/components/button.dart';
 import 'package:ctlpkg/screens/dashboard/components/login_screen.dart';
 import 'package:ctlpkg/screens/dashboard/components/update_packages.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,7 @@ class Header extends StatelessWidget {
             "CtlOS package repository",
             style: Theme.of(context).textTheme.titleLarge,
           ),
-        if (!Responsive.isMobile(context))
-          Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
+        Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
         ProfileCard(),
       ],
     );
@@ -47,6 +47,8 @@ class ProfileCard extends StatefulWidget {
 }
 
 class _ProfileCardState extends State<ProfileCard> {
+  Widget placeholder = Placeholder();
+
   trySetAuthorized() async {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("token") ?? "";
@@ -61,8 +63,6 @@ class _ProfileCardState extends State<ProfileCard> {
       }
     }
   }
-
-  Widget placeholder = UnauthorizedWidget(loggedCallback: () {});
 
   @override
   void initState() {
@@ -98,19 +98,12 @@ class UnauthorizedWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        ElevatedButton.icon(
-          style: TextButton.styleFrom(
-            padding: EdgeInsets.symmetric(
-              horizontal: defaultPadding * 1.5,
-              vertical: defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
-            ),
-            backgroundColor: primaryColor,
-          ),
+        CtlButton(
+          text: "Authorize",
+          icon: Icons.lock_open,
           onPressed: () {
             showLoginScreen(context, loggedCallback);
           },
-          icon: Icon(Icons.lock_open),
-          label: Text("Authorize"),
         ),
       ],
     );
@@ -125,36 +118,21 @@ class AuthorizedActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        ElevatedButton.icon(
-          style: TextButton.styleFrom(
-            padding: EdgeInsets.symmetric(
-              horizontal: defaultPadding * 1.5,
-              vertical: defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
-            ),
-            backgroundColor: primaryColor,
-          ),
+        CtlButton(
+          text: "Update",
+          icon: Icons.refresh,
           onPressed: () {
             showUpdateNotification(context);
           },
-          icon: Icon(Icons.refresh),
-          label: Text("Update"),
         ),
-        Container(width: 8),
-        ElevatedButton.icon(
-          style: TextButton.styleFrom(
-            padding: EdgeInsets.symmetric(
-              horizontal: defaultPadding * 1.5,
-              vertical: defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
-            ),
-            backgroundColor: primaryColor,
-          ),
+        SizedBox(width: defaultPadding),
+        CtlButton(
+          text: "Add",
+          icon: Icons.add,
           onPressed: () {
             showAddPackage(context);
           },
-          icon: Icon(Icons.add),
-          label: Text("Add"),
         ),
       ],
     );

@@ -142,6 +142,9 @@ func (o *OsHelper) ParsePackages(inp string) []string {
 func (o *OsHelper) GetOutdatedPacakges() ([]*pb.OutdatedPackage, error) {
 	output, err := o.Call("sudo pacman -Qu")
 	if err != nil {
+		if output == `` {
+			return nil, nil
+		}
 		return nil, err
 	}
 	out := []*pb.OutdatedPackage{}
