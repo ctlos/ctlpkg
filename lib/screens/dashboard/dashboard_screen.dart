@@ -1,13 +1,12 @@
 import 'package:ctlpkg/generated/v1/pacman.pb.dart';
 import 'package:ctlpkg/responsive.dart';
-import 'package:ctlpkg/screens/dashboard/components/my_fields.dart';
+import 'package:ctlpkg/screens/dashboard/components/package_info_board.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 import 'components/header.dart';
 
-import 'components/recent_files.dart';
-import 'components/storage_details.dart';
+import 'components/outdated_packages.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -55,9 +54,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   flex: 5,
                   child: Column(
                     children: [
-                      MyFiles(),
-                      SizedBox(height: defaultPadding),
-                      RecentFiles(),
+                      PackageInfoBoard(
+                        name: "git",
+                      ),
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
                       if (Responsive.isMobile(context) && showOutdated)

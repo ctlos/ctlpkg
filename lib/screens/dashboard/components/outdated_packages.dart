@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import 'chart.dart';
-import 'storage_info_card.dart';
+import 'outdated_package_card.dart';
 
 class OutdatedPackages extends StatelessWidget {
   final double outdated;
@@ -16,11 +16,11 @@ class OutdatedPackages extends StatelessWidget {
     required this.outdatedPackagesList,
   }) : super(key: key);
 
-  List<StorageInfoCard> convertPackages(
+  List<OutdatedPackageCard> convertPackages(
       List<OutdatedPackage> outdatedPackagesList) {
-    List<StorageInfoCard> output = [];
+    List<OutdatedPackageCard> output = [];
     outdatedPackagesList.forEach((element) {
-      output.add(StorageInfoCard(
+      output.add(OutdatedPackageCard(
         name: element.name,
         latestVersion: element.latestVersion,
         currVersion: element.currentVersion,
