@@ -64,17 +64,17 @@ message DescribeResponse {
   string licenses = 6;
   string groups = 7;
   string provides = 8;
-  string requiredBy = 9;
-  string optionalFor = 10;
-  string conflictsWith = 11;
+  string required_by = 9;
+  string optional_for = 10;
+  string conflicts_with = 11;
   string replaces = 12;
-  string installedSize = 13;
+  string installed_size = 13;
   string packager = 14;
-  string buildDate = 15;
-  string installDate = 16;
-  string installReason = 17;
-  string installScript = 18;
-  string validatedBy = 19;
+  string build_date = 15;
+  string install_date = 16;
+  string install_reason = 17;
+  string install_script = 18;
+  string validated_by = 19;
   repeated Dependency dependecies = 20;
 }
 

@@ -9,12 +9,19 @@ import 'components/header.dart';
 import 'components/outdated_packages.dart';
 
 class DashboardScreen extends StatefulWidget {
+  final String package;
+  const DashboardScreen({
+    Key? key,
+    required this.package,
+  }) : super(key: key);
+
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  Widget outdatedPackages = Container();
+  Widget outdatedPackages = Placeholder();
+  DescribeResponse description = DescribeResponse();
   bool showOutdated = false;
 
   setPackageStatistics() async {
@@ -31,10 +38,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
+  updatePackageInfo(String text) async {
+    var resp = await stub.describe(
+      DescribeRequest(package: text),
+    );
+    setState(() {
+      description = resp;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     setPackageStatistics();
+    updatePackageInfo(widget.package);
   }
 
   @override
@@ -59,27 +76,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       if (Responsive.isMobile(context) && showOutdated)
                         SizedBox(height: defaultPadding),
                       PackageInfoBoard(
-                        description: DescribeResponse(
-                          name: "name",
-                          version: "version",
-                          description: "description",
-                          architecture: "architecture",
-                          url: "url",
-                          licenses: "licenses",
-                          groups: "groups",
-                          provides: "provides",
-                          requiredBy: "requiredBy",
-                          optionalFor: "optionalFor",
-                          conflictsWith: "conflictsWith",
-                          replaces: "replaces",
-                          installedSize: "installedSize",
-                          packager: "packager",
-                          buildDate: "buildDate",
-                          installDate: "installDate",
-                          installReason: "installReason",
-                          installScript: "installScript",
-                          validatedBy: "validatedBy",
-                        ),
+                        description: description,
                       ),
                     ],
                   ),

@@ -251,4 +251,4 @@ issues:
     - path: "cmd/flags.go"
       linters: [gochecknoglobals, gochecknoinits, errcheck]
     - path: "cmd/utils/src.go"
-      linters: [predeclared]
+      linters: [predeclared,cyclop]

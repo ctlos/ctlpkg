@@ -116,7 +116,7 @@ class PackageInfoBoard extends StatelessWidget {
                 ),
                 formDataRow(
                   value: description.installScript,
-                  key: "Has installation script",
+                  key: "Installation script",
                   icon: Icons.code,
                   color: Colors.deepPurple,
                 ),

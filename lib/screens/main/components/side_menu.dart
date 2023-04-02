@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SideMenu extends StatefulWidget {
+  final void Function(String) refreshPage;
   const SideMenu({
     Key? key,
+    required this.refreshPage,
   }) : super(key: key);
 
   @override
@@ -22,7 +24,9 @@ class _SideMenuState extends State<SideMenu> {
       newElements.add(DrawerListTile(
         title: element,
         svgSrc: "assets/icons/menu_doc.svg",
-        press: () {},
+        press: () {
+          widget.refreshPage(element);
+        },
       ));
     });
     setState(() {

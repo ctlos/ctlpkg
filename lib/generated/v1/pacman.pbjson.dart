@@ -85,23 +85,23 @@ const DescribeResponse$json = const {
     const {'1': 'licenses', '3': 6, '4': 1, '5': 9, '10': 'licenses'},
     const {'1': 'groups', '3': 7, '4': 1, '5': 9, '10': 'groups'},
     const {'1': 'provides', '3': 8, '4': 1, '5': 9, '10': 'provides'},
-    const {'1': 'requiredBy', '3': 9, '4': 1, '5': 9, '10': 'requiredBy'},
-    const {'1': 'optionalFor', '3': 10, '4': 1, '5': 9, '10': 'optionalFor'},
-    const {'1': 'conflictsWith', '3': 11, '4': 1, '5': 9, '10': 'conflictsWith'},
+    const {'1': 'required_by', '3': 9, '4': 1, '5': 9, '10': 'requiredBy'},
+    const {'1': 'optional_for', '3': 10, '4': 1, '5': 9, '10': 'optionalFor'},
+    const {'1': 'conflicts_with', '3': 11, '4': 1, '5': 9, '10': 'conflictsWith'},
     const {'1': 'replaces', '3': 12, '4': 1, '5': 9, '10': 'replaces'},
-    const {'1': 'installedSize', '3': 13, '4': 1, '5': 9, '10': 'installedSize'},
+    const {'1': 'installed_size', '3': 13, '4': 1, '5': 9, '10': 'installedSize'},
     const {'1': 'packager', '3': 14, '4': 1, '5': 9, '10': 'packager'},
-    const {'1': 'buildDate', '3': 15, '4': 1, '5': 9, '10': 'buildDate'},
-    const {'1': 'installDate', '3': 16, '4': 1, '5': 9, '10': 'installDate'},
-    const {'1': 'installReason', '3': 17, '4': 1, '5': 9, '10': 'installReason'},
-    const {'1': 'installScript', '3': 18, '4': 1, '5': 9, '10': 'installScript'},
-    const {'1': 'validatedBy', '3': 19, '4': 1, '5': 9, '10': 'validatedBy'},
+    const {'1': 'build_date', '3': 15, '4': 1, '5': 9, '10': 'buildDate'},
+    const {'1': 'install_date', '3': 16, '4': 1, '5': 9, '10': 'installDate'},
+    const {'1': 'install_reason', '3': 17, '4': 1, '5': 9, '10': 'installReason'},
+    const {'1': 'install_script', '3': 18, '4': 1, '5': 9, '10': 'installScript'},
+    const {'1': 'validated_by', '3': 19, '4': 1, '5': 9, '10': 'validatedBy'},
     const {'1': 'dependecies', '3': 20, '4': 3, '5': 11, '6': '.proto.v1.Dependency', '10': 'dependecies'},
   ],
 };
 
 /// Descriptor for `DescribeResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List describeResponseDescriptor = $convert.base64Decode('ChBEZXNjcmliZVJlc3BvbnNlEhIKBG5hbWUYASABKAlSBG5hbWUSGAoHdmVyc2lvbhgCIAEoCVIHdmVyc2lvbhIgCgtkZXNjcmlwdGlvbhgDIAEoCVILZGVzY3JpcHRpb24SIgoMYXJjaGl0ZWN0dXJlGAQgASgJUgxhcmNoaXRlY3R1cmUSEAoDdXJsGAUgASgJUgN1cmwSGgoIbGljZW5zZXMYBiABKAlSCGxpY2Vuc2VzEhYKBmdyb3VwcxgHIAEoCVIGZ3JvdXBzEhoKCHByb3ZpZGVzGAggASgJUghwcm92aWRlcxIeCgpyZXF1aXJlZEJ5GAkgASgJUgpyZXF1aXJlZEJ5EiAKC29wdGlvbmFsRm9yGAogASgJUgtvcHRpb25hbEZvchIkCg1jb25mbGljdHNXaXRoGAsgASgJUg1jb25mbGljdHNXaXRoEhoKCHJlcGxhY2VzGAwgASgJUghyZXBsYWNlcxIkCg1pbnN0YWxsZWRTaXplGA0gASgJUg1pbnN0YWxsZWRTaXplEhoKCHBhY2thZ2VyGA4gASgJUghwYWNrYWdlchIcCglidWlsZERhdGUYDyABKAlSCWJ1aWxkRGF0ZRIgCgtpbnN0YWxsRGF0ZRgQIAEoCVILaW5zdGFsbERhdGUSJAoNaW5zdGFsbFJlYXNvbhgRIAEoCVINaW5zdGFsbFJlYXNvbhIkCg1pbnN0YWxsU2NyaXB0GBIgASgJUg1pbnN0YWxsU2NyaXB0EiAKC3ZhbGlkYXRlZEJ5GBMgASgJUgt2YWxpZGF0ZWRCeRI2CgtkZXBlbmRlY2llcxgUIAMoCzIULnByb3RvLnYxLkRlcGVuZGVuY3lSC2RlcGVuZGVjaWVz');
+final $typed_data.Uint8List describeResponseDescriptor = $convert.base64Decode('ChBEZXNjcmliZVJlc3BvbnNlEhIKBG5hbWUYASABKAlSBG5hbWUSGAoHdmVyc2lvbhgCIAEoCVIHdmVyc2lvbhIgCgtkZXNjcmlwdGlvbhgDIAEoCVILZGVzY3JpcHRpb24SIgoMYXJjaGl0ZWN0dXJlGAQgASgJUgxhcmNoaXRlY3R1cmUSEAoDdXJsGAUgASgJUgN1cmwSGgoIbGljZW5zZXMYBiABKAlSCGxpY2Vuc2VzEhYKBmdyb3VwcxgHIAEoCVIGZ3JvdXBzEhoKCHByb3ZpZGVzGAggASgJUghwcm92aWRlcxIfCgtyZXF1aXJlZF9ieRgJIAEoCVIKcmVxdWlyZWRCeRIhCgxvcHRpb25hbF9mb3IYCiABKAlSC29wdGlvbmFsRm9yEiUKDmNvbmZsaWN0c193aXRoGAsgASgJUg1jb25mbGljdHNXaXRoEhoKCHJlcGxhY2VzGAwgASgJUghyZXBsYWNlcxIlCg5pbnN0YWxsZWRfc2l6ZRgNIAEoCVINaW5zdGFsbGVkU2l6ZRIaCghwYWNrYWdlchgOIAEoCVIIcGFja2FnZXISHQoKYnVpbGRfZGF0ZRgPIAEoCVIJYnVpbGREYXRlEiEKDGluc3RhbGxfZGF0ZRgQIAEoCVILaW5zdGFsbERhdGUSJQoOaW5zdGFsbF9yZWFzb24YESABKAlSDWluc3RhbGxSZWFzb24SJQoOaW5zdGFsbF9zY3JpcHQYEiABKAlSDWluc3RhbGxTY3JpcHQSIQoMdmFsaWRhdGVkX2J5GBMgASgJUgt2YWxpZGF0ZWRCeRI2CgtkZXBlbmRlY2llcxgUIAMoCzIULnByb3RvLnYxLkRlcGVuZGVuY3lSC2RlcGVuZGVjaWVz');
 @$core.Deprecated('Use dependencyDescriptor instead')
 const Dependency$json = const {
   '1': 'Dependency',
