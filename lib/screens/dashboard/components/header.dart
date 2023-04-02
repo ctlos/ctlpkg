@@ -4,7 +4,6 @@ import 'package:ctlpkg/responsive.dart';
 import 'package:ctlpkg/screens/dashboard/components/add_package.dart';
 import 'package:ctlpkg/screens/dashboard/components/button.dart';
 import 'package:ctlpkg/screens/dashboard/components/login_screen.dart';
-import 'package:ctlpkg/screens/dashboard/components/update_packages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -119,14 +118,6 @@ class AuthorizedActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CtlButton(
-          text: "Update",
-          icon: Icons.refresh,
-          onPressed: () {
-            showUpdateNotification(context);
-          },
-        ),
-        SizedBox(width: defaultPadding),
         CtlButton(
           text: "Add",
           icon: Icons.add,

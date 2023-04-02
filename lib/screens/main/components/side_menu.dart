@@ -116,7 +116,6 @@ class SearchField extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
           suffixIcon: InkWell(
-            onTap: () {},
             child: Container(
               padding: EdgeInsets.all(defaultPadding * 0.75),
               margin: EdgeInsets.symmetric(horizontal: defaultPadding / 2),

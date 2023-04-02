@@ -133,7 +133,10 @@ func (o *OsHelper) ParsePkgInfo(inp string) *pb.DescribeResponse {
 		case "Architecture":
 			out.Architecture = value
 		case "URL":
-			out.Url = value + ":" + strings.TrimSpace(splitted[2])
+			if len(splitted) > 2 {
+				out.Url = value + ":" + strings.TrimSpace(splitted[2])
+			}
+			out.Url = "None"
 		case "Licenses":
 			out.Licenses = value
 		case "Groups":
