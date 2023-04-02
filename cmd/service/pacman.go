@@ -56,9 +56,7 @@ func (s *Handlers) Describe(ctx context.Context, in *pb.DescribeRequest) (*pb.De
 	if err != nil {
 		return nil, fmt.Errorf(`unable to execute yay command: %w`, err)
 	}
-	return &pb.DescribeResponse{
-		Fields: s.Helper.ParsePkgInfo(info),
-	}, nil
+	return s.Helper.ParsePkgInfo(info), nil
 }
 
 // Stats implements pb.PacmanServiceServer.

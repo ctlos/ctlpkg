@@ -1,12 +1,14 @@
 import 'package:ctlpkg/constants.dart';
+import 'package:ctlpkg/generated/v1/pacman.pbgrpc.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
 class PackageInfoBoard extends StatelessWidget {
-  final String name;
+  final DescribeResponse description;
+
   const PackageInfoBoard({
     Key? key,
-    required this.name,
+    required this.description,
   }) : super(key: key);
 
   @override
@@ -22,7 +24,7 @@ class PackageInfoBoard extends StatelessWidget {
         children: [
           Center(
             child: Text(
-              name.toUpperCase(),
+              description.name.toUpperCase(),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
@@ -40,66 +42,18 @@ class PackageInfoBoard extends StatelessWidget {
                 ),
               ],
               rows: [
-                DataRow(cells: [
-                  DataCell(
-                    PropertyNameWidget(
-                      icon: Icons.assignment_outlined,
-                      name: "Version",
-                      color: Colors.yellow,
-                    ),
-                  ),
-                  DataCell(Text("Vupsen")),
-                ]),
-                DataRow(cells: [
-                  DataCell(
-                    PropertyNameWidget(
-                      icon: Icons.usb,
-                      name: "Stuff",
-                      color: Colors.red,
-                    ),
-                  ),
-                  DataCell(Text("Pupsen")),
-                ]),
-                DataRow(cells: [
-                  DataCell(
-                    PropertyNameWidget(
-                      icon: Icons.airline_seat_legroom_reduced,
-                      name: "Keks",
-                      color: Colors.orange,
-                    ),
-                  ),
-                  DataCell(Text("Mopsel")),
-                ]),
-                DataRow(cells: [
-                  DataCell(
-                    PropertyNameWidget(
-                      icon: Icons.build_circle_rounded,
-                      name: "Ikrop",
-                      color: Colors.purple,
-                    ),
-                  ),
-                  DataCell(Text("Keka")),
-                ]),
-                DataRow(cells: [
-                  DataCell(
-                    PropertyNameWidget(
-                      icon: Icons.call_missed_rounded,
-                      name: "Prekl",
-                      color: Colors.blue,
-                    ),
-                  ),
-                  DataCell(Text("asdass")),
-                ]),
-                DataRow(cells: [
-                  DataCell(
-                    PropertyNameWidget(
-                      icon: Icons.brightness_1_rounded,
-                      name: "Nanii",
-                      color: Colors.blue,
-                    ),
-                  ),
-                  DataCell(Text("12312aa")),
-                ]),
+                formDataRow(
+                  key: "Current version",
+                  value: description.version,
+                  icon: Icons.article,
+                  color: Colors.blueGrey,
+                ),
+                formDataRow(
+                  key: "Description",
+                  value: description.description,
+                  icon: Icons.note,
+                  color: Colors.orange,
+                ),
               ],
             ),
           ),
@@ -109,39 +63,40 @@ class PackageInfoBoard extends StatelessWidget {
   }
 }
 
-class PropertyNameWidget extends StatelessWidget {
-  final IconData icon;
-  final String name;
-  final Color color;
-  const PropertyNameWidget({
-    Key? key,
-    required this.icon,
-    required this.name,
-    required this.color,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: const BorderRadius.all(Radius.circular(4)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Icon(
-              icon,
-              size: 18,
-              color: Colors.white,
+DataRow formDataRow({
+  required String key,
+  required String value,
+  required IconData icon,
+  required Color color,
+}) {
+  return DataRow(
+    cells: [
+      DataCell(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: const BorderRadius.all(Radius.circular(4)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Icon(
+                  icon,
+                  size: 18,
+                  color: Colors.white,
+                ),
+              ),
             ),
-          ),
+            Padding(padding: EdgeInsets.all(defaultPadding)),
+            Text(key),
+          ],
         ),
-        Padding(padding: EdgeInsets.all(defaultPadding)),
-        Text(name),
-      ],
-    );
-  }
+      ),
+      DataCell(
+        Text(value),
+      ),
+    ],
+  );
 }

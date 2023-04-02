@@ -56,7 +56,31 @@ message DescribeRequest {
 }
 
 message DescribeResponse {
-  map<string, string> fields = 1;
+  string name = 1;
+  string version = 2;
+  string description = 3;
+  string architecture = 4;
+  string url = 5;
+  string licenses = 6;
+  string groups = 7;
+  string provides = 8;
+  string requiredBy = 9;
+  string optionalFor = 10;
+  string conflictsWith = 11;
+  string replaces = 12;
+  string installedSize = 13;
+  string packager = 14;
+  string buildDate = 15;
+  string installDate = 16;
+  string installReason = 17;
+  string installScript = 18;
+  string validatedBy = 19;
+  repeated Dependency dependecies = 20;
+}
+
+message Dependency {
+  string name = 1;
+  repeated Dependency dependecies = 2;
 }
 
 message StatsRequest {}

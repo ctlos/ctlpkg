@@ -110,9 +110,9 @@ func (o *OsHelper) FormDb(yay string, pkg string, repo string) error {
 	return err
 }
 
-func (o *OsHelper) ParsePkgInfo(inp string) map[string]string {
+func (o *OsHelper) ParsePkgInfo(inp string) *pb.DescribeResponse {
 	logrus.Info("parsing package info: ", inp)
-	out := map[string]string{}
+	out := &pb.DescribeResponse{}
 	for _, s := range strings.Split(inp, "\n") {
 		if strings.HasPrefix(s, " ") {
 			continue
@@ -122,7 +122,47 @@ func (o *OsHelper) ParsePkgInfo(inp string) map[string]string {
 		if len(splitted) < correctdElementAmount {
 			continue
 		}
-		out[strings.TrimSpace(splitted[0])] = strings.TrimSpace(splitted[1])
+		value := strings.TrimSpace(splitted[1])
+		switch strings.TrimSpace(splitted[0]) {
+		case "Name":
+			out.Name = value
+		case "Version":
+			out.Version = value
+		case "Description":
+			out.Description = value
+		case "Architecture":
+			out.Architecture = value
+		case "URL":
+			out.Url = value
+		case "Licenses":
+			out.Licenses = value
+		case "Groups":
+			out.Groups = value
+		case "Provides":
+			out.Provides = value
+		case "Required By":
+			out.RequiredBy = value
+		case "Optional For":
+			out.OptionalFor = value
+		case "Conflicts With":
+			out.ConflictsWith = value
+		case "Replaces":
+			out.Replaces = value
+		case "Installed Size":
+			out.InstalledSize = value
+		case "Packager":
+			out.Packager = value
+		case "Build Date":
+			out.BuildDate = value
+		case "Install Date":
+			out.InstallDate = value
+		case "Install Reason":
+			out.InstallReason = value
+		case "Install Script":
+			out.InstallScript = value
+		case "Validated By":
+			out.ValidatedBy = value
+		}
 	}
 	return out
 }

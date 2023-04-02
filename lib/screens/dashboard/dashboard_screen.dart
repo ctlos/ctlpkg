@@ -54,13 +54,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   flex: 5,
                   child: Column(
                     children: [
-                      PackageInfoBoard(
-                        name: "git",
-                      ),
-                      if (Responsive.isMobile(context))
-                        SizedBox(height: defaultPadding),
                       if (Responsive.isMobile(context) && showOutdated)
                         outdatedPackages,
+                      if (Responsive.isMobile(context) && showOutdated)
+                        SizedBox(height: defaultPadding),
+                      PackageInfoBoard(
+                        description: DescribeResponse(
+                          name: "name",
+                          version: "version",
+                          description: "description",
+                          architecture: "architecture",
+                          url: "url",
+                          licenses: "licenses",
+                          groups: "groups",
+                          provides: "provides",
+                          requiredBy: "requiredBy",
+                          optionalFor: "optionalFor",
+                          conflictsWith: "conflictsWith",
+                          replaces: "replaces",
+                          installedSize: "installedSize",
+                          packager: "packager",
+                          buildDate: "buildDate",
+                          installDate: "installDate",
+                          installReason: "installReason",
+                          installScript: "installScript",
+                          validatedBy: "validatedBy",
+                        ),
+                      ),
                     ],
                   ),
                 ),

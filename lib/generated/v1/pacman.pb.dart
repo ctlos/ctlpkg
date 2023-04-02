@@ -306,17 +306,112 @@ class DescribeRequest extends $pb.GeneratedMessage {
 
 class DescribeResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DescribeResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto.v1'), createEmptyInstance: create)
-    ..m<$core.String, $core.String>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fields', entryClassName: 'DescribeResponse.FieldsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('proto.v1'))
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'description')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'architecture')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'url')
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'licenses')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups')
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'provides')
+    ..aOS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'requiredBy', protoName: 'requiredBy')
+    ..aOS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'optionalFor', protoName: 'optionalFor')
+    ..aOS(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'conflictsWith', protoName: 'conflictsWith')
+    ..aOS(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'replaces')
+    ..aOS(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'installedSize', protoName: 'installedSize')
+    ..aOS(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'packager')
+    ..aOS(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'buildDate', protoName: 'buildDate')
+    ..aOS(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'installDate', protoName: 'installDate')
+    ..aOS(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'installReason', protoName: 'installReason')
+    ..aOS(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'installScript', protoName: 'installScript')
+    ..aOS(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'validatedBy', protoName: 'validatedBy')
+    ..pc<Dependency>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dependecies', $pb.PbFieldType.PM, subBuilder: Dependency.create)
     ..hasRequiredFields = false
   ;
 
   DescribeResponse._() : super();
   factory DescribeResponse({
-    $core.Map<$core.String, $core.String>? fields,
+    $core.String? name,
+    $core.String? version,
+    $core.String? description,
+    $core.String? architecture,
+    $core.String? url,
+    $core.String? licenses,
+    $core.String? groups,
+    $core.String? provides,
+    $core.String? requiredBy,
+    $core.String? optionalFor,
+    $core.String? conflictsWith,
+    $core.String? replaces,
+    $core.String? installedSize,
+    $core.String? packager,
+    $core.String? buildDate,
+    $core.String? installDate,
+    $core.String? installReason,
+    $core.String? installScript,
+    $core.String? validatedBy,
+    $core.Iterable<Dependency>? dependecies,
   }) {
     final _result = create();
-    if (fields != null) {
-      _result.fields.addAll(fields);
+    if (name != null) {
+      _result.name = name;
+    }
+    if (version != null) {
+      _result.version = version;
+    }
+    if (description != null) {
+      _result.description = description;
+    }
+    if (architecture != null) {
+      _result.architecture = architecture;
+    }
+    if (url != null) {
+      _result.url = url;
+    }
+    if (licenses != null) {
+      _result.licenses = licenses;
+    }
+    if (groups != null) {
+      _result.groups = groups;
+    }
+    if (provides != null) {
+      _result.provides = provides;
+    }
+    if (requiredBy != null) {
+      _result.requiredBy = requiredBy;
+    }
+    if (optionalFor != null) {
+      _result.optionalFor = optionalFor;
+    }
+    if (conflictsWith != null) {
+      _result.conflictsWith = conflictsWith;
+    }
+    if (replaces != null) {
+      _result.replaces = replaces;
+    }
+    if (installedSize != null) {
+      _result.installedSize = installedSize;
+    }
+    if (packager != null) {
+      _result.packager = packager;
+    }
+    if (buildDate != null) {
+      _result.buildDate = buildDate;
+    }
+    if (installDate != null) {
+      _result.installDate = installDate;
+    }
+    if (installReason != null) {
+      _result.installReason = installReason;
+    }
+    if (installScript != null) {
+      _result.installScript = installScript;
+    }
+    if (validatedBy != null) {
+      _result.validatedBy = validatedBy;
+    }
+    if (dependecies != null) {
+      _result.dependecies.addAll(dependecies);
     }
     return _result;
   }
@@ -342,7 +437,233 @@ class DescribeResponse extends $pb.GeneratedMessage {
   static DescribeResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.Map<$core.String, $core.String> get fields => $_getMap(0);
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get version => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set version($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasVersion() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearVersion() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get description => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set description($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDescription() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDescription() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get architecture => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set architecture($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasArchitecture() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearArchitecture() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get url => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set url($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasUrl() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearUrl() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get licenses => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set licenses($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasLicenses() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearLicenses() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get groups => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set groups($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasGroups() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearGroups() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get provides => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set provides($core.String v) { $_setString(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasProvides() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearProvides() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.String get requiredBy => $_getSZ(8);
+  @$pb.TagNumber(9)
+  set requiredBy($core.String v) { $_setString(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasRequiredBy() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearRequiredBy() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.String get optionalFor => $_getSZ(9);
+  @$pb.TagNumber(10)
+  set optionalFor($core.String v) { $_setString(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasOptionalFor() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearOptionalFor() => clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.String get conflictsWith => $_getSZ(10);
+  @$pb.TagNumber(11)
+  set conflictsWith($core.String v) { $_setString(10, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasConflictsWith() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearConflictsWith() => clearField(11);
+
+  @$pb.TagNumber(12)
+  $core.String get replaces => $_getSZ(11);
+  @$pb.TagNumber(12)
+  set replaces($core.String v) { $_setString(11, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasReplaces() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearReplaces() => clearField(12);
+
+  @$pb.TagNumber(13)
+  $core.String get installedSize => $_getSZ(12);
+  @$pb.TagNumber(13)
+  set installedSize($core.String v) { $_setString(12, v); }
+  @$pb.TagNumber(13)
+  $core.bool hasInstalledSize() => $_has(12);
+  @$pb.TagNumber(13)
+  void clearInstalledSize() => clearField(13);
+
+  @$pb.TagNumber(14)
+  $core.String get packager => $_getSZ(13);
+  @$pb.TagNumber(14)
+  set packager($core.String v) { $_setString(13, v); }
+  @$pb.TagNumber(14)
+  $core.bool hasPackager() => $_has(13);
+  @$pb.TagNumber(14)
+  void clearPackager() => clearField(14);
+
+  @$pb.TagNumber(15)
+  $core.String get buildDate => $_getSZ(14);
+  @$pb.TagNumber(15)
+  set buildDate($core.String v) { $_setString(14, v); }
+  @$pb.TagNumber(15)
+  $core.bool hasBuildDate() => $_has(14);
+  @$pb.TagNumber(15)
+  void clearBuildDate() => clearField(15);
+
+  @$pb.TagNumber(16)
+  $core.String get installDate => $_getSZ(15);
+  @$pb.TagNumber(16)
+  set installDate($core.String v) { $_setString(15, v); }
+  @$pb.TagNumber(16)
+  $core.bool hasInstallDate() => $_has(15);
+  @$pb.TagNumber(16)
+  void clearInstallDate() => clearField(16);
+
+  @$pb.TagNumber(17)
+  $core.String get installReason => $_getSZ(16);
+  @$pb.TagNumber(17)
+  set installReason($core.String v) { $_setString(16, v); }
+  @$pb.TagNumber(17)
+  $core.bool hasInstallReason() => $_has(16);
+  @$pb.TagNumber(17)
+  void clearInstallReason() => clearField(17);
+
+  @$pb.TagNumber(18)
+  $core.String get installScript => $_getSZ(17);
+  @$pb.TagNumber(18)
+  set installScript($core.String v) { $_setString(17, v); }
+  @$pb.TagNumber(18)
+  $core.bool hasInstallScript() => $_has(17);
+  @$pb.TagNumber(18)
+  void clearInstallScript() => clearField(18);
+
+  @$pb.TagNumber(19)
+  $core.String get validatedBy => $_getSZ(18);
+  @$pb.TagNumber(19)
+  set validatedBy($core.String v) { $_setString(18, v); }
+  @$pb.TagNumber(19)
+  $core.bool hasValidatedBy() => $_has(18);
+  @$pb.TagNumber(19)
+  void clearValidatedBy() => clearField(19);
+
+  @$pb.TagNumber(20)
+  $core.List<Dependency> get dependecies => $_getList(19);
+}
+
+class Dependency extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Dependency', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'proto.v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..pc<Dependency>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dependecies', $pb.PbFieldType.PM, subBuilder: Dependency.create)
+    ..hasRequiredFields = false
+  ;
+
+  Dependency._() : super();
+  factory Dependency({
+    $core.String? name,
+    $core.Iterable<Dependency>? dependecies,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (dependecies != null) {
+      _result.dependecies.addAll(dependecies);
+    }
+    return _result;
+  }
+  factory Dependency.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Dependency.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Dependency clone() => Dependency()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Dependency copyWith(void Function(Dependency) updates) => super.copyWith((message) => updates(message as Dependency)) as Dependency; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Dependency create() => Dependency._();
+  Dependency createEmptyInstance() => create();
+  static $pb.PbList<Dependency> createRepeated() => $pb.PbList<Dependency>();
+  @$core.pragma('dart2js:noInline')
+  static Dependency getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Dependency>(create);
+  static Dependency? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<Dependency> get dependecies => $_getList(1);
 }
 
 class StatsRequest extends $pb.GeneratedMessage {

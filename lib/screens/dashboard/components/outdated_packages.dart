@@ -53,7 +53,7 @@ class OutdatedPackages extends StatelessWidget {
             uptodate: total - outdated,
           ),
           Container(
-            height: 420,
+            height: 380,
             child: ListView(
               children: convertPackages(outdatedPackagesList),
             ),

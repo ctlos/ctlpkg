@@ -77,23 +77,42 @@ final $typed_data.Uint8List describeRequestDescriptor = $convert.base64Decode('C
 const DescribeResponse$json = const {
   '1': 'DescribeResponse',
   '2': const [
-    const {'1': 'fields', '3': 1, '4': 3, '5': 11, '6': '.proto.v1.DescribeResponse.FieldsEntry', '10': 'fields'},
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'version', '3': 2, '4': 1, '5': 9, '10': 'version'},
+    const {'1': 'description', '3': 3, '4': 1, '5': 9, '10': 'description'},
+    const {'1': 'architecture', '3': 4, '4': 1, '5': 9, '10': 'architecture'},
+    const {'1': 'url', '3': 5, '4': 1, '5': 9, '10': 'url'},
+    const {'1': 'licenses', '3': 6, '4': 1, '5': 9, '10': 'licenses'},
+    const {'1': 'groups', '3': 7, '4': 1, '5': 9, '10': 'groups'},
+    const {'1': 'provides', '3': 8, '4': 1, '5': 9, '10': 'provides'},
+    const {'1': 'requiredBy', '3': 9, '4': 1, '5': 9, '10': 'requiredBy'},
+    const {'1': 'optionalFor', '3': 10, '4': 1, '5': 9, '10': 'optionalFor'},
+    const {'1': 'conflictsWith', '3': 11, '4': 1, '5': 9, '10': 'conflictsWith'},
+    const {'1': 'replaces', '3': 12, '4': 1, '5': 9, '10': 'replaces'},
+    const {'1': 'installedSize', '3': 13, '4': 1, '5': 9, '10': 'installedSize'},
+    const {'1': 'packager', '3': 14, '4': 1, '5': 9, '10': 'packager'},
+    const {'1': 'buildDate', '3': 15, '4': 1, '5': 9, '10': 'buildDate'},
+    const {'1': 'installDate', '3': 16, '4': 1, '5': 9, '10': 'installDate'},
+    const {'1': 'installReason', '3': 17, '4': 1, '5': 9, '10': 'installReason'},
+    const {'1': 'installScript', '3': 18, '4': 1, '5': 9, '10': 'installScript'},
+    const {'1': 'validatedBy', '3': 19, '4': 1, '5': 9, '10': 'validatedBy'},
+    const {'1': 'dependecies', '3': 20, '4': 3, '5': 11, '6': '.proto.v1.Dependency', '10': 'dependecies'},
   ],
-  '3': const [DescribeResponse_FieldsEntry$json],
-};
-
-@$core.Deprecated('Use describeResponseDescriptor instead')
-const DescribeResponse_FieldsEntry$json = const {
-  '1': 'FieldsEntry',
-  '2': const [
-    const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    const {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
-  ],
-  '7': const {'7': true},
 };
 
 /// Descriptor for `DescribeResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List describeResponseDescriptor = $convert.base64Decode('ChBEZXNjcmliZVJlc3BvbnNlEj4KBmZpZWxkcxgBIAMoCzImLnByb3RvLnYxLkRlc2NyaWJlUmVzcG9uc2UuRmllbGRzRW50cnlSBmZpZWxkcxo5CgtGaWVsZHNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgB');
+final $typed_data.Uint8List describeResponseDescriptor = $convert.base64Decode('ChBEZXNjcmliZVJlc3BvbnNlEhIKBG5hbWUYASABKAlSBG5hbWUSGAoHdmVyc2lvbhgCIAEoCVIHdmVyc2lvbhIgCgtkZXNjcmlwdGlvbhgDIAEoCVILZGVzY3JpcHRpb24SIgoMYXJjaGl0ZWN0dXJlGAQgASgJUgxhcmNoaXRlY3R1cmUSEAoDdXJsGAUgASgJUgN1cmwSGgoIbGljZW5zZXMYBiABKAlSCGxpY2Vuc2VzEhYKBmdyb3VwcxgHIAEoCVIGZ3JvdXBzEhoKCHByb3ZpZGVzGAggASgJUghwcm92aWRlcxIeCgpyZXF1aXJlZEJ5GAkgASgJUgpyZXF1aXJlZEJ5EiAKC29wdGlvbmFsRm9yGAogASgJUgtvcHRpb25hbEZvchIkCg1jb25mbGljdHNXaXRoGAsgASgJUg1jb25mbGljdHNXaXRoEhoKCHJlcGxhY2VzGAwgASgJUghyZXBsYWNlcxIkCg1pbnN0YWxsZWRTaXplGA0gASgJUg1pbnN0YWxsZWRTaXplEhoKCHBhY2thZ2VyGA4gASgJUghwYWNrYWdlchIcCglidWlsZERhdGUYDyABKAlSCWJ1aWxkRGF0ZRIgCgtpbnN0YWxsRGF0ZRgQIAEoCVILaW5zdGFsbERhdGUSJAoNaW5zdGFsbFJlYXNvbhgRIAEoCVINaW5zdGFsbFJlYXNvbhIkCg1pbnN0YWxsU2NyaXB0GBIgASgJUg1pbnN0YWxsU2NyaXB0EiAKC3ZhbGlkYXRlZEJ5GBMgASgJUgt2YWxpZGF0ZWRCeRI2CgtkZXBlbmRlY2llcxgUIAMoCzIULnByb3RvLnYxLkRlcGVuZGVuY3lSC2RlcGVuZGVjaWVz');
+@$core.Deprecated('Use dependencyDescriptor instead')
+const Dependency$json = const {
+  '1': 'Dependency',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'dependecies', '3': 2, '4': 3, '5': 11, '6': '.proto.v1.Dependency', '10': 'dependecies'},
+  ],
+};
+
+/// Descriptor for `Dependency`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List dependencyDescriptor = $convert.base64Decode('CgpEZXBlbmRlbmN5EhIKBG5hbWUYASABKAlSBG5hbWUSNgoLZGVwZW5kZWNpZXMYAiADKAsyFC5wcm90by52MS5EZXBlbmRlbmN5UgtkZXBlbmRlY2llcw==');
 @$core.Deprecated('Use statsRequestDescriptor instead')
 const StatsRequest$json = const {
   '1': 'StatsRequest',
