@@ -14,7 +14,7 @@ Dockerized pacman repository with friendly user interface and public API. Projec
 
 ---
 
-## Environment configurations
+## Configurations
 
 Environment variables/flags:
 
@@ -29,7 +29,7 @@ Environment variables/flags:
 
 ---
 
-## Launch an instance
+## Deploy
 
 - with `docker`:
 
@@ -45,7 +45,7 @@ services:
     image: dancheg97.ru/dancheg97/ctlpkg:latest
     command: run
     environment:
-      CTLPKG_INIT_PKGS: git grabc
+      CTLPKG_INIT_PKGS: yay
       CTLPKG_API_ADRESS: http://localhost:8080/
       CTLPKG_LOGS_FMT: text
       CTLPKG_LOGINS: user1|pass1|user2|pass2
@@ -53,7 +53,24 @@ services:
       - 8080:8080
 ```
 
-## Development
+## Add to pacman conf
+
+Add those lines to your `/etc/pacman.conf`, to get things to work:
+
+```conf
+[localhost]
+SigLevel = Optional TrustAll
+Server = http://localhost:8080/pkg
+```
+
+You can test it with this commands:
+
+```sh
+sudo pacman -R yay
+sudo pacman -Sy yay
+```
+
+## Contribute
 
 For applicaiton development you need to install following software:
 
