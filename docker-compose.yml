@@ -6,7 +6,8 @@ services:
       context: .
     command: run
     environment:
-      CTLPKG_INIT_PKGS: geary
-      CTLPKG_LOGS_FMT: text
+      CTLPKG_INIT_PKGS: git
+      CTLPKG_LOGS_FORMAT: text
+      CTLPKG_LOGINS: user1|pass1|user2|pass2
     ports:
       - 8080:8080

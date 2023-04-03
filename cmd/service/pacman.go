@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"time"
 
 	pb "dancheg97.ru/dancheg97/ctlpkg/cmd/generated/proto/v1"
 	"dancheg97.ru/dancheg97/ctlpkg/cmd/utils"
@@ -15,14 +14,12 @@ import (
 )
 
 type Handlers struct {
-	Helper    *utils.OsHelper
-	YayPath   string
-	PkgPath   string
-	RepoName  string
-	Logins    map[string]string
-	Tokens    map[string]bool
-	StatsTime time.Time
-	LastStats *pb.StatsResponse
+	Helper   *utils.OsHelper
+	YayPath  string
+	PkgPath  string
+	RepoName string
+	Logins   map[string]string
+	Tokens   map[string]bool
 }
 
 // CheckToken implements pb.PacmanServiceServer.
@@ -64,9 +61,6 @@ func (s *Handlers) Describe(ctx context.Context, in *pb.DescribeRequest) (*pb.De
 
 // Stats implements pb.PacmanServiceServer.
 func (s *Handlers) Stats(ctx context.Context, in *pb.StatsRequest) (*pb.StatsResponse, error) {
-	if time.Since(s.StatsTime) < time.Minute {
-		return s.LastStats, nil
-	}
 	pkgCountString, err := s.Helper.Call(`sudo pacman -Q | wc -l`)
 	if err != nil {
 		return nil, fmt.Errorf(`unable to execute pacman command: %w`, err)
@@ -89,13 +83,11 @@ func (s *Handlers) Stats(ctx context.Context, in *pb.StatsRequest) (*pb.StatsRes
 	if err != nil {
 		return nil, fmt.Errorf(`unable to execute pacman command: %w`, err)
 	}
-	s.LastStats = &pb.StatsResponse{
+	return &pb.StatsResponse{
 		PackagesCount:    int32(pkgCountInt),
 		OutdatedCount:    int32(outdatedCount),
 		OutdatedPackages: outdatedList,
-	}
-	s.StatsTime = time.Now()
-	return s.LastStats, nil
+	}, nil
 }
 
 func (s *Handlers) Add(ctx context.Context, in *pb.AddRequest) (*pb.AddResponse, error) {

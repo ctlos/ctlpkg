@@ -1,6 +1,6 @@
 import 'package:ctlpkg/constants.dart';
 import 'package:ctlpkg/controllers/menu_app_controller.dart';
-import 'package:ctlpkg/screens/main/main_screen.dart';
+import 'package:ctlpkg/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';

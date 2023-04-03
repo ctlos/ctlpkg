@@ -26,6 +26,8 @@ Environment variables/flags:
 - 📂 - `CTLPKG_WEB_DIR` - `web-dir` - directory with flutter web app
 - 🔐 - `CTLPKG_LOGINS` - `logins` - list of logins and passwords separated by '|' symbol
 
+---
+
 ## Start docker service
 
 You can run repository via `docker-compose`:
@@ -36,10 +38,9 @@ services:
     image: dancheg97.ru/dancheg97/ctlpkg:latest
     command: run
     environment:
-      INIT_PKGS: onlyoffice-bin yay
-      LOGS_FMT: pretty
-    volumes:
-      - ./go-pacman:/var/cache/pacman/pkg
+      CTLPKG_INIT_PKGS: git
+      CTLPKG_LOGS_FMT: text
+      CTLPKG_LOGINS: user1|pass1|user2|pass2
     ports:
       - 8080:8080
 ```

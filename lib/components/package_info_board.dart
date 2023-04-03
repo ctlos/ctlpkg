@@ -34,11 +34,13 @@ class PackageInfoBoard extends StatelessWidget {
               columnSpacing: defaultPadding,
               minWidth: 600,
               columns: [
-                DataColumn(
+                DataColumn2(
                   label: Text("Property"),
+                  size: ColumnSize.S,
                 ),
-                DataColumn(
+                DataColumn2(
                   label: Text("Value"),
+                  size: ColumnSize.L,
                 ),
               ],
               rows: [
@@ -75,7 +77,7 @@ class PackageInfoBoard extends StatelessWidget {
                 formDataRow(
                   key: "Licenses",
                   value: description.licenses,
-                  icon: Icons.computer,
+                  icon: Icons.assignment,
                   color: Colors.purple,
                 ),
                 formDataRow(

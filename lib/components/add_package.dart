@@ -1,5 +1,5 @@
 import 'package:ctlpkg/generated/v1/pacman.pb.dart';
-import 'package:ctlpkg/screens/dashboard/components/button.dart';
+import 'package:ctlpkg/components/button.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
