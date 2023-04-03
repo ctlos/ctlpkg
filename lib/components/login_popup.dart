@@ -1,5 +1,5 @@
 import 'package:ctlpkg/generated/v1/pacman.pb.dart';
-import 'package:ctlpkg/components/button.dart';
+import 'package:ctlpkg/components/ctl_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,6 +35,28 @@ class _LoginContentsState extends State<LoginContents> {
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
   var shaking = false;
+
+  tryLogin(BuildContext context) async {
+    try {
+      var resp = await stub.login(LoginRequest(
+        login: loginController.text,
+        password: passwordController.text,
+      ));
+      var prefs = await SharedPreferences.getInstance();
+      prefs.setString("token", resp.token);
+      widget.loggedCallback();
+      Navigator.of(context).pop();
+    } catch (e) {
+      setState(() {
+        shaking = true;
+      });
+      await Future.delayed(Duration(milliseconds: 227), () {
+        setState(() {
+          shaking = false;
+        });
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +96,9 @@ class _LoginContentsState extends State<LoginContents> {
             child: TextFormField(
               obscureText: true,
               controller: passwordController,
+              onEditingComplete: () {
+                tryLogin(context);
+              },
               decoration: InputDecoration(
                 hintText: "password",
                 fillColor: secondaryColor,
@@ -101,26 +126,8 @@ class _LoginContentsState extends State<LoginContents> {
                 CtlButton(
                   text: "Login",
                   icon: Icons.person,
-                  onPressed: () async {
-                    try {
-                      var resp = await stub.login(LoginRequest(
-                        login: loginController.text,
-                        password: passwordController.text,
-                      ));
-                      var prefs = await SharedPreferences.getInstance();
-                      prefs.setString("token", resp.token);
-                      widget.loggedCallback();
-                      Navigator.of(context).pop();
-                    } catch (e) {
-                      setState(() {
-                        shaking = true;
-                      });
-                      await Future.delayed(Duration(milliseconds: 227), () {
-                        setState(() {
-                          shaking = false;
-                        });
-                      });
-                    }
+                  onPressed: () {
+                    tryLogin(context);
                   },
                 ),
               ],

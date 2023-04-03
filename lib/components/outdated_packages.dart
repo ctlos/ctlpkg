@@ -1,10 +1,10 @@
 import 'package:ctlpkg/generated/v1/pacman.pb.dart';
-import 'package:ctlpkg/components/button.dart';
+import 'package:ctlpkg/components/ctl_button.dart';
 import 'package:ctlpkg/components/update_packages.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
-import 'chart.dart';
+import 'package_chart.dart';
 import 'outdated_package_card.dart';
 
 class OutdatedPackages extends StatelessWidget {
@@ -33,6 +33,19 @@ class OutdatedPackages extends StatelessWidget {
     return output;
   }
 
+  double getHeight(double outdated) {
+    if (outdated == 1.0) {
+      return 90;
+    }
+    if (outdated == 2.0) {
+      return 180;
+    }
+    if (outdated == 3.0) {
+      return 270;
+    }
+    return 380;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,7 +70,7 @@ class OutdatedPackages extends StatelessWidget {
             uptodate: total - outdated,
           ),
           Container(
-            height: 380,
+            height: getHeight(outdated),
             child: ListView(
               children: convertPackages(outdatedPackagesList),
             ),

@@ -1,9 +1,9 @@
 import 'package:ctlpkg/controllers/menu_app_controller.dart';
 import 'package:ctlpkg/generated/v1/pacman.pb.dart';
 import 'package:ctlpkg/responsive.dart';
-import 'package:ctlpkg/components/add_package.dart';
-import 'package:ctlpkg/components/button.dart';
-import 'package:ctlpkg/components/login_screen.dart';
+import 'package:ctlpkg/components/add_pkg_popup.dart';
+import 'package:ctlpkg/components/ctl_button.dart';
+import 'package:ctlpkg/components/login_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

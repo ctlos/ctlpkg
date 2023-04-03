@@ -1,4 +1,3 @@
-import 'package:ctlpkg/responsive.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
@@ -18,8 +17,8 @@ class CtlButton extends StatelessWidget {
     return ElevatedButton.icon(
       style: TextButton.styleFrom(
         padding: EdgeInsets.symmetric(
-          horizontal: defaultPadding * 1.5,
-          vertical: defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
+          horizontal: 6,
+          vertical: 4,
         ),
         backgroundColor: primaryColor,
       ),

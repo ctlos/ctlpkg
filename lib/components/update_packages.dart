@@ -34,7 +34,7 @@ class _UpdateNotificationState extends State<UpdateNotification> {
   dropAfterUpdate(BuildContext context) async {
     var prefs = await SharedPreferences.getInstance();
     try {
-      var resp = await stub.update(UpdateRequest(
+      await stub.update(UpdateRequest(
         token: prefs.getString("token"),
       ));
       setState(() {

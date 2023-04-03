@@ -1,5 +1,5 @@
 import 'package:ctlpkg/generated/v1/pacman.pb.dart';
-import 'package:ctlpkg/components/button.dart';
+import 'package:ctlpkg/components/ctl_button.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +33,48 @@ class _AddPackageContentsState extends State<AddPackageContents> {
     size: 142,
   );
 
+  tryAddPackage(BuildContext context) async {
+    setState(() {
+      inonPlaceholder = SpinKitCubeGrid(
+        size: 142,
+        color: Theme.of(context).iconTheme.color,
+      );
+      textPlaceholder = "Processing...";
+    });
+    try {
+      var prefs = await SharedPreferences.getInstance();
+      var token = prefs.getString("token");
+      var resp = await stub.add(AddRequest(
+        packages: textContoller.text.split(" "),
+        token: token,
+      ));
+      setState(() {
+        print(resp);
+        setState(() {
+          inonPlaceholder = Icon(
+            Icons.check,
+            size: 142,
+          );
+          Future.delayed(Duration(milliseconds: 832), () {
+            Navigator.of(context).pop();
+          });
+        });
+      });
+    } catch (e) {
+      setState(() {
+        inonPlaceholder = Icon(
+          Icons.do_disturb,
+          size: 142,
+        );
+        if (e.toString().contains("unable to find package")) {
+          textPlaceholder = "Package not found";
+        } else {
+          textPlaceholder = "Unknown error";
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,6 +103,9 @@ class _AddPackageContentsState extends State<AddPackageContents> {
           padding: EdgeInsets.all(defaultPadding / 2),
           child: TextFormField(
             controller: textContoller,
+            onEditingComplete: () {
+              tryAddPackage(context);
+            },
             decoration: InputDecoration(
               hintText: "enter packages",
               fillColor: secondaryColor,
@@ -88,46 +133,8 @@ class _AddPackageContentsState extends State<AddPackageContents> {
               CtlButton(
                 icon: Icons.add,
                 text: "Download",
-                onPressed: () async {
-                  setState(() {
-                    inonPlaceholder = SpinKitCubeGrid(
-                      size: 142,
-                      color: Theme.of(context).iconTheme.color,
-                    );
-                    textPlaceholder = "Processing...";
-                  });
-                  try {
-                    var prefs = await SharedPreferences.getInstance();
-                    var token = prefs.getString("token");
-                    var resp = await stub.add(AddRequest(
-                      packages: textContoller.text.split(" "),
-                      token: token,
-                    ));
-                    setState(() {
-                      print(resp);
-                      setState(() {
-                        inonPlaceholder = Icon(
-                          Icons.check,
-                          size: 142,
-                        );
-                        Future.delayed(Duration(milliseconds: 832), () {
-                          Navigator.of(context).pop();
-                        });
-                      });
-                    });
-                  } catch (e) {
-                    setState(() {
-                      inonPlaceholder = Icon(
-                        Icons.do_disturb,
-                        size: 142,
-                      );
-                      if (e.toString().contains("unable to find package")) {
-                        textPlaceholder = "Package not found";
-                      } else {
-                        textPlaceholder = "Unknown error";
-                      }
-                    });
-                  }
+                onPressed: () {
+                  tryAddPackage(context);
                 },
               ),
             ],
