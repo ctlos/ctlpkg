@@ -117,7 +117,7 @@ func (o *OsHelper) ParsePkgInfo(inp string) *pb.DescribeResponse {
 		if strings.HasPrefix(s, " ") {
 			continue
 		}
-		splitted := strings.Split(s, ":")
+		splitted := strings.Split(s, " : ")
 		correctdElementAmount := 2
 		if len(splitted) < correctdElementAmount {
 			continue
@@ -133,10 +133,7 @@ func (o *OsHelper) ParsePkgInfo(inp string) *pb.DescribeResponse {
 		case "Architecture":
 			out.Architecture = value
 		case "URL":
-			if len(splitted) > 2 {
-				out.Url = value + ":" + strings.TrimSpace(splitted[2])
-			}
-			out.Url = "None"
+			out.Url = value
 		case "Licenses":
 			out.Licenses = value
 		case "Groups":

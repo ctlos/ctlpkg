@@ -11,11 +11,13 @@ class OutdatedPackages extends StatelessWidget {
   final double outdated;
   final double total;
   final List<OutdatedPackage> outdatedPackagesList;
+  final void Function() updateCallback;
   const OutdatedPackages({
     Key? key,
     required this.outdated,
     required this.total,
     required this.outdatedPackagesList,
+    required this.updateCallback,
   }) : super(key: key);
 
   List<OutdatedPackageCard> convertPackages(
@@ -67,7 +69,7 @@ class OutdatedPackages extends StatelessWidget {
                 text: "Update",
                 icon: Icons.refresh,
                 onPressed: () {
-                  showUpdateNotification(context);
+                  showUpdateNotification(context, updateCallback);
                 },
               ),
             ),

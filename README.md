@@ -21,6 +21,7 @@ Environment variables/flags:
 - 📄 - `CTLPKG_REPO` - `repo` - repository name on the web page
 - 😀 - `CTLPKG_USER` - `user` - user name in system, will be used to eject `yay` packages
 - 🌐 - `CTLPKG_PORT` - `port` - publically exposed port, `8080` default
+- 📫 - `CTLPKG_API_ADRESS` - `api-adress` - adress for backend api calls via `grpc-web`
 - 📦 - `CTLPKG_INIT_PKGS` - `init-pkgs` - initial packages to download on start
 - 📒 - `CTLPKG_LOGS_FORMAT` - `logs-fmt` - format for logs (can be text/json/pretty)
 - 📂 - `CTLPKG_WEB_DIR` - `web-dir` - directory with flutter web app
@@ -28,9 +29,15 @@ Environment variables/flags:
 
 ---
 
-## Start docker service
+## Launch an instance
 
-You can run repository via `docker-compose`:
+- with `docker`:
+
+```sh
+docker run -p 8080:8080 -e CTLPKG_LOGS_FMT=text dancheg97.ru/dancheg97/ctlpkg:latest
+```
+
+- with `docker-compose`:
 
 ```yml
 services:
@@ -38,7 +45,8 @@ services:
     image: dancheg97.ru/dancheg97/ctlpkg:latest
     command: run
     environment:
-      CTLPKG_INIT_PKGS: git
+      CTLPKG_INIT_PKGS: git grabc
+      CTLPKG_API_ADRESS: http://localhost:8080/
       CTLPKG_LOGS_FMT: text
       CTLPKG_LOGINS: user1|pass1|user2|pass2
     ports:
@@ -56,9 +64,5 @@ For applicaiton development you need to install following software:
 - `flutter`
 - `flutter webkit`
 
-<!--
-Kinda TODO
-Fix white color stuff in UI
-Add auth check on open
-Expand updated packages
--->
+All frontend dart code is located in `lib` folder, all backend go code is
+located in `cmd` folder.

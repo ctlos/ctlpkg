@@ -66,7 +66,7 @@ class _MainScreenState extends State<MainScreen> {
                 // and it takes 1/6 part of the screen
                 child: SideMenu(
                   refreshPage: (text) {
-                    updateInformation(text);
+                    updatePackage(text);
                   },
                 ),
               ),
@@ -91,6 +91,9 @@ class _MainScreenState extends State<MainScreen> {
                                 if (Responsive.isMobile(context) &&
                                     showOutdated)
                                   OutdatedPackages(
+                                    updateCallback: () {
+                                      updateInformation(descr.name);
+                                    },
                                     outdated: stats.outdatedCount.toDouble(),
                                     total: stats.packagesCount.toDouble(),
                                     outdatedPackagesList:
@@ -115,6 +118,9 @@ class _MainScreenState extends State<MainScreen> {
                             Expanded(
                               flex: 2,
                               child: OutdatedPackages(
+                                updateCallback: () {
+                                  updateInformation(descr.name);
+                                },
                                 outdated: stats.outdatedCount.toDouble(),
                                 total: stats.packagesCount.toDouble(),
                                 outdatedPackagesList: stats.outdatedPackages,

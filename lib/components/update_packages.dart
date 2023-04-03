@@ -6,17 +6,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants.dart';
 
-showUpdateNotification(BuildContext context) {
+showUpdateNotification(BuildContext context, void Function() updateCallback) {
   showBottomSheet(
     context: context,
     builder: (context) {
-      return UpdateNotification();
+      return UpdateNotification(
+        updateCallback: updateCallback,
+      );
     },
   );
 }
 
 class UpdateNotification extends StatefulWidget {
-  const UpdateNotification({Key? key}) : super(key: key);
+  final void Function() updateCallback;
+  const UpdateNotification({
+    Key? key,
+    required this.updateCallback,
+  }) : super(key: key);
 
   @override
   State<UpdateNotification> createState() => _UpdateNotificationState();
@@ -40,6 +46,7 @@ class _UpdateNotificationState extends State<UpdateNotification> {
             Icon(Icons.check, size: 24),
           ],
         );
+        widget.updateCallback();
         Future.delayed(Duration(milliseconds: 932), () {
           Navigator.of(context).pop();
         });
