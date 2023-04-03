@@ -12,6 +12,8 @@
 
 Dockerized pacman repository with friendly user interface and public API. Project goal is to quickly set up personal pacman repostitory without pain and hustle.
 
+![](preview.gif)
+
 ---
 
 ## Configurations
