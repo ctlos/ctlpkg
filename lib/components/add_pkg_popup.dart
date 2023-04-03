@@ -132,7 +132,7 @@ class _AddPackageContentsState extends State<AddPackageContents> {
               SizedBox(width: defaultPadding),
               CtlButton(
                 icon: Icons.add,
-                text: "Download",
+                text: "Pull",
                 onPressed: () {
                   tryAddPackage(context);
                 },

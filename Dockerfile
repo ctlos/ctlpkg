@@ -21,7 +21,7 @@ RUN flutter build web
 FROM archlinux/archlinux:base-devel
 LABEL maintainer="Dancheg97 <dangdancheg@gmail.com>"
 
-RUN pacman -Syu --needed --noconfirm git
+RUN pacman -Syu --needed --noconfirm git pacman-contrib
 
 ARG user=makepkg
 RUN useradd --system --create-home $user
